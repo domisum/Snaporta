@@ -1,6 +1,7 @@
 package de.domisum.lib.snaporta;
 
 import de.domisum.lib.auxilium.util.PHR;
+import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.util.SnaportaValidate;
 import org.apache.commons.lang3.Validate;
 
@@ -16,12 +17,17 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 
 
 	// INIT
-	public static BasicEditableSnaporta fromARGBPixels(int[][] argbPixels)
+	@API public static BasicEditableSnaporta blankOfSize(int width, int height)
+	{
+		return fromARGBPixels(new int[height][width]);
+	}
+
+	@API public static BasicEditableSnaporta fromARGBPixels(int[][] argbPixels)
 	{
 		return new BasicEditableSnaporta(argbPixels);
 	}
 
-	public static BasicEditableSnaporta copyOf(Snaporta snaporta)
+	@API public static BasicEditableSnaporta copyOf(Snaporta snaporta)
 	{
 		int[][] argbPixels = new int[snaporta.getHeight()][snaporta.getWidth()];
 		for(int y = 0; y < snaporta.getHeight(); y++)
@@ -31,6 +37,8 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 		return fromARGBPixels(argbPixels);
 	}
 
+
+	// BASIC INIT
 	private BasicEditableSnaporta(int[][] argbPixels)
 	{
 		// validate minimum dimension
