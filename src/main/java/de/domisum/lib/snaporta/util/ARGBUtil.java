@@ -28,6 +28,7 @@ public final class ARGBUtil
 		return color;
 	}
 
+
 	public static int getAlphaComponent(int argb)
 	{
 		int shiftedAlpha = argb >> (8*3);

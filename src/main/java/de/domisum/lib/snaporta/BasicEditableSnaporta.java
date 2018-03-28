@@ -1,7 +1,10 @@
 package de.domisum.lib.snaporta;
 
+import de.domisum.lib.auxilium.util.PHR;
 import de.domisum.lib.snaporta.util.SnaportaValidate;
 import org.apache.commons.lang3.Validate;
+
+import java.util.Arrays;
 
 public final class BasicEditableSnaporta implements EditableSnaporta
 {
@@ -20,10 +23,24 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 
 	private BasicEditableSnaporta(int[][] argbPixels)
 	{
+		// validate minimum dimension
 		Validate.isTrue(argbPixels.length > 0, "snaporta has to have a minimum height of 1");
 		Validate.isTrue(argbPixels[0].length > 0, "snaporta has to have a minimum width of 1");
 
-		this.argbPixels = argbPixels; // TODO do deep copy to prevent outside access
+		// validate data integrity
+		int width = argbPixels[0].length;
+
+		int[][] argbPixelsCopy = new int[argbPixels.length][];
+		for(int y = 0; y < argbPixels.length; y++)
+		{
+			int[] row = argbPixels[y];
+			Validate.notNull(row, "row "+y+" of the pixels was null");
+			Validate.isTrue(row.length == width, PHR.r("rows 0 and {} have different lengths: {} vs {}", y, width, row.length));
+
+			argbPixelsCopy[y] = Arrays.copyOf(row, row.length);
+		}
+
+		this.argbPixels = argbPixelsCopy;
 	}
 
 
