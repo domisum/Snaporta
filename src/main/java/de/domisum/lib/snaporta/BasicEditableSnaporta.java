@@ -21,6 +21,16 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 		return new BasicEditableSnaporta(argbPixels);
 	}
 
+	public static BasicEditableSnaporta copyOf(Snaporta snaporta)
+	{
+		int[][] argbPixels = new int[snaporta.getHeight()][snaporta.getWidth()];
+		for(int y = 0; y < snaporta.getHeight(); y++)
+			for(int x = 0; x < snaporta.getWidth(); x++)
+				argbPixels[y][x] = snaporta.getARGBAt(x, y);
+
+		return fromARGBPixels(argbPixels);
+	}
+
 	private BasicEditableSnaporta(int[][] argbPixels)
 	{
 		// validate minimum dimension
@@ -42,6 +52,13 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 		}
 
 		this.argbPixels = argbPixelsCopy;
+	}
+
+
+	// OBJECT
+	@Override public String toString()
+	{
+		return PHR.r("BasicEditableSnaporta(width={},height={})", getWidth(), getHeight());
 	}
 
 
