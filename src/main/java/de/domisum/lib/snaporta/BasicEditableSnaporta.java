@@ -46,7 +46,7 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 		Validate.noNullElements(argbPixels);
 		Validate.isTrue(argbPixels[0].length > 0, "snaporta has to have a minimum width of 1");
 
-		// validate data integrity
+		// deep copy to avoid modification through array reference
 		int width = argbPixels[0].length;
 
 		int[][] argbPixelsCopy = new int[argbPixels.length][];
