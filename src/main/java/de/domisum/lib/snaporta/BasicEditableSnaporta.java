@@ -25,6 +25,7 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 	{
 		// validate minimum dimension
 		Validate.isTrue(argbPixels.length > 0, "snaporta has to have a minimum height of 1");
+		Validate.noNullElements(argbPixels);
 		Validate.isTrue(argbPixels[0].length > 0, "snaporta has to have a minimum width of 1");
 
 		// validate data integrity
@@ -34,8 +35,8 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 		for(int y = 0; y < argbPixels.length; y++)
 		{
 			int[] row = argbPixels[y];
-			Validate.notNull(row, "row "+y+" of the pixels was null");
-			Validate.isTrue(row.length == width, PHR.r("rows 0 and {} have different lengths: {} vs {}", y, width, row.length));
+			String invalidLengthMessage = PHR.r("rows 0 and {} have different lengths: {} vs {}", y, width, row.length);
+			Validate.isTrue(row.length == width, invalidLengthMessage);
 
 			argbPixelsCopy[y] = Arrays.copyOf(row, row.length);
 		}
