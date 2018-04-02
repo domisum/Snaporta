@@ -17,7 +17,7 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 
 
 	// INIT
-	@API public static BasicEditableSnaporta blankOfSize(int width, int height)
+	@API public static BasicEditableSnaporta blankOfWidthAndHeight(int width, int height)
 	{
 		return fromARGBPixels(new int[height][width]);
 	}
