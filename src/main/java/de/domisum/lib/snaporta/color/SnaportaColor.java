@@ -66,10 +66,33 @@ public final class SnaportaColor
 	}
 
 
+	// OBJECT
+	@Override public String toString()
+	{
+		String redHex = getComponentAsHex(red);
+		String greenHex = getComponentAsHex(green);
+		String blueHex = getComponentAsHex(blue);
+		String opacityPercent = Math.round((alpha/256d)*100)+"%";
+
+		return "0x"+redHex+greenHex+blueHex+"_"+opacityPercent;
+	}
+
+
 	// CONVERSION
 	public Color toAwt()
 	{
 		return new Color(red, green, blue, alpha);
+	}
+
+
+	// UTIL
+	private String getComponentAsHex(int component)
+	{
+		StringBuilder hex = new StringBuilder(Integer.toHexString(component));
+		while(hex.length() < 2)
+			hex.insert(0, "0");
+
+		return hex.toString().toUpperCase();
 	}
 
 }
