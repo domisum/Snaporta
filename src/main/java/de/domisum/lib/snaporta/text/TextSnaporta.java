@@ -30,6 +30,7 @@ public class TextSnaporta implements Snaporta // TODO change to use builder
 	private final SnaportaFontSizer fontSizer;
 	private final HorizontalTextPositioner horizontalTextPositioner;
 	private final VerticalTextPositioner verticalTextPositioner;
+	private final Color textColor; // TODO change to own color class
 
 	private final String text;
 
@@ -52,7 +53,7 @@ public class TextSnaporta implements Snaporta // TODO change to use builder
 		Graphics2D graphics = createTextRenderingGraphics(bufferedImage);
 
 		setGraphicsFont(graphics);
-		graphics.setColor(Color.BLACK);
+		graphics.setColor(textColor);
 		drawStringToGraphics(graphics);
 
 		graphics.dispose();
