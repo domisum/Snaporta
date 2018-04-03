@@ -3,6 +3,10 @@ package de.domisum.lib.snaporta.text;
 import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.Snaporta;
 import de.domisum.lib.snaporta.formatConversion.SnaportaBufferedImageConverter;
+import de.domisum.lib.snaporta.text.dimensions.TextDimensions;
+import de.domisum.lib.snaporta.text.dimensions.TextDimensionsCalculator;
+import de.domisum.lib.snaporta.text.positioner.horizontal.HorizontalTextPositioner;
+import de.domisum.lib.snaporta.text.positioner.vertical.VerticalTextPositioner;
 import de.domisum.lib.snaporta.text.sizer.SnaportaFontSizer;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +28,9 @@ public class TextSnaporta implements Snaporta // TODO change to use builder
 
 	private final SnaportaFont snaportaFont;
 	private final SnaportaFontSizer fontSizer;
+	private final HorizontalTextPositioner horizontalTextPositioner;
+	private final VerticalTextPositioner verticalTextPositioner;
+
 	private final String text;
 
 	// TEMP
@@ -41,26 +48,45 @@ public class TextSnaporta implements Snaporta // TODO change to use builder
 
 	private Snaporta render()
 	{
-		double fontSize = fontSizer.size(snaportaFont, width, height, text);
-		Font font = snaportaFont.getFont().deriveFont((float) fontSize);
-
 		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D graphics = createTextRenderingGraphics(bufferedImage);
 
+		setGraphicsFont(graphics);
+		graphics.setColor(Color.BLACK);
+		drawStringToGraphics(graphics);
+
+		graphics.dispose();
+		SnaportaBufferedImageConverter imageConverter = new SnaportaBufferedImageConverter();
+		return imageConverter.convertFrom(bufferedImage);
+	}
+
+	private Graphics2D createTextRenderingGraphics(BufferedImage bufferedImage)
+	{
 		Graphics2D graphics = bufferedImage.createGraphics();
 		graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
-		graphics.setColor(Color.RED);
-		graphics.fillRect(0, 0, width, height);
+		return graphics;
+	}
 
+	private void setGraphicsFont(Graphics2D graphics)
+	{
+		double fontSize = fontSizer.size(snaportaFont, width, height, text);
+		Font font = snaportaFont.getFont().deriveFont((float) fontSize);
 		graphics.setFont(font);
-		graphics.setColor(Color.BLACK);
-		graphics.drawString(text, 0, height);
-		graphics.dispose();
+	}
 
+	private void drawStringToGraphics(Graphics2D graphics)
+	{
+		float fontSizePt = graphics.getFont().getSize2D();
+		TextDimensions textDimensions = new TextDimensionsCalculator(snaportaFont, fontSizePt).calculateDimensions(text);
 
-		SnaportaBufferedImageConverter imageConverter = new SnaportaBufferedImageConverter();
-		return imageConverter.convertFrom(bufferedImage);
+		double horizontalPosition = horizontalTextPositioner.position(width, textDimensions);
+		double verticalPosition = verticalTextPositioner.position(height, textDimensions);
+
+		int graphicsVerticalPosition = (int) Math.round(verticalPosition+textDimensions.getHeight());
+		int graphicsHorizontalPosition = (int) Math.round(horizontalPosition);
+		graphics.drawString(text, graphicsHorizontalPosition, graphicsVerticalPosition);
 	}
 
 }
