@@ -1,4 +1,6 @@
-package de.domisum.lib.snaporta.text;
+package de.domisum.lib.snaporta.text.sizer;
+
+import de.domisum.lib.snaporta.text.SnaportaFont;
 
 public interface SnaportaFontSizer
 {

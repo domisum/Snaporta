@@ -2,6 +2,7 @@ package de.domisum.lib.snaporta.text;
 
 import de.domisum.lib.snaporta.Snaporta;
 import de.domisum.lib.snaporta.formatConversion.SnaportaBufferedImageConverter;
+import de.domisum.lib.snaporta.text.sizer.SnaportaFontSizer;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -19,9 +20,9 @@ public class TextSnaporta implements Snaporta // TODO change to use builder
 	@Getter private final int width;
 	@Getter private final int height;
 
-	private final String text;
 	private final SnaportaFont snaportaFont;
-	private final double fontSizePt;
+	private final SnaportaFontSizer fontSizer;
+	private final String text;
 
 	// TEMP
 	private Snaporta renderedText;
@@ -38,7 +39,8 @@ public class TextSnaporta implements Snaporta // TODO change to use builder
 
 	private Snaporta render()
 	{
-		Font font = snaportaFont.getFont().deriveFont((float) fontSizePt);
+		double fontSize = fontSizer.size(snaportaFont, width, height, text);
+		Font font = snaportaFont.getFont().deriveFont((float) fontSize);
 
 		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
