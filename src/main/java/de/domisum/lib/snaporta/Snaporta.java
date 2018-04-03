@@ -10,15 +10,8 @@ public interface Snaporta
 	int getHeight();
 
 
-	default int getARGBAt(int x, int y)
-	{
-		int alpha = getAlphaAt(x, y);
-		int red = getRedAt(x, y);
-		int green = getGreenAt(x, y);
-		int blue = getBlueAt(x, y);
+	int getARGBAt(int x, int y);
 
-		return ARGBUtil.toARGB(alpha, red, green, blue);
-	}
 
 	default int getAlphaAt(int x, int y)
 	{
