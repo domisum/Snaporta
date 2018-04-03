@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 @RequiredArgsConstructor
@@ -37,17 +38,19 @@ public class TextSnaporta implements Snaporta // TODO change to use builder
 
 	private Snaporta render()
 	{
-		Font font = snaportaFont.getFont().deriveFont(70f);
+		Font font = snaportaFont.getFont().deriveFont((float) fontSizePt);
 
 		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
 		Graphics2D graphics = bufferedImage.createGraphics();
+		graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
 		graphics.setColor(Color.RED);
 		graphics.fillRect(0, 0, width, height);
 
 		graphics.setFont(font);
 		graphics.setColor(Color.BLACK);
-
 		graphics.drawString(text, 0, height);
 		graphics.dispose();
 
