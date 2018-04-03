@@ -5,9 +5,12 @@ import lombok.Getter;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.Objects;
+import java.util.Optional;
 
 public final class SnaportaFont
 {
@@ -26,6 +29,7 @@ public final class SnaportaFont
 		return new SnaportaFont(font);
 	}
 
+
 	@API public static SnaportaFont fromTTFFile(File ttfFile)
 	{
 		try
@@ -43,5 +47,16 @@ public final class SnaportaFont
 		}
 	}
 
+	@API public static Optional<SnaportaFont> ofSystemFont(String fontName)
+	{
+		GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		Font[] graphicsEnvironmentFonts = graphicsEnvironment.getAllFonts();
+
+		for(Font font : graphicsEnvironmentFonts)
+			if(Objects.equals(font.getName(), fontName))
+				return Optional.of(fromAwtFont(font));
+
+		return Optional.empty();
+	}
 
 }
