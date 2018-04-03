@@ -1,5 +1,6 @@
 package de.domisum.lib.snaporta.text;
 
+import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.Snaporta;
 import de.domisum.lib.snaporta.formatConversion.SnaportaBufferedImageConverter;
 import de.domisum.lib.snaporta.text.sizer.SnaportaFontSizer;
@@ -12,6 +13,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
+@API
 @RequiredArgsConstructor
 public class TextSnaporta implements Snaporta // TODO change to use builder
 {

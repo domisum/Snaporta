@@ -1,29 +1,20 @@
 package de.domisum.lib.snaporta.text.sizer;
 
 import de.domisum.lib.snaporta.text.SnaportaFont;
-
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import de.domisum.lib.snaporta.text.dimensions.TextDimensions;
+import de.domisum.lib.snaporta.text.dimensions.TextDimensionsCalculator;
 
 public class SnaportaAsBigAsPossibleFontSizer implements SnaportaFontSizer
 {
 
 	@Override public double size(SnaportaFont snaportaFont, int width, int height, String text)
 	{
-		BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D graphics2D = image.createGraphics();
+		double baselineFontSize = 100; // use big font size to reduce pixel rounding errors
+		TextDimensionsCalculator textDimensionsCalculator = new TextDimensionsCalculator(snaportaFont, baselineFontSize);
 
-		float baselineFontSize = 100f; // big font to reduce pixel rounding errors
-		Font font = snaportaFont.getFont().deriveFont(baselineFontSize);
-		FontMetrics fontMetrics = graphics2D.getFontMetrics(font);
-
-		double stringWidth = fontMetrics.stringWidth(text);
-		double stringHeight = fontMetrics.getAscent();
-
-		double fontSizeDerivedFromWidth = baselineFontSize/(stringWidth/width);
-		double fontSizeDerivedFromHeight = baselineFontSize/(stringHeight/height);
+		TextDimensions textDimensions = textDimensionsCalculator.calculateDimensions(text);
+		double fontSizeDerivedFromWidth = baselineFontSize/(textDimensions.getWidth()/width);
+		double fontSizeDerivedFromHeight = baselineFontSize/(textDimensions.getHeight()/height);
 
 		return Math.min(fontSizeDerivedFromWidth, fontSizeDerivedFromHeight);
 	}
