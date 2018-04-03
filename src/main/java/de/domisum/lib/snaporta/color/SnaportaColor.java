@@ -72,7 +72,7 @@ public final class SnaportaColor
 		String redHex = getComponentAsHex(red);
 		String greenHex = getComponentAsHex(green);
 		String blueHex = getComponentAsHex(blue);
-		String opacityPercent = Math.round((alpha/256d)*100)+"%";
+		String opacityPercent = Math.round((alpha/255d)*100)+"%";
 
 		return "0x"+redHex+greenHex+blueHex+"_"+opacityPercent;
 	}
