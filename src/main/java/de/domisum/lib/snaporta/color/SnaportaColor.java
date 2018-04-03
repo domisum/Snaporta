@@ -1,19 +1,17 @@
 package de.domisum.lib.snaporta.color;
 
 import de.domisum.lib.auxilium.util.java.annotations.API;
-import lombok.AccessLevel;
+import de.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.awt.Color;
 
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SnaportaColor
 {
 
 	// CONSTANTS
 	@API public static final int ALPHA_TRANSPARENT = 0;
-	@API public static final int ALPHA_OPAQUE = 0;
+	@API public static final int ALPHA_OPAQUE = 255;
 
 	// ATTRIBUTES
 	@Getter private final int red;
@@ -23,6 +21,19 @@ public final class SnaportaColor
 
 
 	// INIT
+	private SnaportaColor(int red, int green, int blue, int alpha)
+	{
+		SnaportaValidate.validateColorComponentInRange(red, "red");
+		SnaportaValidate.validateColorComponentInRange(green, "green");
+		SnaportaValidate.validateColorComponentInRange(blue, "blue");
+		SnaportaValidate.validateColorComponentInRange(alpha, "alpha");
+
+		this.red = red;
+		this.green = green;
+		this.blue = blue;
+		this.alpha = alpha;
+	}
+
 	@API public static SnaportaColor fromRGBA(int red, int green, int blue, int alpha)
 	{
 		return new SnaportaColor(red, green, blue, alpha);

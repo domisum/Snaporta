@@ -10,20 +10,29 @@ import org.apache.commons.lang3.Validate;
 public final class SnaportaValidate
 {
 
+	// BOUNDS
 	public static void validateInBounds(Snaporta snaporta, int x, int y)
 	{
-		validateDimension(x, snaporta.getWidth(), "x");
-		validateDimension(y, snaporta.getHeight(), "y");
+		validateInInterval(0, snaporta.getWidth()-1, "x", x);
+		validateInInterval(0, snaporta.getHeight()-1, "y", y);
 	}
 
-	private static void validateDimension(int value, int bound, String valueName)
-	{
-		int maxValue = bound-1;
 
-		Validate.inclusiveBetween(0,
+	// COLOR
+	public static void validateColorComponentInRange(int componentValue, String componentName)
+	{
+		validateInInterval(0, 255, componentName+" color component", componentValue);
+	}
+
+
+	// GENERAL
+	private static void validateInInterval(int minValue, int maxValue, String valueName, int value)
+	{
+		Validate.inclusiveBetween(
+				minValue,
 				maxValue,
 				value,
-				PHR.r(valueName+" has to be in interval [{}-{}], but was {}", 0, maxValue, value)
+				PHR.r(valueName+" has to be in interval [{}-{}], but was {}", minValue, maxValue, value)
 		);
 	}
 
