@@ -2,16 +2,16 @@ package de.domisum.lib.snaporta.text;
 
 import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.Snaporta;
+import de.domisum.lib.snaporta.color.SnaportaColor;
 import de.domisum.lib.snaporta.formatConversion.SnaportaBufferedImageConverter;
 import de.domisum.lib.snaporta.text.dimensions.TextDimensions;
 import de.domisum.lib.snaporta.text.dimensions.TextDimensionsCalculator;
 import de.domisum.lib.snaporta.text.positioner.horizontal.HorizontalTextPositioner;
 import de.domisum.lib.snaporta.text.positioner.vertical.VerticalTextPositioner;
-import de.domisum.lib.snaporta.text.sizer.SnaportaFontSizer;
+import de.domisum.lib.snaporta.text.sizer.FontSizer;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -26,11 +26,11 @@ public class TextSnaporta implements Snaporta // TODO change to use builder
 	@Getter private final int width;
 	@Getter private final int height;
 
-	private final SnaportaFont snaportaFont;
-	private final SnaportaFontSizer fontSizer;
+	private final SnaportaFont font;
+	private final FontSizer fontSizer;
 	private final HorizontalTextPositioner horizontalTextPositioner;
 	private final VerticalTextPositioner verticalTextPositioner;
-	private final Color textColor; // TODO change to own color class
+	private final SnaportaColor color;
 
 	private final String text;
 
@@ -53,7 +53,7 @@ public class TextSnaporta implements Snaporta // TODO change to use builder
 		Graphics2D graphics = createTextRenderingGraphics(bufferedImage);
 
 		setGraphicsFont(graphics);
-		graphics.setColor(textColor);
+		graphics.setColor(color.toAwt());
 		drawStringToGraphics(graphics);
 
 		graphics.dispose();
@@ -72,15 +72,15 @@ public class TextSnaporta implements Snaporta // TODO change to use builder
 
 	private void setGraphicsFont(Graphics2D graphics)
 	{
-		double fontSize = fontSizer.size(snaportaFont, width, height, text);
-		Font font = snaportaFont.getFont().deriveFont((float) fontSize);
+		double fontSize = fontSizer.size(font, width, height, text);
+		Font font = this.font.getFont().deriveFont((float) fontSize);
 		graphics.setFont(font);
 	}
 
 	private void drawStringToGraphics(Graphics2D graphics)
 	{
 		float fontSizePt = graphics.getFont().getSize2D();
-		TextDimensions textDimensions = new TextDimensionsCalculator(snaportaFont, fontSizePt).calculateDimensions(text);
+		TextDimensions textDimensions = new TextDimensionsCalculator(font, fontSizePt).calculateDimensions(text);
 
 		double horizontalPosition = horizontalTextPositioner.position(width, textDimensions);
 		double verticalPosition = verticalTextPositioner.position(height, textDimensions);

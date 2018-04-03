@@ -4,7 +4,7 @@ import de.domisum.lib.snaporta.text.SnaportaFont;
 import de.domisum.lib.snaporta.text.dimensions.TextDimensions;
 import de.domisum.lib.snaporta.text.dimensions.TextDimensionsCalculator;
 
-public class SnaportaAsBigAsPossibleFontSizer implements SnaportaFontSizer
+public class SnaportaAsBigAsPossibleFontSizer implements FontSizer
 {
 
 	@Override public double size(SnaportaFont snaportaFont, int width, int height, String text)

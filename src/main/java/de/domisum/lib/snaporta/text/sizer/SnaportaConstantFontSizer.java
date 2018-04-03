@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @API
 @RequiredArgsConstructor
-public class SnaportaConstantFontSizer implements SnaportaFontSizer
+public class SnaportaConstantFontSizer implements FontSizer
 {
 
 	// ATTRIBUTES
