@@ -1,13 +1,22 @@
 package de.domisum.lib.snaporta;
 
+import de.domisum.lib.auxilium.util.java.annotations.API;
+import de.domisum.lib.snaporta.color.SnaportaColor;
 import de.domisum.lib.snaporta.util.ARGBUtil;
 
 public interface EditableSnaporta extends Snaporta
 {
 
-	void setARGBAt(int x, int y, int argb);
+	@API void setARGBAt(int x, int y, int argb);
 
-	default void setAlphaAt(int x, int y, int alpha)
+
+	@API default void setColorAt(int x, int y, SnaportaColor color)
+	{
+		setARGBAt(x, y, color.toARGBInt());
+	}
+
+
+	@API default void setAlphaAt(int x, int y, int alpha)
 	{
 		int oldArgb = getARGBAt(x, y);
 		int newArgb = ARGBUtil.toARGB(
@@ -20,7 +29,7 @@ public interface EditableSnaporta extends Snaporta
 		setARGBAt(x, y, newArgb);
 	}
 
-	default void setRedAt(int x, int y, int red)
+	@API default void setRedAt(int x, int y, int red)
 	{
 		int oldArgb = getARGBAt(x, y);
 		int newArgb = ARGBUtil.toARGB(
@@ -33,7 +42,7 @@ public interface EditableSnaporta extends Snaporta
 		setARGBAt(x, y, newArgb);
 	}
 
-	default void setGreenAt(int x, int y, int green)
+	@API default void setGreenAt(int x, int y, int green)
 	{
 		int oldArgb = getARGBAt(x, y);
 		int newArgb = ARGBUtil.toARGB(
@@ -46,7 +55,7 @@ public interface EditableSnaporta extends Snaporta
 		setARGBAt(x, y, newArgb);
 	}
 
-	default void setBlueAt(int x, int y, int blue)
+	@API default void setBlueAt(int x, int y, int blue)
 	{
 		int oldArgb = getARGBAt(x, y);
 		int newArgb = ARGBUtil.toARGB(

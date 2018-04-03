@@ -84,6 +84,11 @@ public final class SnaportaColor
 		return new Color(red, green, blue, alpha);
 	}
 
+	public int toARGBInt()
+	{
+		return ARGBUtil.toARGB(alpha, red, green, blue);
+	}
+
 
 	// UTIL
 	private String getComponentAsHex(int component)
