@@ -5,9 +5,7 @@ import de.domisum.lib.snaporta.util.ARGBUtil;
 import de.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.Getter;
 
-import java.awt.Color;
-
-public final class SnaportaColor
+public final class Color
 {
 
 	// CONSTANTS
@@ -24,7 +22,7 @@ public final class SnaportaColor
 
 
 	// INIT
-	private SnaportaColor(int alpha, int red, int green, int blue)
+	private Color(int alpha, int red, int green, int blue)
 	{
 		SnaportaValidate.validateColorComponentInRange(alpha, "alpha");
 		SnaportaValidate.validateColorComponentInRange(red, "red");
@@ -37,7 +35,7 @@ public final class SnaportaColor
 		this.blue = blue;
 	}
 
-	@API public static SnaportaColor fromARGBInt(int argb)
+	@API public static Color fromARGBInt(int argb)
 	{
 		return fromARGB(
 				ARGBUtil.getAlphaComponent(argb),
@@ -47,29 +45,29 @@ public final class SnaportaColor
 		);
 	}
 
-	@API public static SnaportaColor fromARGB(int alpha, int red, int green, int blue)
+	@API public static Color fromARGB(int alpha, int red, int green, int blue)
 	{
-		return new SnaportaColor(alpha, red, green, blue);
+		return new Color(alpha, red, green, blue);
 	}
 
-	@API public static SnaportaColor fromRGB(int red, int green, int blue)
+	@API public static Color fromRGB(int red, int green, int blue)
 	{
-		return new SnaportaColor(ALPHA_OPAQUE, red, green, blue);
+		return new Color(ALPHA_OPAQUE, red, green, blue);
 	}
 
-	@API public static SnaportaColor fromBrightness(int brightness)
+	@API public static Color fromBrightness(int brightness)
 	{
 		return fromRGB(brightness, brightness, brightness);
 	}
 
-	@API public static SnaportaColor fromAwt(Color color)
+	@API public static Color fromAwt(java.awt.Color color)
 	{
-		return new SnaportaColor(color.getAlpha(), color.getRed(), color.getGreen(), color.getBlue());
+		return new Color(color.getAlpha(), color.getRed(), color.getGreen(), color.getBlue());
 	}
 
-	@API public static SnaportaColor fullyTransparent()
+	@API public static Color fullyTransparent()
 	{
-		return new SnaportaColor(ALPHA_TRANSPARENT, 0, 0, 0);
+		return new Color(ALPHA_TRANSPARENT, 0, 0, 0);
 	}
 
 
@@ -86,9 +84,9 @@ public final class SnaportaColor
 
 
 	// CONVERSION
-	public Color toAwt()
+	public java.awt.Color toAwt()
 	{
-		return new Color(red, green, blue, alpha);
+		return new java.awt.Color(red, green, blue, alpha);
 	}
 
 	public int toARGBInt()
@@ -98,13 +96,13 @@ public final class SnaportaColor
 
 
 	// DERIVE
-	@API public SnaportaColor deriveOpposite()
+	@API public Color deriveOpposite()
 	{
 		int oppositeRed = COLOR_COMPONENT_MAX-red;
 		int oppositeGreen = COLOR_COMPONENT_MAX-green;
 		int oppositeBlue = COLOR_COMPONENT_MAX-blue;
 
-		return new SnaportaColor(alpha, oppositeRed, oppositeGreen, oppositeBlue);
+		return new Color(alpha, oppositeRed, oppositeGreen, oppositeBlue);
 	}
 
 

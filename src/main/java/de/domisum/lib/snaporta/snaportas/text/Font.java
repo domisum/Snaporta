@@ -3,7 +3,6 @@ package de.domisum.lib.snaporta.snaportas.text;
 import de.domisum.lib.auxilium.util.java.annotations.API;
 import lombok.Getter;
 
-import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
@@ -12,29 +11,29 @@ import java.io.UncheckedIOException;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class SnaportaFont
+public final class Font
 {
 
-	@Getter private final Font font;
+	@Getter private final java.awt.Font font;
 
 
 	// INIT
-	private SnaportaFont(Font font)
+	private Font(java.awt.Font font)
 	{
 		this.font = font.deriveFont(1f);
 	}
 
-	@API public static SnaportaFont fromAwtFont(Font font)
+	@API public static Font fromAwtFont(java.awt.Font font)
 	{
-		return new SnaportaFont(font);
+		return new Font(font);
 	}
 
 
-	@API public static SnaportaFont fromTTFFile(File ttfFile)
+	@API public static Font fromTTFFile(File ttfFile)
 	{
 		try
 		{
-			Font font = Font.createFont(Font.TRUETYPE_FONT, ttfFile);
+			java.awt.Font font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, ttfFile);
 			return fromAwtFont(font);
 		}
 		catch(FontFormatException e)
@@ -47,12 +46,12 @@ public final class SnaportaFont
 		}
 	}
 
-	@API public static Optional<SnaportaFont> ofSystemFont(String fontName)
+	@API public static Optional<Font> ofSystemFont(String fontName)
 	{
 		GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		Font[] graphicsEnvironmentFonts = graphicsEnvironment.getAllFonts();
+		java.awt.Font[] graphicsEnvironmentFonts = graphicsEnvironment.getAllFonts();
 
-		for(Font font : graphicsEnvironmentFonts)
+		for(java.awt.Font font : graphicsEnvironmentFonts)
 			if(Objects.equals(font.getName(), fontName))
 				return Optional.of(fromAwtFont(font));
 
@@ -60,9 +59,9 @@ public final class SnaportaFont
 	}
 
 
-	@API public static SnaportaFont defaultFont()
+	@API public static Font defaultFont()
 	{
-		return fromAwtFont(Font.decode("SansSerif"));
+		return fromAwtFont(java.awt.Font.decode("SansSerif"));
 	}
 
 }

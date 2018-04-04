@@ -1,7 +1,7 @@
 package de.domisum.lib.snaporta;
 
 import de.domisum.lib.auxilium.util.java.annotations.API;
-import de.domisum.lib.snaporta.color.SnaportaColor;
+import de.domisum.lib.snaporta.color.Color;
 import de.domisum.lib.snaporta.util.ARGBUtil;
 
 public interface EditableSnaporta extends Snaporta
@@ -10,7 +10,7 @@ public interface EditableSnaporta extends Snaporta
 	@API void setARGBAt(int x, int y, int argb);
 
 
-	@API default void setColorAt(int x, int y, SnaportaColor color)
+	@API default void setColorAt(int x, int y, Color color)
 	{
 		setARGBAt(x, y, color.toARGBInt());
 	}

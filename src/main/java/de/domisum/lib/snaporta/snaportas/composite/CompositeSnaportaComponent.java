@@ -1,7 +1,7 @@
 package de.domisum.lib.snaporta.snaportas.composite;
 
 import de.domisum.lib.snaporta.Snaporta;
-import de.domisum.lib.snaporta.color.SnaportaColors;
+import de.domisum.lib.snaporta.color.Colors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -35,7 +35,7 @@ public class CompositeSnaportaComponent implements Comparable<CompositeSnaportaC
 		if(snaporta.isInBounds(inSnaportaX, inSnaportaY))
 			return snaporta.getARGBAt(inSnaportaX, inSnaportaY);
 		else
-			return SnaportaColors.TRANSPARENT.toARGBInt();
+			return Colors.TRANSPARENT.toARGBInt();
 	}
 
 }

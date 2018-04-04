@@ -4,8 +4,8 @@ import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.auxilium.util.math.MathUtil;
 import de.domisum.lib.snaporta.Snaporta;
 import de.domisum.lib.snaporta.color.ColorComponent;
-import de.domisum.lib.snaporta.color.SnaportaColor;
-import de.domisum.lib.snaporta.color.SnaportaColors;
+import de.domisum.lib.snaporta.color.Color;
+import de.domisum.lib.snaporta.color.Colors;
 import de.domisum.lib.snaporta.util.ARGBUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -70,17 +70,17 @@ public class CompositeSnaporta implements Snaporta
 	private int getARGBAtDepth(int x, int y, int depth)
 	{
 		if(depth >= componentsTopDown.size())
-			return SnaportaColors.TRANSPARENT.toARGBInt();
+			return Colors.TRANSPARENT.toARGBInt();
 
 		CompositeSnaportaComponent component = componentsTopDown.get(depth);
 		int componentARGB = component.getARGBAt(x, y);
 
 
-		if(ARGBUtil.getAlphaComponent(componentARGB) == SnaportaColor.ALPHA_OPAQUE)
+		if(ARGBUtil.getAlphaComponent(componentARGB) == Color.ALPHA_OPAQUE)
 			return componentARGB;
 
 		int backgroundARGB = getARGBAtDepth(x, y, depth+1);
-		if(ARGBUtil.getAlphaComponent(componentARGB) == SnaportaColor.ALPHA_TRANSPARENT)
+		if(ARGBUtil.getAlphaComponent(componentARGB) == Color.ALPHA_TRANSPARENT)
 			return backgroundARGB;
 
 		return mixARGB(backgroundARGB, componentARGB);
@@ -88,7 +88,7 @@ public class CompositeSnaporta implements Snaporta
 
 	private int mixARGB(int background, int foreground)
 	{
-		if(ARGBUtil.getAlphaComponent(background) == SnaportaColor.ALPHA_TRANSPARENT)
+		if(ARGBUtil.getAlphaComponent(background) == Color.ALPHA_TRANSPARENT)
 			return foreground;
 
 

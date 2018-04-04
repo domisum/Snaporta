@@ -1,10 +1,10 @@
 package de.domisum.lib.snaporta.snaportas.text;
 
 import de.domisum.lib.auxilium.util.java.annotations.API;
-import de.domisum.lib.snaporta.Snaporta;
 import de.domisum.lib.snaporta.Padding;
-import de.domisum.lib.snaporta.color.SnaportaColor;
-import de.domisum.lib.snaporta.color.SnaportaColors;
+import de.domisum.lib.snaporta.Snaporta;
+import de.domisum.lib.snaporta.color.Color;
+import de.domisum.lib.snaporta.color.Colors;
 import de.domisum.lib.snaporta.formatconversion.SnaportaBufferedImageConverter;
 import de.domisum.lib.snaporta.snaportas.text.dimensions.TextDimensions;
 import de.domisum.lib.snaporta.snaportas.text.dimensions.TextDimensionsCalculator;
@@ -13,14 +13,12 @@ import de.domisum.lib.snaporta.snaportas.text.positioner.horizontal.HorizontalTe
 import de.domisum.lib.snaporta.snaportas.text.positioner.vertical.VerticalCenteredTextPositioner;
 import de.domisum.lib.snaporta.snaportas.text.positioner.vertical.VerticalTextPositioner;
 import de.domisum.lib.snaporta.snaportas.text.sizer.FontSizer;
-import de.domisum.lib.snaporta.snaportas.text.sizer.SnaportaAsBigAsPossibleFontSizer;
-import de.domisum.lib.snaporta.snaportas.text.sizer.SnaportaConstantFontSizer;
+import de.domisum.lib.snaporta.snaportas.text.sizer.AsBigAsPossibleFontSizer;
+import de.domisum.lib.snaporta.snaportas.text.sizer.ConstantFontSizer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
@@ -38,12 +36,12 @@ public final class TextSnaporta implements Snaporta
 	@Getter private final int height;
 
 	// FONT
-	private SnaportaFont font = SnaportaFont.defaultFont();
-	private SnaportaColor color = SnaportaColors.BLACK;
+	private Font font = Font.defaultFont();
+	private Color color = Colors.BLACK;
 
 	// POSITIONING
 	private Padding padding = Padding.none();
-	private FontSizer fontSizer = new SnaportaConstantFontSizer(DEFAULT_FONT_SIZE);
+	private FontSizer fontSizer = new ConstantFontSizer(DEFAULT_FONT_SIZE);
 	private HorizontalTextPositioner horizontalTextPositioner;
 	private VerticalTextPositioner verticalTextPositioner;
 
@@ -95,9 +93,9 @@ public final class TextSnaporta implements Snaporta
 
 	private void drawPaddingOutline(Graphics2D graphics)
 	{
-		Color colorBefore = graphics.getColor();
+		java.awt.Color colorBefore = graphics.getColor();
 
-		SnaportaColor paddingOutline = color.deriveOpposite();
+		Color paddingOutline = color.deriveOpposite();
 		graphics.setColor(paddingOutline.toAwt());
 		graphics.drawRect(padding.getLeft(), padding.getTop(), width-padding.getHorizontal(), height-padding.getVertical());
 
@@ -109,7 +107,7 @@ public final class TextSnaporta implements Snaporta
 	private void setGraphicsFont(Graphics2D graphics)
 	{
 		double fontSize = fontSizer.size(font, width, height, padding, text);
-		Font font = this.font.getFont().deriveFont((float) fontSize);
+		java.awt.Font font = this.font.getFont().deriveFont((float) fontSize);
 		graphics.setFont(font);
 	}
 
@@ -143,13 +141,13 @@ public final class TextSnaporta implements Snaporta
 
 
 		// SETTINGS
-		@API public TextSnaportaBuilder font(SnaportaFont font)
+		@API public TextSnaportaBuilder font(Font font)
 		{
 			textSnaporta.font = font;
 			return this;
 		}
 
-		@API public TextSnaportaBuilder color(SnaportaColor color)
+		@API public TextSnaportaBuilder color(Color color)
 		{
 			textSnaporta.color = color;
 			return this;
@@ -190,7 +188,7 @@ public final class TextSnaporta implements Snaporta
 		// SETTINGS SHORTCUTS
 		@API public TextSnaportaBuilder fontAsBigAsPossible()
 		{
-			return fontSizer(new SnaportaAsBigAsPossibleFontSizer());
+			return fontSizer(new AsBigAsPossibleFontSizer());
 		}
 
 		@API public TextSnaportaBuilder centerHorizontally()

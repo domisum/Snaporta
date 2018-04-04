@@ -1,7 +1,7 @@
 package de.domisum.lib.snaporta;
 
 import de.domisum.lib.auxilium.util.java.annotations.API;
-import de.domisum.lib.snaporta.color.SnaportaColor;
+import de.domisum.lib.snaporta.color.Color;
 import de.domisum.lib.snaporta.util.ARGBUtil;
 
 public interface Snaporta
@@ -25,10 +25,10 @@ public interface Snaporta
 
 	@API int getARGBAt(int x, int y);
 
-	@API default SnaportaColor getColorAt(int x, int y)
+	@API default Color getColorAt(int x, int y)
 	{
 		int argb = getARGBAt(x, y);
-		return SnaportaColor.fromARGBInt(argb);
+		return Color.fromARGBInt(argb);
 	}
 
 

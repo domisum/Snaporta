@@ -2,7 +2,7 @@ package de.domisum.lib.snaporta.snaportas.color;
 
 import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.Snaporta;
-import de.domisum.lib.snaporta.color.SnaportaColor;
+import de.domisum.lib.snaporta.color.Color;
 import de.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ public class SolidColorSnaporta implements Snaporta
 	@Getter private final int width;
 	@Getter private final int height;
 
-	@Getter private final SnaportaColor color;
+	@Getter private final Color color;
 
 
 	// SNAPORTA
