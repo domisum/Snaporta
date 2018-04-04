@@ -11,9 +11,19 @@ public interface Snaporta
 
 	@API int getHeight();
 
+	@API default boolean isInBounds(int x, int y)
+	{
+		if((x < 0) || (x >= getWidth()))
+			return false;
+
+		if((y < 0) || (y >= getHeight()))
+			return false;
+
+		return true;
+	}
+
 
 	@API int getARGBAt(int x, int y);
-
 
 	@API default SnaportaColor getColorAt(int x, int y)
 	{
