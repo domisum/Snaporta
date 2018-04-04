@@ -2,8 +2,10 @@ package de.domisum.lib.snaporta.text.dimensions;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 @RequiredArgsConstructor
+@ToString
 public class TextDimensions
 {
 
