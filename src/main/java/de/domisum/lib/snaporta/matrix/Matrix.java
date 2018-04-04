@@ -1,11 +1,17 @@
 package de.domisum.lib.snaporta.matrix;
 
 import de.domisum.lib.auxilium.util.PHR;
+import de.domisum.lib.auxilium.util.StringUtil;
 import de.domisum.lib.auxilium.util.java.annotations.API;
+import de.domisum.lib.auxilium.util.math.MathUtil;
 import de.domisum.lib.snaporta.util.SnaportaValidate;
 import org.apache.commons.lang3.Validate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @API
 public class Matrix
@@ -34,20 +40,51 @@ public class Matrix
 			int rowLength = row.length;
 			Validate.isTrue(rowLength == width, PHR.r("row at index {} has width of {}, has to be {}", i, rowLength, width));
 
-			entries[i] = Arrays.copyOf(row, rowLength);
+			this.entries[i] = Arrays.copyOf(row, rowLength);
 		}
 	}
 
 
+	// OBJECT
+	@Override public String toString()
+	{
+		List<String> rowsString = new ArrayList<>();
+		for(double[] row : entries)
+			rowsString.add(generateToStringRow(row)+"\n");
+
+		String separatorLine = "---"+StringUtil.repeat("+---", getWidth()-1)+"\n";
+
+		return StringUtil.listToString(rowsString, separatorLine);
+	}
+
+	private String generateToStringRow(double[] row)
+	{
+		Stream<String> roundedRowValuesStream = Arrays.stream(row).mapToObj(d->MathUtil.round(d, 1)+"");
+		List<String> roundedRowValues = roundedRowValuesStream.collect(Collectors.toList());
+
+		return StringUtil.listToString(roundedRowValues, "|");
+	}
+
+
 	// GETTERS
+	@API private int getWidth()
+	{
+		return entries[0].length;
+	}
+
+	private int getLength()
+	{
+		return entries.length;
+	}
+
 	@API public int getHorizontalRadius()
 	{
-		return (entries[0].length-1)/2;
+		return (getWidth()-1)/2;
 	}
 
 	@API public int getVerticalRadius()
 	{
-		return (entries.length-1)/2;
+		return (getLength()-1)/2;
 	}
 
 	@API public double getEntryAt(int x, int y)
