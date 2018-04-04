@@ -61,6 +61,8 @@ public final class ARGBUtil
 
 	public static int getAlphaFromOpacity(double opacity)
 	{
+		// TODO validate opacity input
+
 		return (int) Math.round(opacity*255d);
 	}
 
