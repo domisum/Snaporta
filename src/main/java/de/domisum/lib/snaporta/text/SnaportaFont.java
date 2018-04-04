@@ -59,4 +59,10 @@ public final class SnaportaFont
 		return Optional.empty();
 	}
 
+
+	@API public static SnaportaFont defaultFont()
+	{
+		return fromAwtFont(Font.decode("SansSerif"));
+	}
+
 }
