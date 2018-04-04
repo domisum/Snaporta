@@ -13,8 +13,8 @@ public class AsBigAsPossibleFontSizer implements FontSizer
 	// SIZING
 	@Override public double size(Font font, int width, int height, Padding padding, String text)
 	{
-		int availableWidth = width-padding.getHorizontal();
-		int availableHeight = height-padding.getVertical();
+		int availableWidth = width-padding.getHorizontalSum();
+		int availableHeight = height-padding.getVerticalSum();
 
 		double baselineFontSize = 100; // use big font size to reduce pixel rounding errors
 		TextDimensionsCalculator textDimensionsCalculator = new TextDimensionsCalculator(font, baselineFontSize);

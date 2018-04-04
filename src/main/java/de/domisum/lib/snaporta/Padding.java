@@ -45,12 +45,12 @@ public class Padding
 
 
 	// GETTERS
-	public int getHorizontal()
+	public int getHorizontalSum()
 	{
 		return left+right;
 	}
 
-	public int getVertical()
+	public int getVerticalSum()
 	{
 		return top+bottom;
 	}

@@ -10,7 +10,7 @@ public class HorizontalCenteredTextPositioner implements HorizontalTextPositione
 
 	@Override public double position(int width, Padding padding, TextDimensions textDimensions)
 	{
-		double availableWidth = width-textDimensions.getWidth()-padding.getHorizontal();
+		double availableWidth = width-textDimensions.getWidth()-padding.getHorizontalSum();
 		return (availableWidth/2)+padding.getLeft();
 	}
 

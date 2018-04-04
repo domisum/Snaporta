@@ -18,8 +18,6 @@ public final class ResizedSnaporta implements Snaporta
 
 	// REFERENCES
 	private final Snaporta baseSnaporta;
-
-	// SETTINGS
 	private final Interpolator interpolator;
 
 

@@ -97,7 +97,7 @@ public final class TextSnaporta implements Snaporta
 
 		Color paddingOutline = color.deriveOpposite();
 		graphics.setColor(paddingOutline.toAwt());
-		graphics.drawRect(padding.getLeft(), padding.getTop(), width-padding.getHorizontal(), height-padding.getVertical());
+		graphics.drawRect(padding.getLeft(), padding.getTop(), width-padding.getHorizontalSum(), height-padding.getVerticalSum());
 
 		graphics.drawRect(0, 0, width-1, height-1);
 
