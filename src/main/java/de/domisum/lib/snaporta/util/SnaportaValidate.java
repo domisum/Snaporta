@@ -26,7 +26,7 @@ public final class SnaportaValidate
 
 
 	// GENERAL
-	private static void validateInInterval(int minValue, int maxValue, String valueName, int value)
+	public static void validateInInterval(int minValue, int maxValue, String valueName, int value)
 	{
 		Validate.inclusiveBetween(
 				minValue,

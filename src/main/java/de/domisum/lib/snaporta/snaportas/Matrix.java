@@ -1,6 +1,7 @@
 package de.domisum.lib.snaporta.snaportas;
 
 import de.domisum.lib.auxilium.util.PHR;
+import de.domisum.lib.snaporta.util.SnaportaValidate;
 import org.apache.commons.lang3.Validate;
 
 import java.util.Arrays;
@@ -24,6 +25,7 @@ public class Matrix
 		Validate.isTrue((height%2) == 1, "matrix height has to be uneven, was "+height);
 		Validate.isTrue((width%2) == 1, "matrix width has to be uneven, was "+width);
 
+		// copy to prevent outside modification
 		this.entries = new double[height][];
 		for(int i = 0; i < entries.length; i++)
 		{
@@ -37,7 +39,7 @@ public class Matrix
 
 
 	// GETTERS
-	private int getHorizontalRadius()
+	public int getHorizontalRadius()
 	{
 		return (entries[0].length-1)/2;
 	}
@@ -45,6 +47,16 @@ public class Matrix
 	public int getVerticalRadius()
 	{
 		return (entries.length-1)/2;
+	}
+
+	public double getEntryAt(int x, int y)
+	{
+		int inEntriesX = x+getHorizontalRadius();
+		int inEntriesY = y+getVerticalRadius();
+
+		SnaportaValidate.validateInInterval(-getHorizontalRadius(), getHorizontalRadius(), "x", x);
+		SnaportaValidate.validateInInterval(-getVerticalRadius(), getVerticalRadius(), "y", y);
+		return entries[inEntriesY][inEntriesX];
 	}
 
 }
