@@ -1,4 +1,4 @@
-package de.domisum.lib.snaporta.snaportas;
+package de.domisum.lib.snaporta.matrix;
 
 import de.domisum.lib.auxilium.util.PHR;
 import de.domisum.lib.auxilium.util.java.annotations.API;
