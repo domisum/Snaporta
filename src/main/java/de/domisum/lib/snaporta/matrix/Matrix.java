@@ -48,18 +48,26 @@ public class Matrix
 	// OBJECT
 	@Override public String toString()
 	{
+		int valueLength = 5;
+
 		List<String> rowsString = new ArrayList<>();
 		for(double[] row : entries)
-			rowsString.add(generateToStringRow(row)+"\n");
+			rowsString.add(generateToStringRow(row, valueLength)+"\n");
 
-		String separatorLine = "---"+StringUtil.repeat("+---", getWidth()-1)+"\n";
+		String separatorLineComponent = StringUtil.repeat("-", valueLength);
+		String separatorLine = separatorLineComponent+StringUtil.repeat("+"+separatorLineComponent, getWidth()-1)+"\n";
 
 		return StringUtil.listToString(rowsString, separatorLine);
 	}
 
-	private String generateToStringRow(double[] row)
+	private String generateToStringRow(double[] row, int padValueToLength)
 	{
-		Stream<String> roundedRowValuesStream = Arrays.stream(row).mapToObj(d->MathUtil.round(d, 1)+"");
+		Stream<String> roundedRowValuesStream = Arrays.stream(row).mapToObj(d->
+		{
+			String rounded = MathUtil.round(d, padValueToLength-2)+"";
+			String pad = StringUtil.repeat("0", padValueToLength-rounded.length());
+			return rounded+pad;
+		});
 		List<String> roundedRowValues = roundedRowValuesStream.collect(Collectors.toList());
 
 		return StringUtil.listToString(roundedRowValues, "|");
