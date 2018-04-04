@@ -23,24 +23,24 @@ public class Padding
 		return new Padding(0, 0, 0, 0);
 	}
 
-	@API public static Padding horizontal(int horizontalPadding)
+	@API public static Padding toHorizontalSides(int horizontalPadding)
 	{
 		return new Padding(horizontalPadding, horizontalPadding, 0, 0);
 	}
 
-	@API public static Padding vertical(int verticalPadding)
+	@API public static Padding toVerticalSides(int verticalPadding)
 	{
 		return new Padding(0, 0, verticalPadding, verticalPadding);
 	}
 
-	@API public static Padding horizontalAndVertical(int horizontalPadding, int verticalPadding)
+	@API public static Padding toHorizontalAndToVerticalSides(int horizontalPadding, int verticalPadding)
 	{
 		return new Padding(horizontalPadding, horizontalPadding, verticalPadding, verticalPadding);
 	}
 
 	@API public static Padding toAllSides(int padding)
 	{
-		return horizontalAndVertical(padding, padding);
+		return toHorizontalAndToVerticalSides(padding, padding);
 	}
 
 
