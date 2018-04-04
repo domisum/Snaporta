@@ -12,12 +12,13 @@ import de.domisum.lib.snaporta.snaportas.text.positioner.horizontal.HorizontalCe
 import de.domisum.lib.snaporta.snaportas.text.positioner.horizontal.HorizontalTextPositioner;
 import de.domisum.lib.snaporta.snaportas.text.positioner.vertical.VerticalCenteredTextPositioner;
 import de.domisum.lib.snaporta.snaportas.text.positioner.vertical.VerticalTextPositioner;
-import de.domisum.lib.snaporta.snaportas.text.sizer.FontSizer;
 import de.domisum.lib.snaporta.snaportas.text.sizer.AsBigAsPossibleFontSizer;
 import de.domisum.lib.snaporta.snaportas.text.sizer.ConstantFontSizer;
+import de.domisum.lib.snaporta.snaportas.text.sizer.FontSizer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.Validate;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -29,7 +30,7 @@ public final class TextSnaporta implements Snaporta
 {
 
 	// CONSTANTS
-	private static final int DEFAULT_FONT_SIZE = 16;
+	private static final int DEFAULT_FONT_SIZE = 24;
 
 	// SNAPORTA
 	@Getter private final int width;
@@ -205,6 +206,9 @@ public final class TextSnaporta implements Snaporta
 		// BUILD
 		@API public TextSnaporta build()
 		{
+			Validate.notNull(textSnaporta.horizontalTextPositioner, "horizontalTextPositioner not set");
+			Validate.notNull(textSnaporta.verticalTextPositioner, "verticalTextPositioner not set");
+
 			textSnaporta.renderedText = textSnaporta.render();
 			return textSnaporta;
 		}
