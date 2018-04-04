@@ -61,9 +61,6 @@ public final class TextSnaporta implements Snaporta
 	// SNAPORTA
 	@Override public int getARGBAt(int x, int y)
 	{
-		if(renderedText == null)
-			renderedText = render();
-
 		return renderedText.getARGBAt(x, y);
 	}
 
@@ -104,6 +101,8 @@ public final class TextSnaporta implements Snaporta
 		graphics.setColor(paddingOutline.toAwt());
 		graphics.drawRect(padding.getLeft(), padding.getTop(), width-padding.getHorizontal(), height-padding.getVertical());
 
+		graphics.drawRect(0, 0, width-1, height-1);
+
 		graphics.setColor(colorBefore);
 	}
 
@@ -122,8 +121,8 @@ public final class TextSnaporta implements Snaporta
 		double horizontalPosition = horizontalTextPositioner.position(width, padding, textDimensions);
 		double verticalPosition = verticalTextPositioner.position(height, padding, textDimensions);
 
-		int graphicsVerticalPosition = (int) Math.round(verticalPosition+textDimensions.getHeight());
 		int graphicsHorizontalPosition = (int) Math.round(horizontalPosition);
+		int graphicsVerticalPosition = (int) Math.round(verticalPosition+textDimensions.getHeight());
 		graphics.drawString(text, graphicsHorizontalPosition, graphicsVerticalPosition);
 	}
 
@@ -208,6 +207,7 @@ public final class TextSnaporta implements Snaporta
 		// BUILD
 		@API public TextSnaporta build()
 		{
+			textSnaporta.renderedText = textSnaporta.render();
 			return textSnaporta;
 		}
 
