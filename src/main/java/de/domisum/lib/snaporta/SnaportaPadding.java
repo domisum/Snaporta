@@ -3,7 +3,9 @@ package de.domisum.lib.snaporta;
 import de.domisum.lib.auxilium.util.java.annotations.API;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
+@ToString
 @RequiredArgsConstructor
 public class SnaportaPadding
 {
@@ -92,12 +94,12 @@ public class SnaportaPadding
 
 
 	// DERIVE MIRROR
-	@API public SnaportaPadding deriveMirrorHorizontally()
+	@API public SnaportaPadding deriveMirrorHorizontalPaddings()
 	{
 		return new SnaportaPadding(right, left, top, bottom);
 	}
 
-	@API public SnaportaPadding deriveMirrorVertically()
+	@API public SnaportaPadding deriveMirrorVerticalPaddings()
 	{
 		return new SnaportaPadding(left, right, bottom, top);
 	}
