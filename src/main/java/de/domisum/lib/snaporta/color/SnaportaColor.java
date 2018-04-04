@@ -11,8 +11,10 @@ public final class SnaportaColor
 {
 
 	// CONSTANTS
+	@API public static final int COLOR_COMPONENT_MAX = 255;
+
 	@API public static final int ALPHA_TRANSPARENT = 0;
-	@API public static final int ALPHA_OPAQUE = 255;
+	@API public static final int ALPHA_OPAQUE = COLOR_COMPONENT_MAX;
 
 	// ATTRIBUTES
 	@Getter private final int alpha;
@@ -92,6 +94,17 @@ public final class SnaportaColor
 	public int toARGBInt()
 	{
 		return ARGBUtil.toARGB(alpha, red, green, blue);
+	}
+
+
+	// DERIVE
+	@API public SnaportaColor deriveOpposite()
+	{
+		int oppositeRed = COLOR_COMPONENT_MAX-red;
+		int oppositeGreen = COLOR_COMPONENT_MAX-green;
+		int oppositeBlue = COLOR_COMPONENT_MAX-blue;
+
+		return new SnaportaColor(alpha, oppositeRed, oppositeGreen, oppositeBlue);
 	}
 
 

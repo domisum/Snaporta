@@ -19,6 +19,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -49,6 +50,10 @@ public final class TextSnaporta implements Snaporta
 	// CONTENT
 	private final String text;
 
+	// DEBUG
+	private boolean drawPaddingOutline = false;
+
+
 	// TEMP
 	private Snaporta renderedText;
 
@@ -69,6 +74,9 @@ public final class TextSnaporta implements Snaporta
 		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D graphics = createTextRenderingGraphics(bufferedImage);
 
+		if(drawPaddingOutline)
+			drawPaddingOutline(graphics);
+
 		setGraphicsFont(graphics);
 		graphics.setColor(color.toAwt());
 		drawStringToGraphics(graphics);
@@ -85,6 +93,18 @@ public final class TextSnaporta implements Snaporta
 		graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
 		return graphics;
+	}
+
+
+	private void drawPaddingOutline(Graphics2D graphics)
+	{
+		Color colorBefore = graphics.getColor();
+
+		SnaportaColor paddingOutline = color.deriveOpposite();
+		graphics.setColor(paddingOutline.toAwt());
+		graphics.drawRect(padding.getLeft(), padding.getTop(), width-padding.getHorizontal(), height-padding.getVertical());
+
+		graphics.setColor(colorBefore);
 	}
 
 	private void setGraphicsFont(Graphics2D graphics)
@@ -157,6 +177,13 @@ public final class TextSnaporta implements Snaporta
 		@API public TextSnaportaBuilder verticalTextPositioner(VerticalTextPositioner verticalTextPositioner)
 		{
 			textSnaporta.verticalTextPositioner = verticalTextPositioner;
+			return this;
+		}
+
+
+		@API public TextSnaportaBuilder drawPaddingOutline()
+		{
+			textSnaporta.drawPaddingOutline = true;
 			return this;
 		}
 
