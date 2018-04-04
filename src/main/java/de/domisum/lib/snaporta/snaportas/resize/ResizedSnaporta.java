@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 @API
 @RequiredArgsConstructor
-public final class ResizeSnaporta implements Snaporta
+public final class ResizedSnaporta implements Snaporta
 {
 
 	// ATTRIBUTES
