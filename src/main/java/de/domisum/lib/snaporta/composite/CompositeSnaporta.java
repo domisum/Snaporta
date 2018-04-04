@@ -14,6 +14,7 @@ import org.apache.commons.lang3.Validate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.OptionalDouble;
 
 @RequiredArgsConstructor
 @API
@@ -31,11 +32,25 @@ public class CompositeSnaporta implements Snaporta
 	// COMPONENTS
 	@API public void addComponent(CompositeSnaportaComponent component)
 	{
-		boolean uniqueZ = componentsTopDown.stream().noneMatch(c->c.getZ() == component.getZ());
-		Validate.isTrue(uniqueZ, "component z values have to be unique, already have component with z="+component.getZ());
+		validateUniqueZ(component);
 
 		componentsTopDown.add(component);
 		Collections.sort(componentsTopDown);
+	}
+
+	@API public void addComponentOnTop(Snaporta snaporta)
+	{
+		OptionalDouble maxZ = componentsTopDown.stream().mapToDouble(CompositeSnaportaComponent::getZ).max();
+		double onTopZ = maxZ.isPresent() ? (maxZ.getAsDouble()+1) : 0;
+
+		CompositeSnaportaComponent component = new CompositeSnaportaComponent(snaporta, 0, 0, onTopZ);
+		addComponent(component);
+	}
+
+	private void validateUniqueZ(CompositeSnaportaComponent component)
+	{
+		boolean uniqueZ = componentsTopDown.stream().noneMatch(c->c.getZ() == component.getZ());
+		Validate.isTrue(uniqueZ, "component z values have to be unique, already have component with z="+component.getZ());
 	}
 
 
@@ -45,6 +60,8 @@ public class CompositeSnaporta implements Snaporta
 		return getARGBAtDepth(x, y, 0);
 	}
 
+
+	// COLOR MIXING
 	private int getARGBAtDepth(int x, int y, int depth)
 	{
 		if(depth >= componentsTopDown.size())
