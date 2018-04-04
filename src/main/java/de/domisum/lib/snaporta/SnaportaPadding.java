@@ -55,24 +55,39 @@ public class SnaportaPadding
 
 
 	// DERIVE
-	@API public SnaportaPadding addToLeft(int deltaLeft)
+	@API public SnaportaPadding addLeft(int deltaLeftPadding)
 	{
-		return new SnaportaPadding(left+deltaLeft, right, top, bottom);
+		return new SnaportaPadding(left+deltaLeftPadding, right, top, bottom);
 	}
 
-	@API public SnaportaPadding addToRight(int deltaRight)
+	@API public SnaportaPadding addRight(int deltaRightPadding)
 	{
-		return new SnaportaPadding(left, right+deltaRight, top, bottom);
+		return new SnaportaPadding(left, right+deltaRightPadding, top, bottom);
 	}
 
-	@API public SnaportaPadding addToTop(int deltaTop)
+	@API public SnaportaPadding addTop(int deltaTopPaddding)
 	{
-		return new SnaportaPadding(left, right, top+deltaTop, bottom);
+		return new SnaportaPadding(left, right, top+deltaTopPaddding, bottom);
 	}
 
-	@API public SnaportaPadding addToBottom(int deltaBottom)
+	@API public SnaportaPadding addBottom(int deltaBottomPadding)
 	{
-		return new SnaportaPadding(left, right, top, bottom+deltaBottom);
+		return new SnaportaPadding(left, right, top, bottom+deltaBottomPadding);
+	}
+
+	@API public SnaportaPadding addHorizontal(int deltaHorizontalPadding)
+	{
+		return new SnaportaPadding(left+deltaHorizontalPadding, right+deltaHorizontalPadding, top, bottom);
+	}
+
+	@API public SnaportaPadding addVertical(int deltaVerticalPadding)
+	{
+		return new SnaportaPadding(left, right, top+deltaVerticalPadding, bottom+deltaVerticalPadding);
+	}
+
+	@API public SnaportaPadding addToAllSides(int deltaPadding)
+	{
+		return new SnaportaPadding(left+deltaPadding, right+deltaPadding, top+deltaPadding, bottom+deltaPadding);
 	}
 
 }
