@@ -1,17 +1,25 @@
 package de.domisum.lib.snaporta.snaportas.resize.interpolator.matrix;
 
+import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.matrix.Matrix;
 import de.domisum.lib.snaporta.matrix.evaluator.MatrixOnSnaportaEvaluator;
 
 public class LinearInterpolator extends MatrixInterpolator
 {
 
+	// CONSTANTS
+	private static final int DEFAULT_MATRIX_RADIUS = 1;
+
+
 	// INIT
+	@API public static LinearInterpolator ofDefaultRadius(MatrixOnSnaportaEvaluator matrixOnSnaportaEvaluator)
+	{
+		return new LinearInterpolator(matrixOnSnaportaEvaluator, DEFAULT_MATRIX_RADIUS);
+	}
+
 	public LinearInterpolator(MatrixOnSnaportaEvaluator matrixOnSnaportaEvaluator, int matrixRadius)
 	{
 		super(matrixOnSnaportaEvaluator, generateInterpolationMatrix(matrixRadius));
-
-		System.out.println(generateInterpolationMatrix(matrixRadius));
 	}
 
 	private static Matrix generateInterpolationMatrix(int matrixRadius)
