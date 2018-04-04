@@ -10,7 +10,8 @@ public class VerticalCenteredTextPositioner implements VerticalTextPositioner
 
 	@Override public double position(int height, SnaportaPadding padding, TextDimensions textDimensions)
 	{
-		return (height-textDimensions.getHeight())/2;
+		double availableHeight = height-textDimensions.getHeight()-padding.getVertical();
+		return (availableHeight/2)+padding.getTop();
 	}
 
 }
