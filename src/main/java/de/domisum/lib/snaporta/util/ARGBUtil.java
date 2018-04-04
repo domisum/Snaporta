@@ -1,5 +1,6 @@
 package de.domisum.lib.snaporta.util;
 
+import de.domisum.lib.snaporta.color.ColorComponent;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -29,11 +30,40 @@ public final class ARGBUtil
 	}
 
 
+	public static int getComponent(ColorComponent colorComponent, int argb)
+	{
+		switch(colorComponent)
+		{
+			case ALPHA:
+				return getAlphaComponent(argb);
+			case RED:
+				return getRedComponent(argb);
+			case GREEN:
+				return getGreenComponent(argb);
+			case BLUE:
+				return getBlueComponent(argb);
+			default:
+				throw new IllegalArgumentException("invalid color component: "+colorComponent);
+		}
+	}
+
+
 	public static int getAlphaComponent(int argb)
 	{
 		int shiftedAlpha = argb >> (8*3);
 		return shiftedAlpha&TWO_BYTE_MASK;
 	}
+
+	public static double getOpacity(int argb)
+	{
+		return getAlphaComponent(argb)/255d;
+	}
+
+	public static int getAlphaFromOpacity(double opacity)
+	{
+		return (int) Math.round(opacity*255d);
+	}
+
 
 	public static int getRedComponent(int argb)
 	{

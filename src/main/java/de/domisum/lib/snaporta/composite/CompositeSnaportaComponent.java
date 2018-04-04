@@ -22,7 +22,7 @@ public class CompositeSnaportaComponent implements Comparable<CompositeSnaportaC
 	// COMPARE
 	@Override public int compareTo(@Nonnull CompositeSnaportaComponent other)
 	{
-		return Comparator.comparing(CompositeSnaportaComponent::getZ).compare(this, other);
+		return Comparator.comparing(CompositeSnaportaComponent::getZ).reversed().compare(this, other);
 	}
 
 
