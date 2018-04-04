@@ -30,7 +30,8 @@ public class IgnoreOutOfBoundsMatrixOnSnaportaEvaluator implements MatrixOnSnapo
 				{
 					ColorComponent colorComponent = ColorComponent.values()[i];
 					double value = ARGBUtil.getComponent(colorComponent, argbInt);
-					evaluatedComponentSum[i] += value*matrixEntry;
+					double weightedValue = value*matrixEntry;
+					evaluatedComponentSum[i] += weightedValue;
 				}
 			}
 
