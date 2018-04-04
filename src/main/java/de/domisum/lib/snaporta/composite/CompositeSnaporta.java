@@ -40,10 +40,15 @@ public class CompositeSnaporta implements Snaporta
 
 	@API public void addComponentOnTop(Snaporta snaporta)
 	{
+		addComponentOnTop(snaporta, 0, 0);
+	}
+
+	@API public void addComponentOnTop(Snaporta snaporta, int x, int y)
+	{
 		OptionalDouble maxZ = componentsTopDown.stream().mapToDouble(CompositeSnaportaComponent::getZ).max();
 		double onTopZ = maxZ.isPresent() ? (maxZ.getAsDouble()+1) : 0;
 
-		CompositeSnaportaComponent component = new CompositeSnaportaComponent(snaporta, 0, 0, onTopZ);
+		CompositeSnaportaComponent component = new CompositeSnaportaComponent(snaporta, x, y, onTopZ);
 		addComponent(component);
 	}
 
