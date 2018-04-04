@@ -1,6 +1,7 @@
 package de.domisum.lib.snaporta.text.sizer;
 
 import de.domisum.lib.auxilium.util.java.annotations.API;
+import de.domisum.lib.snaporta.SnaportaPadding;
 import de.domisum.lib.snaporta.text.SnaportaFont;
 import lombok.RequiredArgsConstructor;
 
@@ -14,7 +15,7 @@ public class SnaportaConstantFontSizer implements FontSizer
 
 
 	// SIZER
-	@Override public double size(SnaportaFont snaportaFont, int width, int height, String text)
+	@Override public double size(SnaportaFont snaportaFont, int width, int height, SnaportaPadding snaportaPadding, String text)
 	{
 		return fontSize;
 	}

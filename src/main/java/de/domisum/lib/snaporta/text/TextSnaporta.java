@@ -2,6 +2,7 @@ package de.domisum.lib.snaporta.text;
 
 import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.Snaporta;
+import de.domisum.lib.snaporta.SnaportaPadding;
 import de.domisum.lib.snaporta.color.SnaportaColor;
 import de.domisum.lib.snaporta.formatConversion.SnaportaBufferedImageConverter;
 import de.domisum.lib.snaporta.text.dimensions.TextDimensions;
@@ -27,10 +28,12 @@ public class TextSnaporta implements Snaporta // TODO change to use builder
 	@Getter private final int height;
 
 	private final SnaportaFont font;
+	private final SnaportaColor color;
+
+	private final SnaportaPadding padding;
 	private final FontSizer fontSizer;
 	private final HorizontalTextPositioner horizontalTextPositioner;
 	private final VerticalTextPositioner verticalTextPositioner;
-	private final SnaportaColor color;
 
 	private final String text;
 
@@ -72,7 +75,7 @@ public class TextSnaporta implements Snaporta // TODO change to use builder
 
 	private void setGraphicsFont(Graphics2D graphics)
 	{
-		double fontSize = fontSizer.size(font, width, height, text);
+		double fontSize = fontSizer.size(font, width, height, padding, text);
 		Font font = this.font.getFont().deriveFont((float) fontSize);
 		graphics.setFont(font);
 	}
@@ -82,8 +85,8 @@ public class TextSnaporta implements Snaporta // TODO change to use builder
 		float fontSizePt = graphics.getFont().getSize2D();
 		TextDimensions textDimensions = new TextDimensionsCalculator(font, fontSizePt).calculateDimensions(text);
 
-		double horizontalPosition = horizontalTextPositioner.position(width, textDimensions);
-		double verticalPosition = verticalTextPositioner.position(height, textDimensions);
+		double horizontalPosition = horizontalTextPositioner.position(width, padding, textDimensions);
+		double verticalPosition = verticalTextPositioner.position(height, padding, textDimensions);
 
 		int graphicsVerticalPosition = (int) Math.round(verticalPosition+textDimensions.getHeight());
 		int graphicsHorizontalPosition = (int) Math.round(horizontalPosition);

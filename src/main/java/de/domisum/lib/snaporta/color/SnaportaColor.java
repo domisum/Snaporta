@@ -55,6 +55,11 @@ public final class SnaportaColor
 		return new SnaportaColor(ALPHA_OPAQUE, red, green, blue);
 	}
 
+	@API public static SnaportaColor fromBrightness(int brightness)
+	{
+		return fromRGB(brightness, brightness, brightness);
+	}
+
 	@API public static SnaportaColor fromAwt(Color color)
 	{
 		return new SnaportaColor(color.getAlpha(), color.getRed(), color.getGreen(), color.getBlue());
