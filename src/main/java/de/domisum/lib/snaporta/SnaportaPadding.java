@@ -53,4 +53,26 @@ public class SnaportaPadding
 		return top+bottom;
 	}
 
+
+	// DERIVE
+	@API public SnaportaPadding addToLeft(int deltaLeft)
+	{
+		return new SnaportaPadding(left+deltaLeft, right, top, bottom);
+	}
+
+	@API public SnaportaPadding addToRight(int deltaRight)
+	{
+		return new SnaportaPadding(left, right+deltaRight, top, bottom);
+	}
+
+	@API public SnaportaPadding addToTop(int deltaTop)
+	{
+		return new SnaportaPadding(left, right, top+deltaTop, bottom);
+	}
+
+	@API public SnaportaPadding addToBottom(int deltaBottom)
+	{
+		return new SnaportaPadding(left, right, top, bottom+deltaBottom);
+	}
+
 }
