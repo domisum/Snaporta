@@ -36,7 +36,7 @@ public class SnaportaPadding
 		return new SnaportaPadding(horizontalPadding, horizontalPadding, verticalPadding, verticalPadding);
 	}
 
-	@API public static SnaportaPadding toEverySide(int padding)
+	@API public static SnaportaPadding toAllSides(int padding)
 	{
 		return horizontalAndVertical(padding, padding);
 	}

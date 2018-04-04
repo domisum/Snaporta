@@ -13,6 +13,7 @@ import de.domisum.lib.snaporta.text.positioner.horizontal.HorizontalTextPosition
 import de.domisum.lib.snaporta.text.positioner.vertical.VerticalCenteredTextPositioner;
 import de.domisum.lib.snaporta.text.positioner.vertical.VerticalTextPositioner;
 import de.domisum.lib.snaporta.text.sizer.FontSizer;
+import de.domisum.lib.snaporta.text.sizer.SnaportaAsBigAsPossibleFontSizer;
 import de.domisum.lib.snaporta.text.sizer.SnaportaConstantFontSizer;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -161,6 +162,11 @@ public final class TextSnaporta implements Snaporta
 
 
 		// SETTINGS SHORTCUTS
+		@API public TextSnaportaBuilder fontAsBigAsPossible()
+		{
+			return fontSizer(new SnaportaAsBigAsPossibleFontSizer());
+		}
+
 		@API public TextSnaportaBuilder centerHorizontally()
 		{
 			return horizontalTextPositioner(new HorizontalCenteredTextPositioner());
