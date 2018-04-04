@@ -8,9 +8,10 @@ import de.domisum.lib.snaporta.text.dimensions.TextDimensions;
 public class HorizontalCenteredTextPositioner implements HorizontalTextPositioner
 {
 
-	@Override public double position(int width, SnaportaPadding snaportaPadding, TextDimensions textDimensions)
+	@Override public double position(int width, SnaportaPadding padding, TextDimensions textDimensions)
 	{
-		return (width-textDimensions.getWidth())/2;
+		double availableWidth = width-textDimensions.getWidth()-padding.getHorizontal();
+		return (availableWidth/2)+padding.getLeft();
 	}
 
 }
