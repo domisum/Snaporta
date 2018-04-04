@@ -38,7 +38,7 @@ public class Padding
 		return new Padding(horizontalPadding, horizontalPadding, verticalPadding, verticalPadding);
 	}
 
-	@API public static Padding toAllSides(int padding)
+	@API public static Padding toEverySide(int padding)
 	{
 		return toHorizontalAndToVerticalSides(padding, padding);
 	}
