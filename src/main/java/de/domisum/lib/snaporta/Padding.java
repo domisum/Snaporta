@@ -18,6 +18,11 @@ public class Padding
 
 
 	// INIT
+	public Padding()
+	{
+		this(0, 0, 0, 0);
+	}
+
 	@API public static Padding none()
 	{
 		return new Padding(0, 0, 0, 0);
