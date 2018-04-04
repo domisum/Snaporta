@@ -60,4 +60,18 @@
 		</plugins>
 	</build>
 
+	<distributionManagement>
+		<repository>
+			<id>vps</id>
+			<name>vps.domisum.de-releases</name>
+			<url>http://vps.domisum.de:8081/nexus/content/repositories/releases-public/</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>vps</id>
+			<name>vps.domisum.de-snapshots</name>
+			<url>http://vps.domisum.de:8081/nexus/content/repositories/snapshots-public/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 </project>
