@@ -3,10 +3,11 @@ package de.domisum.lib.snaporta.snaportas.composite;
 import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.auxilium.util.math.MathUtil;
 import de.domisum.lib.snaporta.Snaporta;
-import de.domisum.lib.snaporta.color.ColorComponent;
 import de.domisum.lib.snaporta.color.Color;
+import de.domisum.lib.snaporta.color.ColorComponent;
 import de.domisum.lib.snaporta.color.Colors;
 import de.domisum.lib.snaporta.util.ARGBUtil;
+import de.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.Validate;
@@ -62,6 +63,7 @@ public class CompositeSnaporta implements Snaporta
 	// SNAPORTA
 	@Override public int getARGBAt(int x, int y)
 	{
+		SnaportaValidate.validateInBounds(this, x, y);
 		return getARGBAtDepth(x, y, 0);
 	}
 

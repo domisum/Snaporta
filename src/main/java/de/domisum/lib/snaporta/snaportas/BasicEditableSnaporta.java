@@ -86,7 +86,6 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 	@Override public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-
 		return argbPixels[y][x];
 	}
 

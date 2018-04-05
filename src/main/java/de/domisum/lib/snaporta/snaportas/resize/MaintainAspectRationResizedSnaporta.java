@@ -5,6 +5,7 @@ import de.domisum.lib.snaporta.Padding;
 import de.domisum.lib.snaporta.Snaporta;
 import de.domisum.lib.snaporta.color.Colors;
 import de.domisum.lib.snaporta.snaportas.resize.interpolator.Interpolator;
+import de.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +34,8 @@ public final class MaintainAspectRationResizedSnaporta implements Snaporta
 	// SNAPORTA
 	@Override public int getARGBAt(int x, int y)
 	{
+		SnaportaValidate.validateInBounds(this, x, y);
+
 		if(resizedSnaporta == null)
 			buildResizedSnaporta();
 

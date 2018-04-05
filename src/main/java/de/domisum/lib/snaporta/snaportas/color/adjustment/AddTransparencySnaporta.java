@@ -4,6 +4,7 @@ import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.Snaporta;
 import de.domisum.lib.snaporta.color.Colors;
 import de.domisum.lib.snaporta.util.ARGBUtil;
+import de.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.RequiredArgsConstructor;
 
 @API
@@ -28,6 +29,8 @@ public class AddTransparencySnaporta implements Snaporta
 
 	@Override public int getARGBAt(int x, int y)
 	{
+		SnaportaValidate.validateInBounds(this, x, y);
+
 		if(opacity == 0)
 			return Colors.TRANSPARENT.toARGBInt();
 

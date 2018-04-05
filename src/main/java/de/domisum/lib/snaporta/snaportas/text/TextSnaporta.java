@@ -15,6 +15,7 @@ import de.domisum.lib.snaporta.snaportas.text.positioner.vertical.VerticalTextPo
 import de.domisum.lib.snaporta.snaportas.text.sizer.AsBigAsPossibleFontSizer;
 import de.domisum.lib.snaporta.snaportas.text.sizer.ConstantFontSizer;
 import de.domisum.lib.snaporta.snaportas.text.sizer.FontSizer;
+import de.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -60,6 +61,7 @@ public final class TextSnaporta implements Snaporta
 	// SNAPORTA
 	@Override public int getARGBAt(int x, int y)
 	{
+		SnaportaValidate.validateInBounds(this, x, y);
 		return renderedText.getARGBAt(x, y);
 	}
 
