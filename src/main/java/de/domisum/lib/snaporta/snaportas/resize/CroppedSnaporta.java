@@ -37,7 +37,7 @@ public class CroppedSnaporta implements Snaporta
 	@Override public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-		return backingSnaporta.getARGBAt(x-cropX, y-cropY);
+		return backingSnaporta.getARGBAt(x+cropX, y+cropY);
 	}
 
 }
