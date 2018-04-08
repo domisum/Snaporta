@@ -1,8 +1,10 @@
 package de.domisum.lib.snaporta.util;
 
+import de.domisum.lib.snaporta.color.Color;
 import de.domisum.lib.snaporta.color.ColorComponent;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.Validate;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ARGBUtil
@@ -56,14 +58,13 @@ public final class ARGBUtil
 
 	public static double getOpacity(int argb)
 	{
-		return getAlphaComponent(argb)/255d;
+		return getAlphaComponent(argb)/(double) Color.COLOR_COMPONENT_MAX;
 	}
 
 	public static int getAlphaFromOpacity(double opacity)
 	{
-		// TODO validate opacity input
-
-		return (int) Math.round(opacity*255d);
+		Validate.inclusiveBetween(0, 1, opacity, "opacity has to be in interval [0.0-1.0], was "+opacity);
+		return (int) Math.round(opacity*Color.COLOR_COMPONENT_MAX);
 	}
 
 
