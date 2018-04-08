@@ -38,7 +38,7 @@ public final class Font
 		}
 		catch(FontFormatException e)
 		{
-			throw new RuntimeException(e); // TODO better way to handle this exception
+			throw new UncheckedIOException(new IOException("loaded font contains errors", e));
 		}
 		catch(IOException e)
 		{
