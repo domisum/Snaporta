@@ -57,7 +57,7 @@ public final class Color
 		return new Color(ALPHA_OPAQUE, red, green, blue);
 	}
 
-	@API public static Color fromBrightness(int brightness)
+	@API public static Color fromBrightnessAbs(int brightness)
 	{
 		return fromRGB(brightness, brightness, brightness);
 	}
@@ -101,6 +101,19 @@ public final class Color
 		String opacityPercent = Math.round((alpha/255d)*100)+"%";
 
 		return "0x"+redHex+greenHex+blueHex+"_"+opacityPercent;
+	}
+
+
+	// GETTERS
+	@API public double getOpacity()
+	{
+		return alpha/(double) COLOR_COMPONENT_MAX;
+	}
+
+	@API public double getRGBBrightnessRelative()
+	{
+		double componentSum = red+green+blue;
+		return componentSum/3/COLOR_COMPONENT_MAX;
 	}
 
 
