@@ -4,6 +4,8 @@ import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.util.ARGBUtil;
 import de.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 
 public final class Color
 {
@@ -68,6 +70,25 @@ public final class Color
 	@API public static Color fullyTransparent()
 	{
 		return new Color(ALPHA_TRANSPARENT, 0, 0, 0);
+	}
+
+
+	@API public static Color fromRGBHex(String hex)
+	{
+		Validate.isTrue(hex.startsWith("#"), "hex color has to start with #, was '"+hex+"'");
+		Validate.isTrue(hex.length() == 7, "hex has to be in format '#000000', was '"+hex+"'");
+		String hexRaw = hex.substring(1).toUpperCase();
+		Validate.isTrue(StringUtils.containsOnly(hexRaw, "0123456789ABCDEF"), "hex contains invalid characters: '"+hexRaw+"'");
+
+		String redHexString = hexRaw.substring(0, 2);
+		String greenHexString = hexRaw.substring(2, 4);
+		String blueHexString = hexRaw.substring(4, 6);
+
+		int red = Integer.parseInt(redHexString, 16);
+		int green = Integer.parseInt(greenHexString, 16);
+		int blue = Integer.parseInt(blueHexString, 16);
+
+		return fromRGB(red, green, blue);
 	}
 
 
