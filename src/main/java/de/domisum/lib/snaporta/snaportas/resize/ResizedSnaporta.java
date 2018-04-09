@@ -13,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 public final class ResizedSnaporta implements Snaporta
 {
 
+	// DEFAULTS
+	private static final Interpolator DEFAULT_INTERPOLATOR = new ClosestPixelInterpolator();
+
 	// ATTRIBUTES
 	@Getter private final int width;
 	@Getter private final int height;
@@ -29,7 +32,7 @@ public final class ResizedSnaporta implements Snaporta
 		this.height = height;
 		this.baseSnaporta = baseSnaporta;
 
-		interpolator = new ClosestPixelInterpolator();
+		interpolator = DEFAULT_INTERPOLATOR;
 	}
 
 
