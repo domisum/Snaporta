@@ -139,6 +139,26 @@ public final class Color
 		return new Color(alpha, oppositeRed, oppositeGreen, oppositeBlue);
 	}
 
+	@API public Color deriveWithAlpha(int deriveAlpha)
+	{
+		return fromARGB(deriveAlpha, getRed(), getGreen(), getBlue());
+	}
+
+	@API public Color deriveWithRed(int deriveRed)
+	{
+		return fromARGB(getAlpha(), deriveRed, getGreen(), getBlue());
+	}
+
+	@API public Color deriveWithGreen(int deriveGreen)
+	{
+		return fromARGB(getAlpha(), getRed(), deriveGreen, getBlue());
+	}
+
+	@API public Color deriveWithBlue(int deriveBlue)
+	{
+		return fromARGB(getAlpha(), getRed(), getGreen(), deriveBlue);
+	}
+
 
 	// UTIL
 	private String getComponentAsHex(int component)
