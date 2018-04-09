@@ -16,6 +16,14 @@ public class SnaportaToFileWriter
 	private final SnaportaBufferedImageConverter snaportaBufferedImageConverter = new SnaportaBufferedImageConverter();
 
 
+	// SHORTCUT
+	@API public static void write(File file, Snaporta snaporta)
+	{
+		SnaportaToFileWriter writer = new SnaportaToFileWriter();
+		writer.writeToFile(file, snaporta);
+	}
+
+
 	// WRITING
 	@API public void writeToFile(File file, Snaporta snaporta)
 	{
