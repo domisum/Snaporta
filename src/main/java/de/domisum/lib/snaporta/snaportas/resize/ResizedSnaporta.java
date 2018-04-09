@@ -2,6 +2,7 @@ package de.domisum.lib.snaporta.snaportas.resize;
 
 import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.Snaporta;
+import de.domisum.lib.snaporta.snaportas.resize.interpolator.ClosestPixelInterpolator;
 import de.domisum.lib.snaporta.snaportas.resize.interpolator.Interpolator;
 import de.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.Getter;
@@ -19,6 +20,17 @@ public final class ResizedSnaporta implements Snaporta
 	// REFERENCES
 	private final Snaporta baseSnaporta;
 	private final Interpolator interpolator;
+
+
+	// INIT
+	public ResizedSnaporta(int width, int height, Snaporta baseSnaporta)
+	{
+		this.width = width;
+		this.height = height;
+		this.baseSnaporta = baseSnaporta;
+
+		interpolator = new ClosestPixelInterpolator();
+	}
 
 
 	// SNAPORTA
