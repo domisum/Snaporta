@@ -16,6 +16,14 @@ public class SnaportaFromFileReader
 	private final SnaportaBufferedImageConverter snaportaBufferedImageConverter = new SnaportaBufferedImageConverter();
 
 
+	// SHORTCUT
+	@API public static EditableSnaporta read(File file)
+	{
+		SnaportaFromFileReader fromFileReader = new SnaportaFromFileReader();
+		return fromFileReader.readFromFile(file);
+	}
+
+
 	// READING
 	@API public EditableSnaporta readFromFile(File file)
 	{
