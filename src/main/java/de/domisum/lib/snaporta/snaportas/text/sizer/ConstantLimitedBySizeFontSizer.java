@@ -9,8 +9,11 @@ import lombok.RequiredArgsConstructor;
 
 @API
 @RequiredArgsConstructor
-public class AsBigAsPossibleFontSizer implements FontSizer
+public class ConstantLimitedBySizeFontSizer implements FontSizer
 {
+
+	private final double fontSize;
+
 
 	// SIZING
 	@Override public double size(Font font, int width, int height, Padding padding, String text)
@@ -25,7 +28,8 @@ public class AsBigAsPossibleFontSizer implements FontSizer
 		double fontSizeDerivedFromWidth = baselineFontSize/(textDimensions.getWidth()/availableWidth);
 		double fontSizeDerivedFromHeight = baselineFontSize/(textDimensions.getHeight()/availableHeight);
 
-		return Math.min(fontSizeDerivedFromWidth, fontSizeDerivedFromHeight);
+		double maxFontSize = Math.min(fontSizeDerivedFromWidth, fontSizeDerivedFromHeight);
+		return Math.min(fontSize, maxFontSize);
 	}
 
 }
