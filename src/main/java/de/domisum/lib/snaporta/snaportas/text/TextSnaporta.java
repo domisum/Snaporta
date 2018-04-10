@@ -8,6 +8,8 @@ import de.domisum.lib.snaporta.color.Colors;
 import de.domisum.lib.snaporta.formatconversion.SnaportaBufferedImageConverter;
 import de.domisum.lib.snaporta.snaportas.text.dimensions.TextDimensions;
 import de.domisum.lib.snaporta.snaportas.text.dimensions.TextDimensionsCalculator;
+import de.domisum.lib.snaporta.snaportas.text.positioner.horizontal.HorizontalAlignLeftTextPositioner;
+import de.domisum.lib.snaporta.snaportas.text.positioner.horizontal.HorizontalAlignRightTextPositioner;
 import de.domisum.lib.snaporta.snaportas.text.positioner.horizontal.HorizontalCenteredTextPositioner;
 import de.domisum.lib.snaporta.snaportas.text.positioner.horizontal.HorizontalTextPositioner;
 import de.domisum.lib.snaporta.snaportas.text.positioner.vertical.VerticalCenteredTextPositioner;
@@ -194,6 +196,7 @@ public final class TextSnaporta implements Snaporta
 			return fontSizer(new AsBigAsPossibleFontSizer());
 		}
 
+
 		@API public TextSnaportaBuilder centerHorizontally()
 		{
 			return horizontalTextPositioner(new HorizontalCenteredTextPositioner());
@@ -202,6 +205,18 @@ public final class TextSnaporta implements Snaporta
 		@API public TextSnaportaBuilder centerVertically()
 		{
 			return verticalTextPositioner(new VerticalCenteredTextPositioner());
+		}
+
+		@API public TextSnaportaBuilder alignLeft()
+		{
+			textSnaporta.horizontalTextPositioner = new HorizontalAlignLeftTextPositioner();
+			return this;
+		}
+
+		@API public TextSnaportaBuilder alignRight()
+		{
+			textSnaporta.horizontalTextPositioner = new HorizontalAlignRightTextPositioner();
+			return this;
 		}
 
 

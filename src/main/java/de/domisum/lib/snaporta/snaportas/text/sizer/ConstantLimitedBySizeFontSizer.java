@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 @API
 @RequiredArgsConstructor
-public class ConstantLimitedBySizeFontSizer implements FontSizer
+public class ConstantLimitedBySizeFontSizer implements FontSizer // TODO find better name
 {
 
 	private final double fontSize;
