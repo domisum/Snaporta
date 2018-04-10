@@ -1,4 +1,4 @@
-package de.domisum.lib.snaporta.snaportas.resize.interpolator.matrix;
+package de.domisum.lib.snaporta.snaportas.transform.resize.interpolator.matrix;
 
 import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.matrix.Matrix;

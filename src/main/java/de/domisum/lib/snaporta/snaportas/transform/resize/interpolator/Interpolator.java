@@ -1,4 +1,4 @@
-package de.domisum.lib.snaporta.snaportas.resize.interpolator;
+package de.domisum.lib.snaporta.snaportas.transform.resize.interpolator;
 
 import de.domisum.lib.snaporta.Snaporta;
 

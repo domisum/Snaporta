@@ -1,4 +1,4 @@
-package de.domisum.lib.snaporta.snaportas.resize;
+package de.domisum.lib.snaporta.snaportas.transform.resize;
 
 import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.Snaporta;
