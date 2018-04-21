@@ -42,7 +42,7 @@ public final class Color
 		return fromARGB(
 				ARGBUtil.getAlphaComponent(argb),
 				ARGBUtil.getRedComponent(argb),
-				ARGBUtil.getBlueComponent(argb),
+				ARGBUtil.getGreenComponent(argb),
 				ARGBUtil.getBlueComponent(argb)
 		);
 	}
@@ -55,6 +55,14 @@ public final class Color
 	@API public static Color fromRGB(int red, int green, int blue)
 	{
 		return new Color(ALPHA_OPAQUE, red, green, blue);
+	}
+
+	@API public static Color fromOHSB(double opacity, double hue, double saturation, double brighntess)
+	{
+		java.awt.Color hsbColor = java.awt.Color.getHSBColor((float) hue, (float) saturation, (float) brighntess);
+		Color hsb = fromAwt(hsbColor);
+
+		return hsb.deriveWithOpacity(opacity);
 	}
 
 	@API public static Color fromBrightnessAbs(int brightness)
@@ -116,6 +124,27 @@ public final class Color
 		return componentSum/3/COLOR_COMPONENT_MAX;
 	}
 
+	@API public double getHue()
+	{
+		// TODO cache
+		float[] hsb = java.awt.Color.RGBtoHSB(red, green, blue, null);
+		return hsb[0];
+	}
+
+	@API public double getSaturation()
+	{
+		// TODO cache
+		float[] hsb = java.awt.Color.RGBtoHSB(red, green, blue, null);
+		return hsb[1];
+	}
+
+	@API public double getBrightness()
+	{
+		// TODO cache
+		float[] hsb = java.awt.Color.RGBtoHSB(red, green, blue, null);
+		return hsb[2];
+	}
+
 
 	// CONVERSION
 	public java.awt.Color toAwt()
@@ -159,6 +188,12 @@ public final class Color
 		return fromARGB(getAlpha(), getRed(), getGreen(), deriveBlue);
 	}
 
+
+	@API public Color deriveWithOpacity(double opacity)
+	{
+		int newAlpha = (int) Math.round(opacity*COLOR_COMPONENT_MAX);
+		return deriveWithAlpha(newAlpha);
+	}
 
 	@API public Color deriveMultiplyOpacity(double opacity)
 	{

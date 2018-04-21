@@ -1,4 +1,4 @@
-package de.domisum.lib.snaporta.snaportas.color.adjustment;
+package de.domisum.lib.snaporta.snaportas.filter.color;
 
 import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.Snaporta;
