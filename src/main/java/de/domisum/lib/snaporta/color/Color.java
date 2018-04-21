@@ -160,6 +160,15 @@ public final class Color
 	}
 
 
+	@API public Color deriveMultiplyOpacity(double opacity)
+	{
+		SnaportaValidate.validateInDoubleInterval(0, 1, "opacity", opacity);
+
+		int newAlpha = (int) Math.round(alpha*opacity);
+		return deriveWithAlpha(newAlpha);
+	}
+
+
 	// UTIL
 	private String getComponentAsHex(int component)
 	{

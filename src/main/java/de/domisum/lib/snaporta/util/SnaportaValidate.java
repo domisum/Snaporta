@@ -36,4 +36,14 @@ public final class SnaportaValidate
 		);
 	}
 
+	public static void validateInDoubleInterval(double minValue, double maxValue, String valueName, double value)
+	{
+		Validate.inclusiveBetween(
+				minValue,
+				maxValue,
+				value,
+				PHR.r(valueName+" has to be in interval [{}-{}], but was {}", minValue, maxValue, value)
+		);
+	}
+
 }
