@@ -12,6 +12,17 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>domisum-de-public</id>
+			<name>domisum-de-public</name>
+			<url>http://domisum.de:8081/nexus/content/repositories/public/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<!-- MY LIBRARIES -->
 		<dependency>
