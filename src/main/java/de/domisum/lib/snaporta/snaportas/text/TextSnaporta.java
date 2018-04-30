@@ -100,11 +100,11 @@ public final class TextSnaporta implements Snaporta
 	{
 		java.awt.Color colorBefore = graphics.getColor();
 
-		Color paddingOutline = color.deriveOpposite();
-		graphics.setColor(paddingOutline.toAwt());
-		graphics.drawRect(padding.getLeft(), padding.getTop(), width-padding.getHorizontalSum(), height-padding.getVerticalSum());
+		Color outlineColor = color.deriveOpposite();
+		graphics.setColor(outlineColor.toAwt());
 
 		graphics.drawRect(0, 0, width-1, height-1);
+		graphics.drawRect(padding.getLeft(), padding.getTop(), width-padding.getHorizontalSum(), height-padding.getVerticalSum());
 
 		graphics.setColor(colorBefore);
 	}
