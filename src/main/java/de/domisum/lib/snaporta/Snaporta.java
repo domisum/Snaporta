@@ -3,25 +3,10 @@ package de.domisum.lib.snaporta;
 import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.color.Color;
 import de.domisum.lib.snaporta.util.ARGBUtil;
+import de.domisum.lib.snaporta.util.Sized;
 
-public interface Snaporta
+public interface Snaporta extends Sized
 {
-
-	@API int getWidth();
-
-	@API int getHeight();
-
-	@API default boolean isInBounds(int x, int y)
-	{
-		if((x < 0) || (x >= getWidth()))
-			return false;
-
-		if((y < 0) || (y >= getHeight()))
-			return false;
-
-		return true;
-	}
-
 
 	@API int getARGBAt(int x, int y);
 

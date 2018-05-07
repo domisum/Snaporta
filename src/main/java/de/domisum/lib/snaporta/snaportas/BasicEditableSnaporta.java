@@ -9,6 +9,7 @@ import org.apache.commons.lang3.Validate;
 
 import java.util.Arrays;
 
+// TODO refactor to snaporta "painter" and not inherit from snaporta, instead convert to it
 public final class BasicEditableSnaporta implements EditableSnaporta
 {
 
@@ -21,6 +22,12 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 	// INIT
 	@API public static BasicEditableSnaporta blankOfWidthAndHeight(int width, int height)
 	{
+		if(width < 0)
+			throw new IllegalArgumentException("width can't be negative, was "+width);
+
+		if(height < 0)
+			throw new IllegalArgumentException("height can't be negative, was "+height);
+
 		return fromARGBPixels(new int[height][width]);
 	}
 

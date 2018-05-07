@@ -1,7 +1,6 @@
 package de.domisum.lib.snaporta.util;
 
 import de.domisum.lib.auxilium.util.PHR;
-import de.domisum.lib.snaporta.Snaporta;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.Validate;
@@ -11,10 +10,10 @@ public final class SnaportaValidate
 {
 
 	// BOUNDS
-	public static void validateInBounds(Snaporta snaporta, int x, int y)
+	public static void validateInBounds(Sized sized, int x, int y)
 	{
-		validateInInterval(0, snaporta.getWidth()-1, "x", x);
-		validateInInterval(0, snaporta.getHeight()-1, "y", y);
+		validateInInterval(0, sized.getWidth()-1, "x", x);
+		validateInInterval(0, sized.getHeight()-1, "y", y);
 	}
 
 
