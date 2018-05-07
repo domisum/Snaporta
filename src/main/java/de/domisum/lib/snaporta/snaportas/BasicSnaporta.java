@@ -2,15 +2,13 @@ package de.domisum.lib.snaporta.snaportas;
 
 import de.domisum.lib.auxilium.util.PHR;
 import de.domisum.lib.auxilium.util.java.annotations.API;
-import de.domisum.lib.snaporta.EditableSnaporta;
 import de.domisum.lib.snaporta.Snaporta;
 import de.domisum.lib.snaporta.util.SnaportaValidate;
 import org.apache.commons.lang3.Validate;
 
 import java.util.Arrays;
 
-// TODO refactor to snaporta "painter" and not inherit from snaporta, instead convert to it
-public final class BasicEditableSnaporta implements EditableSnaporta
+public final class BasicSnaporta implements Snaporta
 {
 
 	/**
@@ -20,7 +18,7 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 
 
 	// INIT
-	@API public static BasicEditableSnaporta blankOfWidthAndHeight(int width, int height)
+	@API public static BasicSnaporta blankOfWidthAndHeight(int width, int height)
 	{
 		if(width < 0)
 			throw new IllegalArgumentException("width can't be negative, was "+width);
@@ -31,12 +29,12 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 		return fromARGBPixels(new int[height][width]);
 	}
 
-	@API public static BasicEditableSnaporta fromARGBPixels(int[][] argbPixels)
+	@API public static BasicSnaporta fromARGBPixels(int[][] argbPixels)
 	{
-		return new BasicEditableSnaporta(argbPixels);
+		return new BasicSnaporta(argbPixels);
 	}
 
-	@API public static BasicEditableSnaporta copyOf(Snaporta snaporta)
+	@API public static BasicSnaporta copyOf(Snaporta snaporta)
 	{
 		int[][] argbPixels = new int[snaporta.getHeight()][snaporta.getWidth()];
 		for(int y = 0; y < snaporta.getHeight(); y++)
@@ -48,7 +46,7 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 
 
 	// BASIC INIT
-	private BasicEditableSnaporta(int[][] argbPixels)
+	private BasicSnaporta(int[][] argbPixels)
 	{
 		// validate minimum dimension
 		Validate.isTrue(argbPixels.length > 0, "snaporta has to have a minimum height of 1");
@@ -75,7 +73,7 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 	// OBJECT
 	@Override public String toString()
 	{
-		return PHR.r("BasicEditableSnaporta(width={},height={})", getWidth(), getHeight());
+		return PHR.r("BasicSnaporta(width={},height={})", getWidth(), getHeight());
 	}
 
 
@@ -94,15 +92,6 @@ public final class BasicEditableSnaporta implements EditableSnaporta
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		return argbPixels[y][x];
-	}
-
-
-	// EDITABLE SNAPORTA
-	@Override public void setARGBAt(int x, int y, int argb)
-	{
-		SnaportaValidate.validateInBounds(this, x, y);
-
-		argbPixels[y][x] = argb;
 	}
 
 }

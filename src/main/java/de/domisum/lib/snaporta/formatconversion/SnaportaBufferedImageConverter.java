@@ -1,8 +1,8 @@
 package de.domisum.lib.snaporta.formatconversion;
 
-import de.domisum.lib.snaporta.EditableSnaporta;
 import de.domisum.lib.snaporta.Snaporta;
-import de.domisum.lib.snaporta.snaportas.BasicEditableSnaporta;
+import de.domisum.lib.snaporta.snaportas.BasicSnaporta;
+import de.domisum.lib.snaporta.snaportas.SnaportaPainter;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
@@ -10,17 +10,17 @@ import java.awt.image.WritableRaster;
 public class SnaportaBufferedImageConverter
 {
 
-	public EditableSnaporta convertFrom(BufferedImage bufferedImage)
+	public Snaporta convertFrom(BufferedImage bufferedImage)
 	{
 		int width = bufferedImage.getWidth();
 		int height = bufferedImage.getHeight();
-		BasicEditableSnaporta snaporta = BasicEditableSnaporta.blankOfWidthAndHeight(width, height);
+		SnaportaPainter snaportaPainter = new SnaportaPainter(BasicSnaporta.blankOfWidthAndHeight(width, height));
 
 		for(int y = 0; y < height; y++)
 			for(int x = 0; x < width; x++)
-				snaporta.setARGBAt(x, y, bufferedImage.getRGB(x, y));
+				snaportaPainter.setARGBAt(x, y, bufferedImage.getRGB(x, y));
 
-		return snaporta;
+		return snaportaPainter.toSnaporta();
 	}
 
 	public BufferedImage convertTo(Snaporta snaporta)

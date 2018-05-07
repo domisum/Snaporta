@@ -5,6 +5,9 @@ import de.domisum.lib.snaporta.color.Color;
 import de.domisum.lib.snaporta.util.ARGBUtil;
 import de.domisum.lib.snaporta.util.Sized;
 
+/**
+ * A snaporta is an immutable abstraction of an ARGB image.
+ */
 public interface Snaporta extends Sized
 {
 

@@ -2,7 +2,7 @@ package de.domisum.lib.snaporta.formatconversion.io;
 
 import de.domisum.lib.auxilium.util.FileUtil;
 import de.domisum.lib.auxilium.util.java.annotations.API;
-import de.domisum.lib.snaporta.EditableSnaporta;
+import de.domisum.lib.snaporta.Snaporta;
 import de.domisum.lib.snaporta.formatconversion.SnaportaBufferedImageConverter;
 
 import java.awt.image.BufferedImage;
@@ -17,7 +17,7 @@ public class SnaportaFromFileReader
 
 
 	// SHORTCUT
-	@API public static EditableSnaporta read(File file)
+	@API public static Snaporta read(File file)
 	{
 		SnaportaFromFileReader fromFileReader = new SnaportaFromFileReader();
 		return fromFileReader.readFromFile(file);
@@ -25,7 +25,7 @@ public class SnaportaFromFileReader
 
 
 	// READING
-	@API public EditableSnaporta readFromFile(File file)
+	@API public Snaporta readFromFile(File file)
 	{
 		BufferedImage bufferedImage = FileUtil.readImage(file);
 		return snaportaBufferedImageConverter.convertFrom(bufferedImage);
