@@ -24,9 +24,9 @@ public class BasicSnaportaTest
 
 	@Test void testZeroSizeInitException()
 	{
-		Assertions.assertThrows(IllegalArgumentException.class, ()->BasicSnaporta.fromARGBPixels(new int[0][0]));
-		Assertions.assertThrows(IllegalArgumentException.class, ()->BasicSnaporta.fromARGBPixels(new int[21][0]));
-		Assertions.assertThrows(IllegalArgumentException.class, ()->BasicSnaporta.fromARGBPixels(new int[0][69]));
+		Assertions.assertThrows(IllegalArgumentException.class, ()->new BasicSnaporta(new int[0][0]));
+		Assertions.assertThrows(IllegalArgumentException.class, ()->new BasicSnaporta(new int[21][0]));
+		Assertions.assertThrows(IllegalArgumentException.class, ()->new BasicSnaporta(new int[0][69]));
 
 		Assertions.assertThrows(IllegalArgumentException.class, ()->BasicSnaporta.blankOfWidthAndHeight(-2, 9));
 		Assertions.assertThrows(IllegalArgumentException.class, ()->BasicSnaporta.blankOfWidthAndHeight(0, 0));
@@ -38,7 +38,7 @@ public class BasicSnaportaTest
 		int[][] nonRectangular = {{0, 1}, {0}};
 
 
-		Assertions.assertThrows(IllegalArgumentException.class, ()->BasicSnaporta.fromARGBPixels(nonRectangular));
+		Assertions.assertThrows(IllegalArgumentException.class, ()->new BasicSnaporta(nonRectangular));
 	}
 
 	@Test void testCopyEquality()

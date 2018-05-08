@@ -26,12 +26,7 @@ public final class BasicSnaporta implements Snaporta
 		if(height < 0)
 			throw new IllegalArgumentException("height can't be negative, was "+height);
 
-		return fromARGBPixels(new int[height][width]);
-	}
-
-	@API public static BasicSnaporta fromARGBPixels(int[][] argbPixels)
-	{
-		return new BasicSnaporta(argbPixels);
+		return new BasicSnaporta(new int[height][width]);
 	}
 
 	@API public static BasicSnaporta copyOf(Snaporta snaporta)
@@ -41,12 +36,12 @@ public final class BasicSnaporta implements Snaporta
 			for(int x = 0; x < snaporta.getWidth(); x++)
 				argbPixels[y][x] = snaporta.getARGBAt(x, y);
 
-		return fromARGBPixels(argbPixels);
+		return new BasicSnaporta(argbPixels);
 	}
 
 
 	// BASIC INIT
-	private BasicSnaporta(int[][] argbPixels)
+	BasicSnaporta(int[][] argbPixels)
 	{
 		// validate minimum dimension
 		Validate.isTrue(argbPixels.length > 0, "snaporta has to have a minimum height of 1");

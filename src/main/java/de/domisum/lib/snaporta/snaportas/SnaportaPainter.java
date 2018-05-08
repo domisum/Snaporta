@@ -37,7 +37,7 @@ public class SnaportaPainter implements Sized
 	// CONVERSION
 	public Snaporta toSnaporta()
 	{
-		return BasicSnaporta.fromARGBPixels(argbPixels);
+		return new BasicSnaporta(argbPixels);
 	}
 
 
