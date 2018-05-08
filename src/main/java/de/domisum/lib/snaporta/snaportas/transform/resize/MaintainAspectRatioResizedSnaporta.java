@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @API
 @RequiredArgsConstructor
-public final class MaintainAspectRationResizedSnaporta implements Snaporta
+public final class MaintainAspectRatioResizedSnaporta implements Snaporta
 {
 
 	// ATTRIBUTES
