@@ -3,10 +3,12 @@ package de.domisum.lib.snaporta.color;
 import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.util.ARGBUtil;
 import de.domisum.lib.snaporta.util.SnaportaValidate;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
+@EqualsAndHashCode
 public final class Color
 {
 
