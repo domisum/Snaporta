@@ -60,8 +60,8 @@ public final class BasicSnaporta implements Snaporta
 		for(int y = 0; y < argbPixels.length; y++)
 		{
 			int[] row = argbPixels[y];
-			String invalidLengthMessage = PHR.r("rows 0 and {} have different lengths: {} vs {}", y, width, row.length);
-			Validate.isTrue(row.length == width, invalidLengthMessage);
+			if(row.length != width)
+				throw new IllegalArgumentException(PHR.r("rows 0 and {} have different lengths: {} vs {}", y, width, row.length));
 
 			argbPixelsCopy[y] = Arrays.copyOf(row, row.length);
 		}
