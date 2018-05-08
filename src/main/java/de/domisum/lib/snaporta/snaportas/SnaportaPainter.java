@@ -59,7 +59,7 @@ public class SnaportaPainter implements Sized
 	}
 
 
-	// EDITABLE
+	// PAINTER
 	public void setARGBAt(int x, int y, int argb)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
