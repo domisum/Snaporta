@@ -1,26 +1,25 @@
-package de.domisum.lib.snaporta.mask;
+package de.domisum.lib.snaporta.mask.bool;
 
 import de.domisum.lib.auxilium.util.PHR;
-import de.domisum.lib.snaporta.util.Sized;
 import de.domisum.lib.snaporta.util.SnaportaValidate;
 import org.apache.commons.lang3.Validate;
 
 import java.util.Arrays;
 
-public class BooleanMask implements Sized
+public class BasicBooleanMask implements BooleanMask
 {
 
 	private final boolean[][] values;
 
 
 	// INIT
-	public static BooleanMask onlyFalseOfWidthAndHeight(int width, int height)
+	public static BasicBooleanMask onlyFalseOfWidthAndHeight(int width, int height)
 	{
 		boolean[][] values = new boolean[height][width];
-		return new BooleanMask(values);
+		return new BasicBooleanMask(values);
 	}
 
-	private BooleanMask(boolean[][] values)
+	private BasicBooleanMask(boolean[][] values)
 	{
 		// validate minimum dimension
 		Validate.isTrue(values.length > 0, "mask has to have a minimum height of 1");
@@ -55,7 +54,7 @@ public class BooleanMask implements Sized
 		return values.length;
 	}
 
-	public boolean getValueAt(int x, int y)
+	@Override public boolean getValueAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		return values[y][x];

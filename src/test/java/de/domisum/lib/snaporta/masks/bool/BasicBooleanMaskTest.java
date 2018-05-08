@@ -1,10 +1,10 @@
-package de.domisum.lib.snaporta.masks;
+package de.domisum.lib.snaporta.masks.bool;
 
-import de.domisum.lib.snaporta.mask.BooleanMask;
+import de.domisum.lib.snaporta.mask.bool.BasicBooleanMask;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class BooleanMaskTest
+public class BasicBooleanMaskTest
 {
 
 	@Test void testInitSize()
@@ -13,7 +13,7 @@ public class BooleanMaskTest
 		int height = 13;
 
 
-		BooleanMask mask = BooleanMask.onlyFalseOfWidthAndHeight(width, height);
+		BasicBooleanMask mask = BasicBooleanMask.onlyFalseOfWidthAndHeight(width, height);
 
 
 		Assertions.assertEquals(width, mask.getWidth());
