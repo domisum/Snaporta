@@ -16,7 +16,9 @@ public class HorizontalGradientDoubleMaskTest
 		Assertions.assertEquals(0.0, doubleMask.getValueAt(5, 10));
 		Assertions.assertEquals(0.0, doubleMask.getValueAt(50, 10));
 
+		Assertions.assertEquals(0.25, doubleMask.getValueAt(75, 10));
 		Assertions.assertEquals(0.5, doubleMask.getValueAt(100, 10));
+		Assertions.assertEquals(0.75, doubleMask.getValueAt(125, 10));
 
 		Assertions.assertEquals(1.0, doubleMask.getValueAt(150, 10));
 		Assertions.assertEquals(1.0, doubleMask.getValueAt(190, 10));

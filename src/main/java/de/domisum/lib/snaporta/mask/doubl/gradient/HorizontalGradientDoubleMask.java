@@ -39,7 +39,8 @@ public class HorizontalGradientDoubleMask implements DoubleMask
 		if(x <= left)
 			return leftNumber;
 
-		double leftProximity = (x-left)/(double) (right-left);
+		double leftDistance = (x-left)/(double) (right-left);
+		double leftProximity = 1-leftDistance;
 		return MathUtil.mix(leftNumber, leftProximity, rightNumber);
 	}
 
