@@ -1,4 +1,4 @@
-package de.domisum.lib.snaporta.mask.bool;
+package de.domisum.lib.snaporta.mask.doubl;
 
 import de.domisum.lib.auxilium.util.PHR;
 import de.domisum.lib.snaporta.util.Sized;
@@ -7,20 +7,20 @@ import org.apache.commons.lang3.Validate;
 
 import java.util.Arrays;
 
-public final class BooleanMaskPainter implements Sized
+public final class DoubleMaskPainter implements Sized
 {
 
-	private final boolean[][] values;
+	private final double[][] values;
 
 
 	// INIT
-	public static BooleanMaskPainter onlyFalseOfWidthAndHeight(int width, int height)
+	public static DoubleMaskPainter onlyFalseOfWidthAndHeight(int width, int height)
 	{
-		boolean[][] values = new boolean[height][width];
-		return new BooleanMaskPainter(values);
+		double[][] values = new double[height][width];
+		return new DoubleMaskPainter(values);
 	}
 
-	private BooleanMaskPainter(boolean[][] values)
+	private DoubleMaskPainter(double[][] values)
 	{
 		// validate minimum dimension
 		Validate.isTrue(values.length > 0, "mask has to have a minimum height of 1");
@@ -30,10 +30,10 @@ public final class BooleanMaskPainter implements Sized
 		// deep copy to avoid modification through array reference
 		int width = values[0].length;
 
-		boolean[][] valuesCopy = new boolean[values.length][];
+		double[][] valuesCopy = new double[values.length][];
 		for(int y = 0; y < values.length; y++)
 		{
-			boolean[] row = values[y];
+			double[] row = values[y];
 			if(row.length != width)
 				throw new IllegalArgumentException(PHR.r("rows 0 and {} have different lengths: {} vs {}", y, width, row.length));
 
@@ -45,9 +45,9 @@ public final class BooleanMaskPainter implements Sized
 
 
 	// CONVERSION
-	public BooleanMask toMask()
+	public DoubleMask toMask()
 	{
-		return new BasicBooleanMask(values);
+		return new BasicDoubleMask(values);
 	}
 
 
@@ -62,7 +62,7 @@ public final class BooleanMaskPainter implements Sized
 		return values.length;
 	}
 
-	public boolean getValueAt(int x, int y)
+	public double getValueAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		return values[y][x];
@@ -70,7 +70,7 @@ public final class BooleanMaskPainter implements Sized
 
 
 	// PAINTER
-	public void setValueAt(int x, int y, boolean value)
+	public void setValueAt(int x, int y, double value)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		values[y][x] = value;
