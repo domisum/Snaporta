@@ -110,7 +110,7 @@ public final class Color
 		String blueHex = getComponentAsHex(blue);
 		String opacityPercent = Math.round((alpha/255d)*100)+"%";
 
-		return "#"+redHex+greenHex+blueHex+"_"+opacityPercent;
+		return "#"+redHex+greenHex+blueHex+"-"+opacityPercent;
 	}
 
 
