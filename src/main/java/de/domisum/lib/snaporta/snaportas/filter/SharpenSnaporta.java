@@ -11,7 +11,7 @@ import de.domisum.lib.snaporta.util.SnaportaValidate;
 public class SharpenSnaporta implements Snaporta
 {
 
-	// SETTINGS
+	// INPUT
 	private final Snaporta baseSnaporta;
 
 	// UTIL
@@ -22,8 +22,6 @@ public class SharpenSnaporta implements Snaporta
 	public SharpenSnaporta(Snaporta baseSnaporta, double sharpness)
 	{
 		this.baseSnaporta = baseSnaporta;
-
-		System.out.println(createSharpenMatrix(sharpness));
 		matrixInterpolator = new MatrixInterpolator(new IgnoreOutOfBoundsMatrixOnSnaportaEvaluator(),
 				createSharpenMatrix(sharpness)
 		);
@@ -31,7 +29,11 @@ public class SharpenSnaporta implements Snaporta
 
 	private Matrix createSharpenMatrix(double s)
 	{
-		double[][] kernel = {{-1*s, -1*s, -1*s}, {-1*s, (8*s)+1, -1*s}, {-1*s, -1*s, -1*s}};
+		double[] line1 = {-1*s, -1*s, -1*s};
+		double[] line2 = {-1*s, (8*s)+1, -1*s};
+		double[] line3 = {-1*s, -1*s, -1*s};
+
+		double[][] kernel = {line1, line2, line3};
 		return new Matrix(kernel);
 	}
 
