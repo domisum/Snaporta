@@ -105,4 +105,26 @@ public class Matrix
 		return entries[inEntriesY][inEntriesX];
 	}
 
+
+	// DERIVE
+	@API public Matrix deriveMultiply(double factor)
+	{
+		double[][] multiplied = new double[getWidth()][getWidth()];
+		for(int x = 0; x < getWidth(); ++x)
+			for(int y = 0; y < getWidth(); ++y)
+				multiplied[x][y] = entries[x][y]*factor;
+
+		return new Matrix(multiplied);
+	}
+
+	@API public Matrix deriveNormalized()
+	{
+		double kernelValueSum = 0.0;
+		for(int x = 0; x < getWidth(); ++x)
+			for(int y = 0; y < getWidth(); ++y)
+				kernelValueSum += entries[x][y];
+
+		return deriveMultiply(1/kernelValueSum);
+	}
+
 }

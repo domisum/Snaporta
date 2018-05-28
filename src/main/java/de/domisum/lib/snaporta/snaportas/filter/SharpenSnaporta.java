@@ -8,39 +8,31 @@ import de.domisum.lib.snaporta.snaportas.transform.resize.interpolator.matrix.Ma
 import de.domisum.lib.snaporta.util.SnaportaValidate;
 
 @API
-public class SmoothSnaporta implements Snaporta
+public class SharpenSnaporta implements Snaporta
 {
 
 	// SETTINGS
 	private final Snaporta baseSnaporta;
-	private final int radius;
 
 	// UTIL
 	private final MatrixInterpolator matrixInterpolator;
 
 
 	// INIT
-	public SmoothSnaporta(Snaporta baseSnaporta, int radius)
+	public SharpenSnaporta(Snaporta baseSnaporta, double sharpness)
 	{
 		this.baseSnaporta = baseSnaporta;
-		this.radius = radius;
 
-		matrixInterpolator = new MatrixInterpolator(new IgnoreOutOfBoundsMatrixOnSnaportaEvaluator(), createGaussianBlurMatrix());
+		System.out.println(createSharpenMatrix(sharpness));
+		matrixInterpolator = new MatrixInterpolator(new IgnoreOutOfBoundsMatrixOnSnaportaEvaluator(),
+				createSharpenMatrix(sharpness)
+		);
 	}
 
-	private Matrix createGaussianBlurMatrix()
+	private Matrix createSharpenMatrix(double s)
 	{
-		int W = (radius*2)+1;
-		double sigma = 1;
-		double mean = W/2;
-
-		double[][] kernel = new double[W][W];
-		for(int x = 0; x < W; ++x)
-			for(int y = 0; y < W; ++y)
-				kernel[x][y] =
-						Math.exp(-0.5*(Math.pow((x-mean)/sigma, 2.0)+Math.pow((y-mean)/sigma, 2.0)))/(2*Math.PI*sigma*sigma);
-
-		return new Matrix(kernel).deriveNormalized();
+		double[][] kernel = {{-1*s, -1*s, -1*s}, {-1*s, (8*s)+1, -1*s}, {-1*s, -1*s, -1*s}};
+		return new Matrix(kernel);
 	}
 
 
