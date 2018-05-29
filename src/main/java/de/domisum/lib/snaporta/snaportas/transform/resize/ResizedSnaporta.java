@@ -28,11 +28,7 @@ public final class ResizedSnaporta implements Snaporta
 	// INIT
 	public ResizedSnaporta(int width, int height, Snaporta baseSnaporta)
 	{
-		this.width = width;
-		this.height = height;
-		this.baseSnaporta = baseSnaporta;
-
-		interpolator = DEFAULT_INTERPOLATOR;
+		this(width, height, baseSnaporta, DEFAULT_INTERPOLATOR);
 	}
 
 
