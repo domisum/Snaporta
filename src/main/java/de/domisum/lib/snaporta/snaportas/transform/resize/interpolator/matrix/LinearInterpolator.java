@@ -40,7 +40,7 @@ public class LinearInterpolator extends MatrixInterpolator
 				matrixEntries[inEntriesY][inEntriesX] = relativeProximity;
 			}
 
-		return new Matrix(matrixEntries);
+		return new Matrix(matrixEntries).deriveNormalized();
 	}
 
 }
