@@ -3,7 +3,6 @@ package de.domisum.lib.snaporta.util;
 import de.domisum.lib.auxilium.util.PHR;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.Validate;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SnaportaValidate
@@ -27,22 +26,22 @@ public final class SnaportaValidate
 	// GENERAL
 	public static void validateInInterval(int minValue, int maxValue, String valueName, int value)
 	{
-		Validate.inclusiveBetween(
-				minValue,
-				maxValue,
-				value,
-				PHR.r(valueName+" has to be in interval [{}-{}], but was {}", minValue, maxValue, value)
-		);
+		if((value < minValue) || (value > maxValue))
+			throw new IllegalArgumentException(PHR.r(valueName+" has to be in interval [{}-{}], but was {}",
+					minValue,
+					maxValue,
+					value
+			));
 	}
 
 	public static void validateInDoubleInterval(double minValue, double maxValue, String valueName, double value)
 	{
-		Validate.inclusiveBetween(
-				minValue,
-				maxValue,
-				value,
-				PHR.r(valueName+" has to be in interval [{}-{}], but was {}", minValue, maxValue, value)
-		);
+		if((value < minValue) || (value > maxValue))
+			throw new IllegalArgumentException(PHR.r(valueName+" has to be in interval [{}-{}], but was {}",
+					minValue,
+					maxValue,
+					value
+			));
 	}
 
 }
