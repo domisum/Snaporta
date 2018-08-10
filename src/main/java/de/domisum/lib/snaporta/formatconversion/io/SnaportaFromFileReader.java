@@ -7,6 +7,7 @@ import de.domisum.lib.snaporta.formatconversion.SnaportaBufferedImageConverter;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 @API
 public class SnaportaFromFileReader
@@ -23,12 +24,35 @@ public class SnaportaFromFileReader
 		return fromFileReader.readFromFile(file);
 	}
 
+	@API public static Snaporta readUncaught(File file) throws IOException
+	{
+		SnaportaFromFileReader fromFileReader = new SnaportaFromFileReader();
+		return fromFileReader.readFromFileUncaught(file);
+	}
+
 
 	// READING
 	@API public Snaporta readFromFile(File file)
 	{
-		BufferedImage bufferedImage = FileUtil.readImage(file);
+		BufferedImage bufferedImage = readBufferedImage(file);
 		return snaportaBufferedImageConverter.convertFrom(bufferedImage);
+	}
+
+	@API public Snaporta readFromFileUncaught(File file) throws IOException
+	{
+		BufferedImage bufferedImage = readBufferedImageUncaught(file);
+		return snaportaBufferedImageConverter.convertFrom(bufferedImage);
+	}
+
+
+	private BufferedImage readBufferedImage(File file)
+	{
+		return FileUtil.readImage(file);
+	}
+
+	private BufferedImage readBufferedImageUncaught(File file) throws IOException
+	{
+		return FileUtil.readImageUncaught(file);
 	}
 
 }
