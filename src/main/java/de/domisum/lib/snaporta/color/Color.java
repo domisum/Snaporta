@@ -128,21 +128,18 @@ public final class Color
 
 	@API public double getHue()
 	{
-		// TODO cache
 		float[] hsb = java.awt.Color.RGBtoHSB(red, green, blue, null);
 		return hsb[0];
 	}
 
 	@API public double getSaturation()
 	{
-		// TODO cache
 		float[] hsb = java.awt.Color.RGBtoHSB(red, green, blue, null);
 		return hsb[1];
 	}
 
 	@API public double getBrightness()
 	{
-		// TODO cache
 		float[] hsb = java.awt.Color.RGBtoHSB(red, green, blue, null);
 		return hsb[2];
 	}
