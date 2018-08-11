@@ -94,9 +94,10 @@ public final class Color
 		String greenHexString = hexRaw.substring(2, 4);
 		String blueHexString = hexRaw.substring(4, 6);
 
-		int red = Integer.parseInt(redHexString, 16);
-		int green = Integer.parseInt(greenHexString, 16);
-		int blue = Integer.parseInt(blueHexString, 16);
+		final int hexBase = 16;
+		int red = Integer.parseInt(redHexString, hexBase);
+		int green = Integer.parseInt(greenHexString, hexBase);
+		int blue = Integer.parseInt(blueHexString, hexBase);
 
 		return fromRGB(red, green, blue);
 	}
@@ -108,7 +109,7 @@ public final class Color
 		String redHex = getComponentAsHex(red);
 		String greenHex = getComponentAsHex(green);
 		String blueHex = getComponentAsHex(blue);
-		String opacityPercent = Math.round((alpha/255d)*100)+"%";
+		String opacityPercent = Math.round((alpha/(double) COLOR_COMPONENT_MAX)*100)+"%";
 
 		return "#"+redHex+greenHex+blueHex+"-"+opacityPercent;
 	}
