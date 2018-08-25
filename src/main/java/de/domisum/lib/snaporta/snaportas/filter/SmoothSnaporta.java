@@ -32,7 +32,7 @@ public class SmoothSnaporta implements Snaporta
 	{
 		int W = (radius*2)+1;
 		double sigma = 1;
-		double mean = W/2;
+		double mean = (double)W/2;
 
 		double[][] kernel = new double[W][W];
 		for(int x = 0; x < W; ++x)
