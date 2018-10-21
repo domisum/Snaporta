@@ -81,7 +81,7 @@ public final class MaintainAspectRatioResizedSnaporta implements Snaporta
 		int resizedSnaportaFromPaddingOffsetX = (width-padding.getHorizontalSum()-resizedSnaporta.getWidth())/2;
 		int resizedSnaportaFromPaddingOffsetY = (height-padding.getVerticalSum()-resizedSnaporta.getHeight())/2;
 		resizedSnaportaX = resizedSnaportaFromPaddingOffsetX+padding.getLeft();
-		this.resizedSnaportaY = resizedSnaportaFromPaddingOffsetY+padding.getTop();
+		resizedSnaportaY = resizedSnaportaFromPaddingOffsetY+padding.getTop();
 	}
 
 }
