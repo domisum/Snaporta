@@ -7,8 +7,8 @@ public class ClosestPixelInterpolator implements Interpolator
 
 	@Override public int interpolateARGBAt(Snaporta snaporta, double x, double y)
 	{
-		int closestPixelX = (int) Math.round(x);
-		int closestPixelY = (int) Math.round(y);
+		int closestPixelX = (int) Math.floor(x);
+		int closestPixelY = (int) Math.floor(y);
 
 		return snaporta.getARGBAt(closestPixelX, closestPixelY);
 	}
