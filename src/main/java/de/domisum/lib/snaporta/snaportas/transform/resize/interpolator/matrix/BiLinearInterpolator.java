@@ -25,15 +25,14 @@ public class BiLinearInterpolator implements Interpolator
 		valuedPixels.add(getValuedPixel(snaporta, x, y, xFloor, yFloor+1));
 		valuedPixels.remove(null);
 
-		int redSum = 0;
-		int greenSum = 0;
-		int blueSum = 0;
-		int alphaSum = 0;
+		double redSum = 0;
+		double greenSum = 0;
+		double blueSum = 0;
+		double alphaSum = 0;
 
 		for(ValuedPixel valuedPixel : valuedPixels)
 		{
 			double value = valuedPixel.getValue();
-
 			redSum += valuedPixel.getColor().getRed()*value;
 			greenSum += valuedPixel.getColor().getGreen()*value;
 			blueSum += valuedPixel.getColor().getBlue()*value;
