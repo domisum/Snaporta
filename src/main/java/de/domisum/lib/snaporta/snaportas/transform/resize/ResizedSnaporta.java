@@ -2,8 +2,8 @@ package de.domisum.lib.snaporta.snaportas.transform.resize;
 
 import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.Snaporta;
-import de.domisum.lib.snaporta.snaportas.transform.resize.interpolator.ClosestPixelInterpolator;
 import de.domisum.lib.snaporta.snaportas.transform.resize.interpolator.Interpolator;
+import de.domisum.lib.snaporta.snaportas.transform.resize.interpolator.matrix.BiLinearInterpolator;
 import de.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +14,13 @@ public final class ResizedSnaporta implements Snaporta
 {
 
 	// DEFAULTS
-	private static final Interpolator DEFAULT_INTERPOLATOR = new ClosestPixelInterpolator();
+	private static final Interpolator DEFAULT_INTERPOLATOR = new BiLinearInterpolator();
 
 	// ATTRIBUTES
-	@Getter private final int width;
-	@Getter private final int height;
+	@Getter
+	private final int width;
+	@Getter
+	private final int height;
 
 	// REFERENCES
 	private final Snaporta baseSnaporta;
@@ -33,7 +35,8 @@ public final class ResizedSnaporta implements Snaporta
 
 
 	// SNAPORTA
-	@Override public int getARGBAt(int x, int y)
+	@Override
+	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 
