@@ -10,6 +10,21 @@ import java.awt.image.WritableRaster;
 public class SnaportaBufferedImageConverter
 {
 
+	private static final SnaportaBufferedImageConverter SNAPORTA_BUFFERED_IMAGE_CONVERTER = new SnaportaBufferedImageConverter();
+
+	// UTIL
+	public static BufferedImage convert(Snaporta snaporta)
+	{
+		return SNAPORTA_BUFFERED_IMAGE_CONVERTER.convertTo(snaporta);
+	}
+
+	public static Snaporta convert(BufferedImage bufferedImage)
+	{
+		return SNAPORTA_BUFFERED_IMAGE_CONVERTER.convertFrom(bufferedImage);
+	}
+
+
+	// CONVERT
 	public Snaporta convertFrom(BufferedImage bufferedImage)
 	{
 		int width = bufferedImage.getWidth();
