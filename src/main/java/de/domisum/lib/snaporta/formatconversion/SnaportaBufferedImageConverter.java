@@ -1,5 +1,6 @@
 package de.domisum.lib.snaporta.formatconversion;
 
+import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.Snaporta;
 import de.domisum.lib.snaporta.snaportas.BasicSnaporta;
 import de.domisum.lib.snaporta.snaportas.SnaportaPainter;
@@ -13,11 +14,19 @@ public class SnaportaBufferedImageConverter
 	private static final SnaportaBufferedImageConverter SNAPORTA_BUFFERED_IMAGE_CONVERTER = new SnaportaBufferedImageConverter();
 
 	// UTIL
+	@API
 	public static BufferedImage convert(Snaporta snaporta)
 	{
-		return SNAPORTA_BUFFERED_IMAGE_CONVERTER.convertTo(snaporta);
+		return convert(snaporta, BufferedImage.TYPE_INT_ARGB);
 	}
 
+	@API
+	public static BufferedImage convert(Snaporta snaporta, int bufferedImageType)
+	{
+		return SNAPORTA_BUFFERED_IMAGE_CONVERTER.convertTo(snaporta, bufferedImageType);
+	}
+
+	@API
 	public static Snaporta convert(BufferedImage bufferedImage)
 	{
 		return SNAPORTA_BUFFERED_IMAGE_CONVERTER.convertFrom(bufferedImage);
@@ -38,14 +47,24 @@ public class SnaportaBufferedImageConverter
 		return snaportaPainter.toSnaporta();
 	}
 
-	public BufferedImage convertTo(Snaporta snaporta)
+	public BufferedImage convertTo(Snaporta snaporta, int bufferedImageType)
 	{
-		BufferedImage bufferedImage = new BufferedImage(snaporta.getWidth(), snaporta.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		BufferedImage bufferedImage = new BufferedImage(snaporta.getWidth(), snaporta.getHeight(), bufferedImageType);
 
 		int[] pixelsLinear = new int[snaporta.getWidth()*snaporta.getHeight()];
 		for(int y = 0; y < snaporta.getHeight(); y++)
 			for(int x = 0; x < snaporta.getWidth(); x++)
-				pixelsLinear[(y*snaporta.getWidth())+x] = snaporta.getARGBAt(x, y);
+			{
+				int pixel;
+				if(bufferedImageType == BufferedImage.TYPE_INT_ARGB)
+					pixel = snaporta.getARGBAt(x, y);
+				else if(bufferedImageType == BufferedImage.TYPE_INT_RGB)
+					pixel = snaporta.getARGBAt(x, y)&0xFFFFFF;
+				else
+					throw new UnsupportedOperationException("unsupported BufferedImageType: "+bufferedImageType);
+
+				pixelsLinear[(y*snaporta.getWidth())+x] = pixel;
+			}
 
 		WritableRaster raster = (WritableRaster) bufferedImage.getData();
 		raster.setDataElements(0, 0, snaporta.getWidth(), snaporta.getHeight(), pixelsLinear);

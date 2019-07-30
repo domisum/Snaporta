@@ -12,12 +12,9 @@ import java.io.File;
 public class SnaportaToFileWriter
 {
 
-	// DEPENDENCIES
-	private final SnaportaBufferedImageConverter snaportaBufferedImageConverter = new SnaportaBufferedImageConverter();
-
-
 	// SHORTCUT
-	@API public static void write(File file, Snaporta snaporta)
+	@API
+	public static void write(File file, Snaporta snaporta)
 	{
 		SnaportaToFileWriter writer = new SnaportaToFileWriter();
 		writer.writeToFile(file, snaporta);
@@ -25,9 +22,10 @@ public class SnaportaToFileWriter
 
 
 	// WRITING
-	@API public void writeToFile(File file, Snaporta snaporta)
+	@API
+	public void writeToFile(File file, Snaporta snaporta)
 	{
-		BufferedImage bufferedImage = snaportaBufferedImageConverter.convertTo(snaporta);
+		BufferedImage bufferedImage = SnaportaBufferedImageConverter.convert(snaporta);
 		FileUtil.writeImage(file, bufferedImage);
 	}
 
