@@ -6,23 +6,29 @@ import de.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Validate;
 
 @EqualsAndHashCode
 public final class Color
 {
 
 	// CONSTANTS
-	@API public static final int COLOR_COMPONENT_MAX = 255;
+	@API
+	public static final int COLOR_COMPONENT_MAX = 255;
 
-	@API public static final int ALPHA_TRANSPARENT = 0;
-	@API public static final int ALPHA_OPAQUE = COLOR_COMPONENT_MAX;
+	@API
+	public static final int ALPHA_TRANSPARENT = 0;
+	@API
+	public static final int ALPHA_OPAQUE = COLOR_COMPONENT_MAX;
 
 	// ATTRIBUTES
-	@Getter private final int alpha;
-	@Getter private final int red;
-	@Getter private final int green;
-	@Getter private final int blue;
+	@Getter
+	private final int alpha;
+	@Getter
+	private final int red;
+	@Getter
+	private final int green;
+	@Getter
+	private final int blue;
 
 
 	// INIT
@@ -39,7 +45,8 @@ public final class Color
 		this.blue = blue;
 	}
 
-	@API public static Color fromARGBInt(int argb)
+	@API
+	public static Color fromARGBInt(int argb)
 	{
 		return fromARGB(
 				ARGBUtil.getAlphaComponent(argb),
@@ -49,17 +56,20 @@ public final class Color
 		);
 	}
 
-	@API public static Color fromARGB(int alpha, int red, int green, int blue)
+	@API
+	public static Color fromARGB(int alpha, int red, int green, int blue)
 	{
 		return new Color(alpha, red, green, blue);
 	}
 
-	@API public static Color fromRGB(int red, int green, int blue)
+	@API
+	public static Color fromRGB(int red, int green, int blue)
 	{
 		return new Color(ALPHA_OPAQUE, red, green, blue);
 	}
 
-	@API public static Color fromOHSB(double opacity, double hue, double saturation, double brighntess)
+	@API
+	public static Color fromOHSB(double opacity, double hue, double saturation, double brighntess)
 	{
 		java.awt.Color hsbColor = java.awt.Color.getHSBColor((float) hue, (float) saturation, (float) brighntess);
 		Color hsb = fromAwt(hsbColor);
@@ -67,32 +77,40 @@ public final class Color
 		return hsb.deriveWithOpacity(opacity);
 	}
 
-	@API public static Color fromBrightnessAbs(int brightness)
+	@API
+	public static Color fromBrightnessAbs(int brightness)
 	{
 		return fromRGB(brightness, brightness, brightness);
 	}
 
-	@API public static Color fromAwt(java.awt.Color color)
+	@API
+	public static Color fromAwt(java.awt.Color color)
 	{
 		return new Color(color.getAlpha(), color.getRed(), color.getGreen(), color.getBlue());
 	}
 
-	@API public static Color fullyTransparent()
+	@API
+	public static Color fullyTransparent()
 	{
 		return new Color(ALPHA_TRANSPARENT, 0, 0, 0);
 	}
 
 
-	@API public static Color fromRGBHex(String hex)
+	@API
+	public static Color fromRGBHex(String hex)
 	{
-		Validate.isTrue(hex.startsWith("#"), "hex color has to start with #, was '"+hex+"'");
-		Validate.isTrue(hex.length() == 7, "hex has to be in format '#000000', was '"+hex+"'");
-		String hexRaw = hex.substring(1).toUpperCase();
-		Validate.isTrue(StringUtils.containsOnly(hexRaw, "0123456789ABCDEF"), "hex contains invalid characters: '"+hexRaw+"'");
+		String hexProcessed = hex.toUpperCase();
+		if(hexProcessed.startsWith("#"))
+			hexProcessed = hexProcessed.substring(1);
 
-		String redHexString = hexRaw.substring(0, 2);
-		String greenHexString = hexRaw.substring(2, 4);
-		String blueHexString = hexRaw.substring(4, 6);
+		if(!StringUtils.containsOnly(hexProcessed, "0123456789ABCDEF"))
+			throw new IllegalArgumentException("hex contains invalid characters: '"+hex+"'");
+		if(hexProcessed.length() != 6)
+			throw new IllegalArgumentException("hex has to have length of 6, but was: '"+hex+"'");
+
+		String redHexString = hexProcessed.substring(0, 2);
+		String greenHexString = hexProcessed.substring(2, 4);
+		String blueHexString = hexProcessed.substring(4, 6);
 
 		final int hexBase = 16;
 		int red = Integer.parseInt(redHexString, hexBase);
@@ -104,7 +122,8 @@ public final class Color
 
 
 	// OBJECT
-	@Override public String toString()
+	@Override
+	public String toString()
 	{
 		String redHex = getComponentAsHex(red);
 		String greenHex = getComponentAsHex(green);
@@ -116,30 +135,35 @@ public final class Color
 
 
 	// GETTERS
-	@API public double getOpacity()
+	@API
+	public double getOpacity()
 	{
 		return alpha/(double) COLOR_COMPONENT_MAX;
 	}
 
-	@API public double getRGBBrightnessRelative()
+	@API
+	public double getRGBBrightnessRelative()
 	{
 		double componentSum = red+green+blue;
 		return componentSum/3/COLOR_COMPONENT_MAX;
 	}
 
-	@API public double getHue()
+	@API
+	public double getHue()
 	{
 		float[] hsb = java.awt.Color.RGBtoHSB(red, green, blue, null);
 		return hsb[0];
 	}
 
-	@API public double getSaturation()
+	@API
+	public double getSaturation()
 	{
 		float[] hsb = java.awt.Color.RGBtoHSB(red, green, blue, null);
 		return hsb[1];
 	}
 
-	@API public double getBrightness()
+	@API
+	public double getBrightness()
 	{
 		float[] hsb = java.awt.Color.RGBtoHSB(red, green, blue, null);
 		return hsb[2];
@@ -159,7 +183,8 @@ public final class Color
 
 
 	// DERIVE
-	@API public Color deriveOpposite()
+	@API
+	public Color deriveOpposite()
 	{
 		int oppositeRed = COLOR_COMPONENT_MAX-red;
 		int oppositeGreen = COLOR_COMPONENT_MAX-green;
@@ -168,34 +193,40 @@ public final class Color
 		return new Color(alpha, oppositeRed, oppositeGreen, oppositeBlue);
 	}
 
-	@API public Color deriveWithAlpha(int deriveAlpha)
+	@API
+	public Color deriveWithAlpha(int deriveAlpha)
 	{
 		return fromARGB(deriveAlpha, getRed(), getGreen(), getBlue());
 	}
 
-	@API public Color deriveWithRed(int deriveRed)
+	@API
+	public Color deriveWithRed(int deriveRed)
 	{
 		return fromARGB(getAlpha(), deriveRed, getGreen(), getBlue());
 	}
 
-	@API public Color deriveWithGreen(int deriveGreen)
+	@API
+	public Color deriveWithGreen(int deriveGreen)
 	{
 		return fromARGB(getAlpha(), getRed(), deriveGreen, getBlue());
 	}
 
-	@API public Color deriveWithBlue(int deriveBlue)
+	@API
+	public Color deriveWithBlue(int deriveBlue)
 	{
 		return fromARGB(getAlpha(), getRed(), getGreen(), deriveBlue);
 	}
 
 
-	@API public Color deriveWithOpacity(double opacity)
+	@API
+	public Color deriveWithOpacity(double opacity)
 	{
 		int newAlpha = (int) Math.round(opacity*COLOR_COMPONENT_MAX);
 		return deriveWithAlpha(newAlpha);
 	}
 
-	@API public Color deriveMultiplyOpacity(double opacity)
+	@API
+	public Color deriveMultiplyOpacity(double opacity)
 	{
 		SnaportaValidate.validateInDoubleInterval(0, 1, "opacity", opacity);
 

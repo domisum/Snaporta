@@ -23,15 +23,26 @@ public class CompositeSnaporta implements Snaporta
 {
 
 	// ATTRIBUTES
-	@Getter private final int width;
-	@Getter private final int height;
+	@Getter
+	private final int width;
+	@Getter
+	private final int height;
 
 	// COMPONENTS
 	private final List<CompositeSnaportaComponent> componentsTopDown = new ArrayList<>();
 
 
 	// COMPONENTS
-	@API public void addComponent(CompositeSnaportaComponent component)
+	@API
+	public void setComponentOnZ(Snaporta snaporta, int x, int y, double z)
+	{
+		CompositeSnaportaComponent component = new CompositeSnaportaComponent(snaporta, x, y, z);
+		componentsTopDown.removeIf(c->c.getZ() == component.getZ());
+		addComponent(component);
+	}
+
+	@API
+	public void addComponent(CompositeSnaportaComponent component)
 	{
 		validateUniqueZ(component);
 
@@ -39,12 +50,14 @@ public class CompositeSnaporta implements Snaporta
 		Collections.sort(componentsTopDown);
 	}
 
-	@API public void addComponentOnTop(Snaporta snaporta)
+	@API
+	public void addComponentOnTop(Snaporta snaporta)
 	{
 		addComponentOnTop(snaporta, 0, 0);
 	}
 
-	@API public void addComponentOnTop(Snaporta snaporta, int x, int y)
+	@API
+	public void addComponentOnTop(Snaporta snaporta, int x, int y)
 	{
 		OptionalDouble maxZ = componentsTopDown.stream().mapToDouble(CompositeSnaportaComponent::getZ).max();
 		double onTopZ = maxZ.isPresent() ? (maxZ.getAsDouble()+1) : 0;
@@ -61,7 +74,8 @@ public class CompositeSnaporta implements Snaporta
 
 
 	// SNAPORTA
-	@Override public int getARGBAt(int x, int y)
+	@Override
+	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		return getARGBAtDepth(x, y, 0);
