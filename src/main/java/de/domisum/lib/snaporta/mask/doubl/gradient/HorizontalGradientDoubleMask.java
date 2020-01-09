@@ -10,7 +10,8 @@ public class HorizontalGradientDoubleMask extends StraightGradientDoubleMask
 	}
 
 	// MASK
-	@Override public double getValueAt(int x, int y)
+	@Override
+	public double getValueAt(int x, int y)
 	{
 		return getGradientAt(x);
 	}

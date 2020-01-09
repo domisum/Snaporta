@@ -25,7 +25,8 @@ public class Matrix
 
 
 	// INIT
-	@API public Matrix(double[][] entries)
+	@API
+	public Matrix(double[][] entries)
 	{
 		int width = entries[0].length;
 		int height = entries.length;
@@ -46,7 +47,8 @@ public class Matrix
 
 
 	// OBJECT
-	@Override public String toString()
+	@Override
+	public String toString()
 	{
 		int valueLength = 5;
 
@@ -75,7 +77,8 @@ public class Matrix
 
 
 	// GETTERS
-	@API private int getWidth()
+	@API
+	private int getWidth()
 	{
 		return entries[0].length;
 	}
@@ -85,17 +88,20 @@ public class Matrix
 		return entries.length;
 	}
 
-	@API public int getHorizontalRadius()
+	@API
+	public int getHorizontalRadius()
 	{
 		return (getWidth()-1)/2;
 	}
 
-	@API public int getVerticalRadius()
+	@API
+	public int getVerticalRadius()
 	{
 		return (getLength()-1)/2;
 	}
 
-	@API public double getEntryAt(int x, int y)
+	@API
+	public double getEntryAt(int x, int y)
 	{
 		int inEntriesX = x+getHorizontalRadius();
 		int inEntriesY = y+getVerticalRadius();
@@ -107,7 +113,8 @@ public class Matrix
 
 
 	// DERIVE
-	@API public Matrix deriveMultiply(double factor)
+	@API
+	public Matrix deriveMultiply(double factor)
 	{
 		double[][] multiplied = new double[getWidth()][getWidth()];
 		for(int x = 0; x < getWidth(); ++x)
@@ -117,7 +124,8 @@ public class Matrix
 		return new Matrix(multiplied);
 	}
 
-	@API public Matrix deriveNormalized()
+	@API
+	public Matrix deriveNormalized()
 	{
 		double kernelValueSum = 0.0;
 		for(int x = 0; x < getWidth(); ++x)

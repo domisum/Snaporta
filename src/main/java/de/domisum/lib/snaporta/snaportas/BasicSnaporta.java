@@ -18,7 +18,8 @@ public final class BasicSnaporta implements Snaporta
 
 
 	// INIT
-	@API public static BasicSnaporta blankOfWidthAndHeight(int width, int height)
+	@API
+	public static BasicSnaporta blankOfWidthAndHeight(int width, int height)
 	{
 		if(width < 0)
 			throw new IllegalArgumentException("width can't be negative, was "+width);
@@ -29,7 +30,8 @@ public final class BasicSnaporta implements Snaporta
 		return new BasicSnaporta(new int[height][width]);
 	}
 
-	@API public static BasicSnaporta copyOf(Snaporta snaporta)
+	@API
+	public static BasicSnaporta copyOf(Snaporta snaporta)
 	{
 		int[][] argbPixels = new int[snaporta.getHeight()][snaporta.getWidth()];
 		for(int y = 0; y < snaporta.getHeight(); y++)
@@ -66,24 +68,28 @@ public final class BasicSnaporta implements Snaporta
 
 
 	// OBJECT
-	@Override public String toString()
+	@Override
+	public String toString()
 	{
 		return PHR.r("BasicSnaporta(width={},height={})", getWidth(), getHeight());
 	}
 
 
 	// SNAPORTA
-	@Override public int getWidth()
+	@Override
+	public int getWidth()
 	{
 		return argbPixels[0].length;
 	}
 
-	@Override public int getHeight()
+	@Override
+	public int getHeight()
 	{
 		return argbPixels.length;
 	}
 
-	@Override public int getARGBAt(int x, int y)
+	@Override
+	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		return argbPixels[y][x];

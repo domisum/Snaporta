@@ -16,11 +16,13 @@ public class CompositeSnaportaComponent implements Comparable<CompositeSnaportaC
 	private final int x;
 	private final int y;
 
-	@Getter private final double z;
+	@Getter
+	private final double z;
 
 
 	// COMPARE
-	@Override public int compareTo(@Nonnull CompositeSnaportaComponent other)
+	@Override
+	public int compareTo(@Nonnull CompositeSnaportaComponent other)
 	{
 		return Comparator.comparing(CompositeSnaportaComponent::getZ).reversed().compare(this, other);
 	}

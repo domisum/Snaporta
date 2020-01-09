@@ -9,7 +9,8 @@ import de.domisum.lib.snaporta.util.ARGBUtil;
 public class IgnoreOutOfBoundsMatrixOnSnaportaEvaluator implements MatrixOnSnaportaEvaluator
 {
 
-	@Override public int evaluateToARGB(Snaporta snaporta, Matrix matrix, int x, int y)
+	@Override
+	public int evaluateToARGB(Snaporta snaporta, Matrix matrix, int x, int y)
 	{
 		double[] evaluatedComponentSum = new double[ColorComponent.values().length];
 		for(int matrixX = -matrix.getHorizontalRadius(); matrixX <= matrix.getHorizontalRadius(); matrixX++)

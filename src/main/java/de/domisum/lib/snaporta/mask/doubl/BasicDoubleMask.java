@@ -44,17 +44,20 @@ public final class BasicDoubleMask implements DoubleMask
 
 
 	// GETTERS
-	@Override public int getWidth()
+	@Override
+	public int getWidth()
 	{
 		return values[0].length;
 	}
 
-	@Override public int getHeight()
+	@Override
+	public int getHeight()
 	{
 		return values.length;
 	}
 
-	@Override public double getValueAt(int x, int y)
+	@Override
+	public double getValueAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		return values[y][x];

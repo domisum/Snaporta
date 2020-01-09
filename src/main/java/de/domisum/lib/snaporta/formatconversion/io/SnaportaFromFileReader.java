@@ -18,13 +18,15 @@ public class SnaportaFromFileReader
 
 
 	// SHORTCUT
-	@API public static Snaporta read(File file)
+	@API
+	public static Snaporta read(File file)
 	{
 		SnaportaFromFileReader fromFileReader = new SnaportaFromFileReader();
 		return fromFileReader.readFromFile(file);
 	}
 
-	@API public static Snaporta readUncaught(File file) throws IOException
+	@API
+	public static Snaporta readUncaught(File file) throws IOException
 	{
 		SnaportaFromFileReader fromFileReader = new SnaportaFromFileReader();
 		return fromFileReader.readFromFileUncaught(file);
@@ -32,13 +34,15 @@ public class SnaportaFromFileReader
 
 
 	// READING
-	@API public Snaporta readFromFile(File file)
+	@API
+	public Snaporta readFromFile(File file)
 	{
 		BufferedImage bufferedImage = readBufferedImage(file);
 		return snaportaBufferedImageConverter.convertFrom(bufferedImage);
 	}
 
-	@API public Snaporta readFromFileUncaught(File file) throws IOException
+	@API
+	public Snaporta readFromFileUncaught(File file) throws IOException
 	{
 		BufferedImage bufferedImage = readBufferedImageUncaught(file);
 		return snaportaBufferedImageConverter.convertFrom(bufferedImage);

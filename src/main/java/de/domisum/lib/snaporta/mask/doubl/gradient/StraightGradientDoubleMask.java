@@ -14,8 +14,10 @@ public abstract class StraightGradientDoubleMask implements DoubleMask
 	private static final double LOW_VALUE = 0.0;
 
 	// SETTINGS
-	@Getter private final int width;
-	@Getter private final int height;
+	@Getter
+	private final int width;
+	@Getter
+	private final int height;
 
 	private final int lowValueCoord;
 	private final int highValueCoord;

@@ -14,7 +14,8 @@ import java.util.Optional;
 public final class Font
 {
 
-	@Getter private final java.awt.Font font;
+	@Getter
+	private final java.awt.Font font;
 
 
 	// INIT
@@ -23,13 +24,15 @@ public final class Font
 		this.font = font.deriveFont(1f);
 	}
 
-	@API public static Font fromAwtFont(java.awt.Font font)
+	@API
+	public static Font fromAwtFont(java.awt.Font font)
 	{
 		return new Font(font);
 	}
 
 
-	@API public static Font fromTTFFile(File ttfFile)
+	@API
+	public static Font fromTTFFile(File ttfFile)
 	{
 		try
 		{
@@ -46,7 +49,8 @@ public final class Font
 		}
 	}
 
-	@API public static Optional<Font> ofSystemFont(String fontName)
+	@API
+	public static Optional<Font> ofSystemFont(String fontName)
 	{
 		GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		java.awt.Font[] graphicsEnvironmentFonts = graphicsEnvironment.getAllFonts();
@@ -59,7 +63,8 @@ public final class Font
 	}
 
 
-	@API public static Font defaultFont()
+	@API
+	public static Font defaultFont()
 	{
 		return fromAwtFont(java.awt.Font.decode("SansSerif"));
 	}

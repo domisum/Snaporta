@@ -28,7 +28,8 @@ public class SnaportaPainter implements Sized
 
 
 	// OBJECT
-	@Override public String toString()
+	@Override
+	public String toString()
 	{
 		return PHR.r("SnaportaPainter(width={},height={})", getWidth(), getHeight());
 	}
@@ -42,12 +43,14 @@ public class SnaportaPainter implements Sized
 
 
 	// SNAPORTA
-	@Override public int getWidth()
+	@Override
+	public int getWidth()
 	{
 		return argbPixels[0].length;
 	}
 
-	@Override public int getHeight()
+	@Override
+	public int getHeight()
 	{
 		return argbPixels.length;
 	}

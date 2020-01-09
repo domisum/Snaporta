@@ -9,7 +9,8 @@ public class BasicSnaportaTest
 {
 
 	// TEST: INIT
-	@Test void testBlankOfWidthAndHeightDimensions()
+	@Test
+	void testBlankOfWidthAndHeightDimensions()
 	{
 		int width = 20;
 		int height = 10;
@@ -22,7 +23,8 @@ public class BasicSnaportaTest
 		Assertions.assertEquals(height, snaporta.getHeight());
 	}
 
-	@Test void testZeroSizeInitException()
+	@Test
+	void testZeroSizeInitException()
 	{
 		Assertions.assertThrows(IllegalArgumentException.class, ()->new BasicSnaporta(new int[0][0]));
 		Assertions.assertThrows(IllegalArgumentException.class, ()->new BasicSnaporta(new int[21][0]));
@@ -33,7 +35,8 @@ public class BasicSnaportaTest
 		Assertions.assertThrows(IllegalArgumentException.class, ()->BasicSnaporta.blankOfWidthAndHeight(10, 0));
 	}
 
-	@Test void testNonRectangularArrayInit()
+	@Test
+	void testNonRectangularArrayInit()
 	{
 		int[][] nonRectangular = {{0, 1}, {0}};
 
@@ -41,7 +44,8 @@ public class BasicSnaportaTest
 		Assertions.assertThrows(IllegalArgumentException.class, ()->new BasicSnaporta(nonRectangular));
 	}
 
-	@Test void testCopyEquality()
+	@Test
+	void testCopyEquality()
 	{
 		SnaportaPainter painter = new SnaportaPainter(BasicSnaporta.blankOfWidthAndHeight(16, 9));
 		painter.setColorAt(0, 3, Colors.RED);

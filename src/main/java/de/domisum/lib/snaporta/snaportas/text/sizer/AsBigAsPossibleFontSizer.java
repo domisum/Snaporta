@@ -13,7 +13,8 @@ public class AsBigAsPossibleFontSizer implements FontSizer
 {
 
 	// SIZING
-	@Override public double size(Font font, int width, int height, Padding padding, String text)
+	@Override
+	public double size(Font font, int width, int height, Padding padding, String text)
 	{
 		int availableWidth = width-padding.getHorizontalSum();
 		int availableHeight = height-padding.getVerticalSum();

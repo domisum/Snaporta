@@ -5,11 +5,14 @@ import de.domisum.lib.auxilium.util.java.annotations.API;
 public interface Sized
 {
 
-	@API int getWidth();
+	@API
+	int getWidth();
 
-	@API int getHeight();
+	@API
+	int getHeight();
 
-	@API default boolean isInBounds(int x, int y)
+	@API
+	default boolean isInBounds(int x, int y)
 	{
 		if((x < 0) || (x >= getWidth()))
 			return false;

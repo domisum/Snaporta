@@ -8,7 +8,8 @@ import de.domisum.lib.snaporta.snaportas.text.dimensions.TextDimensions;
 public class HorizontalAlignRightTextPositioner implements HorizontalTextPositioner
 {
 
-	@Override public double position(int width, Padding padding, TextDimensions textDimensions)
+	@Override
+	public double position(int width, Padding padding, TextDimensions textDimensions)
 	{
 		return width-(padding.getHorizontalSum()+textDimensions.getWidth());
 	}

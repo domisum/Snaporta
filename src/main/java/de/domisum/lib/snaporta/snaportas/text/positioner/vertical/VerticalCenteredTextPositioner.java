@@ -8,7 +8,8 @@ import de.domisum.lib.snaporta.snaportas.text.dimensions.TextDimensions;
 public class VerticalCenteredTextPositioner implements VerticalTextPositioner
 {
 
-	@Override public double position(int height, Padding padding, TextDimensions textDimensions)
+	@Override
+	public double position(int height, Padding padding, TextDimensions textDimensions)
 	{
 		double availableHeight = height-textDimensions.getHeight()-padding.getVerticalSum();
 		return (availableHeight/2)+padding.getTop();

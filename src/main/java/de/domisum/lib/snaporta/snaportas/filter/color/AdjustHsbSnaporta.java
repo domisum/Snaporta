@@ -22,17 +22,20 @@ public class AdjustHsbSnaporta implements Snaporta
 
 
 	// SNAPORTA
-	@Override public int getWidth()
+	@Override
+	public int getWidth()
 	{
 		return parent.getWidth();
 	}
 
-	@Override public int getHeight()
+	@Override
+	public int getHeight()
 	{
 		return parent.getHeight();
 	}
 
-	@Override public int getARGBAt(int x, int y)
+	@Override
+	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 

@@ -32,7 +32,7 @@ public class SmoothSnaporta implements Snaporta
 	{
 		int W = (radius*2)+1;
 		double sigma = 1;
-		double mean = (double)W/2;
+		double mean = (double) W/2;
 
 		double[][] kernel = new double[W][W];
 		for(int x = 0; x < W; ++x)
@@ -45,17 +45,20 @@ public class SmoothSnaporta implements Snaporta
 
 
 	// SNAPORTA
-	@Override public int getWidth()
+	@Override
+	public int getWidth()
 	{
 		return baseSnaporta.getWidth();
 	}
 
-	@Override public int getHeight()
+	@Override
+	public int getHeight()
 	{
 		return baseSnaporta.getHeight();
 	}
 
-	@Override public int getARGBAt(int x, int y)
+	@Override
+	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 

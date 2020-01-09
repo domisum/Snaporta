@@ -15,8 +15,10 @@ public final class MaintainAspectRatioResizedSnaporta implements Snaporta
 {
 
 	// ATTRIBUTES
-	@Getter private final int width;
-	@Getter private final int height;
+	@Getter
+	private final int width;
+	@Getter
+	private final int height;
 
 	// REFERENCES
 	private final Snaporta baseSnaporta;
@@ -32,7 +34,8 @@ public final class MaintainAspectRatioResizedSnaporta implements Snaporta
 
 
 	// SNAPORTA
-	@Override public int getARGBAt(int x, int y)
+	@Override
+	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 

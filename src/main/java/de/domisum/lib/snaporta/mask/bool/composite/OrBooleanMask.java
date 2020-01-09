@@ -13,8 +13,10 @@ public class OrBooleanMask implements BooleanMask
 
 	// MASKS
 	private final Collection<BooleanMask> masks;
-	@Getter private final int width;
-	@Getter private final int height;
+	@Getter
+	private final int width;
+	@Getter
+	private final int height;
 
 
 	// INIT
@@ -42,7 +44,8 @@ public class OrBooleanMask implements BooleanMask
 
 
 	// MASK
-	@Override public boolean getValueAt(int x, int y)
+	@Override
+	public boolean getValueAt(int x, int y)
 	{
 		for(BooleanMask mask : masks)
 			if(mask.isInBounds(x, y) && mask.getValueAt(x, y))

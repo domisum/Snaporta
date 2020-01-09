@@ -44,17 +44,20 @@ public final class BasicBooleanMask implements BooleanMask
 
 
 	// GETTERS
-	@Override public int getWidth()
+	@Override
+	public int getWidth()
 	{
 		return values[0].length;
 	}
 
-	@Override public int getHeight()
+	@Override
+	public int getHeight()
 	{
 		return values.length;
 	}
 
-	@Override public boolean getValueAt(int x, int y)
+	@Override
+	public boolean getValueAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		return values[y][x];

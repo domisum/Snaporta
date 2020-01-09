@@ -17,7 +17,8 @@ public class MatrixInterpolator implements Interpolator
 	private final Matrix interpolationMatrix;
 
 
-	@Override public int interpolateARGBAt(Snaporta snaporta, double x, double y)
+	@Override
+	public int interpolateARGBAt(Snaporta snaporta, double x, double y)
 	{
 		int closestPixelX = (int) Math.round(x);
 		int closestPixelY = (int) Math.round(y);

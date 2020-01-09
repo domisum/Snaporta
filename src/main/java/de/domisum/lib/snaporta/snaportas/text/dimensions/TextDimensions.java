@@ -9,7 +9,9 @@ import lombok.ToString;
 public class TextDimensions
 {
 
-	@Getter private final double width;
-	@Getter private final double height;
+	@Getter
+	private final double width;
+	@Getter
+	private final double height;
 
 }

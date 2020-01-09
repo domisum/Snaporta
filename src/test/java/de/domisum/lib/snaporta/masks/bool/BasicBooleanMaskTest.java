@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test;
 public class BasicBooleanMaskTest
 {
 
-	@Test void testInitSize()
+	@Test
+	void testInitSize()
 	{
 		int width = 7;
 		int height = 13;

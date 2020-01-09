@@ -8,7 +8,8 @@ import de.domisum.lib.snaporta.snaportas.text.dimensions.TextDimensions;
 public class VerticalAlignTopTextPositioner implements VerticalTextPositioner
 {
 
-	@Override public double position(int height, Padding padding, TextDimensions textDimensions)
+	@Override
+	public double position(int height, Padding padding, TextDimensions textDimensions)
 	{
 		return padding.getTop();
 	}

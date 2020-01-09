@@ -29,17 +29,20 @@ public class OffsetSnaporta implements Snaporta
 
 
 	// SNAPORTA
-	@Override public int getWidth()
+	@Override
+	public int getWidth()
 	{
 		return baseSnaporta.getWidth()+offsetX;
 	}
 
-	@Override public int getHeight()
+	@Override
+	public int getHeight()
 	{
 		return baseSnaporta.getHeight()+offsetY;
 	}
 
-	@Override public int getARGBAt(int x, int y)
+	@Override
+	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 

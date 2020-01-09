@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 public class HorizontalGradientDoubleMaskTest
 {
 
-	@Test void testLeftLow()
+	@Test
+	void testLeftLow()
 	{
 		DoubleMask doubleMask = new HorizontalGradientDoubleMask(200, 100, 50, 150);
 
@@ -24,7 +25,8 @@ public class HorizontalGradientDoubleMaskTest
 		Assertions.assertEquals(1.0, doubleMask.getValueAt(190, 10));
 	}
 
-	@Test void testRightLow()
+	@Test
+	void testRightLow()
 	{
 		DoubleMask doubleMask = new HorizontalGradientDoubleMask(1000, 20, 600, 400);
 

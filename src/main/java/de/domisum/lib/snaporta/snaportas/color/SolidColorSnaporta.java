@@ -13,14 +13,18 @@ public class SolidColorSnaporta implements Snaporta
 {
 
 	// ATTRIBUTES
-	@Getter private final int width;
-	@Getter private final int height;
+	@Getter
+	private final int width;
+	@Getter
+	private final int height;
 
-	@Getter private final Color color;
+	@Getter
+	private final Color color;
 
 
 	// SNAPORTA
-	@Override public int getARGBAt(int x, int y)
+	@Override
+	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		return color.toARGBInt();

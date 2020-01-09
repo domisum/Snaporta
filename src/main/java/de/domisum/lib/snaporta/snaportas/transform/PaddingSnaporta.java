@@ -27,17 +27,20 @@ public class PaddingSnaporta implements Snaporta
 
 
 	// SNAPORTA
-	@Override public int getWidth()
+	@Override
+	public int getWidth()
 	{
 		return baseSnaporta.getWidth()+padding.getHorizontalSum();
 	}
 
-	@Override public int getHeight()
+	@Override
+	public int getHeight()
 	{
 		return baseSnaporta.getHeight()+padding.getVerticalSum();
 	}
 
-	@Override public int getARGBAt(int x, int y)
+	@Override
+	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 

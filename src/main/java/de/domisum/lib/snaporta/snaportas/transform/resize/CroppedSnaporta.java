@@ -14,12 +14,15 @@ public class CroppedSnaporta implements Snaporta
 
 	private final int cropX;
 	private final int cropY;
-	@Getter private final int width;
-	@Getter private final int height;
+	@Getter
+	private final int width;
+	@Getter
+	private final int height;
 
 
 	// INIT
-	@API public CroppedSnaporta(Snaporta backingSnaporta, int cropX, int cropY, int width, int height)
+	@API
+	public CroppedSnaporta(Snaporta backingSnaporta, int cropX, int cropY, int width, int height)
 	{
 		Validate.isTrue(width >= 1, "width has to be at least 1, was "+width);
 		Validate.isTrue(height >= 1, "height has to be at least 1, was "+height);
@@ -34,7 +37,8 @@ public class CroppedSnaporta implements Snaporta
 	}
 
 
-	@Override public int getARGBAt(int x, int y)
+	@Override
+	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		return backingSnaporta.getARGBAt(x+cropX, y+cropY);

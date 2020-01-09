@@ -36,8 +36,10 @@ public final class TextSnaporta implements Snaporta
 	private static final int DEFAULT_FONT_SIZE = 24;
 
 	// SNAPORTA
-	@Getter private final int width;
-	@Getter private final int height;
+	@Getter
+	private final int width;
+	@Getter
+	private final int height;
 
 	// FONT
 	private Font font = Font.defaultFont();
@@ -61,7 +63,8 @@ public final class TextSnaporta implements Snaporta
 
 
 	// SNAPORTA
-	@Override public int getARGBAt(int x, int y)
+	@Override
+	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		return renderedText.getARGBAt(x, y);
@@ -146,44 +149,51 @@ public final class TextSnaporta implements Snaporta
 
 
 		// SETTINGS
-		@API public TextSnaportaBuilder font(Font font)
+		@API
+		public TextSnaportaBuilder font(Font font)
 		{
 			textSnaporta.font = font;
 			return this;
 		}
 
-		@API public TextSnaportaBuilder color(Color color)
+		@API
+		public TextSnaportaBuilder color(Color color)
 		{
 			textSnaporta.color = color;
 			return this;
 		}
 
-		@API public TextSnaportaBuilder padding(Padding padding)
+		@API
+		public TextSnaportaBuilder padding(Padding padding)
 		{
 			textSnaporta.padding = padding;
 			return this;
 		}
 
-		@API public TextSnaportaBuilder fontSizer(FontSizer fontSizer)
+		@API
+		public TextSnaportaBuilder fontSizer(FontSizer fontSizer)
 		{
 			textSnaporta.fontSizer = fontSizer;
 			return this;
 		}
 
-		@API public TextSnaportaBuilder horizontalTextPositioner(HorizontalTextPositioner horizontalTextPositioner)
+		@API
+		public TextSnaportaBuilder horizontalTextPositioner(HorizontalTextPositioner horizontalTextPositioner)
 		{
 			textSnaporta.horizontalTextPositioner = horizontalTextPositioner;
 			return this;
 		}
 
-		@API public TextSnaportaBuilder verticalTextPositioner(VerticalTextPositioner verticalTextPositioner)
+		@API
+		public TextSnaportaBuilder verticalTextPositioner(VerticalTextPositioner verticalTextPositioner)
 		{
 			textSnaporta.verticalTextPositioner = verticalTextPositioner;
 			return this;
 		}
 
 
-		@API public TextSnaportaBuilder drawPaddingOutline()
+		@API
+		public TextSnaportaBuilder drawPaddingOutline()
 		{
 			textSnaporta.drawPaddingOutline = true;
 			return this;
@@ -191,29 +201,34 @@ public final class TextSnaporta implements Snaporta
 
 
 		// SETTINGS SHORTCUTS
-		@API public TextSnaportaBuilder fontAsBigAsPossible()
+		@API
+		public TextSnaportaBuilder fontAsBigAsPossible()
 		{
 			return fontSizer(new AsBigAsPossibleFontSizer());
 		}
 
 
-		@API public TextSnaportaBuilder centerHorizontally()
+		@API
+		public TextSnaportaBuilder centerHorizontally()
 		{
 			return horizontalTextPositioner(new HorizontalCenteredTextPositioner());
 		}
 
-		@API public TextSnaportaBuilder centerVertically()
+		@API
+		public TextSnaportaBuilder centerVertically()
 		{
 			return verticalTextPositioner(new VerticalCenteredTextPositioner());
 		}
 
-		@API public TextSnaportaBuilder alignLeft()
+		@API
+		public TextSnaportaBuilder alignLeft()
 		{
 			textSnaporta.horizontalTextPositioner = new HorizontalAlignLeftTextPositioner();
 			return this;
 		}
 
-		@API public TextSnaportaBuilder alignRight()
+		@API
+		public TextSnaportaBuilder alignRight()
 		{
 			textSnaporta.horizontalTextPositioner = new HorizontalAlignRightTextPositioner();
 			return this;
@@ -221,7 +236,8 @@ public final class TextSnaporta implements Snaporta
 
 
 		// BUILD
-		@API public TextSnaporta build()
+		@API
+		public TextSnaporta build()
 		{
 			Validate.notNull(textSnaporta.horizontalTextPositioner, "horizontalTextPositioner not set");
 			Validate.notNull(textSnaporta.verticalTextPositioner, "verticalTextPositioner not set");

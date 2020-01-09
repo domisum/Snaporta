@@ -15,7 +15,8 @@ public class ConstantFontSizer implements FontSizer
 
 
 	// SIZER
-	@Override public double size(Font font, int width, int height, Padding padding, String text)
+	@Override
+	public double size(Font font, int width, int height, Padding padding, String text)
 	{
 		return fontSize;
 	}

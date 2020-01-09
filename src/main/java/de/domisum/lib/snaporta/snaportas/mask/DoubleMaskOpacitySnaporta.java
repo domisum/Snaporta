@@ -14,23 +14,27 @@ public class DoubleMaskOpacitySnaporta implements Snaporta
 
 
 	// SNAPORTA
-	@Override public int getARGBAt(int x, int y)
+	@Override
+	public int getARGBAt(int x, int y)
 	{
 		return getColorAt(x, y).toARGBInt();
 	}
 
-	@Override public Color getColorAt(int x, int y)
+	@Override
+	public Color getColorAt(int x, int y)
 	{
 		double opacityAt = opacityMask.getValueAt(x, y);
 		return base.getColorAt(x, y).deriveMultiplyOpacity(opacityAt);
 	}
 
-	@Override public int getWidth()
+	@Override
+	public int getWidth()
 	{
 		return base.getWidth();
 	}
 
-	@Override public int getHeight()
+	@Override
+	public int getHeight()
 	{
 		return base.getHeight();
 	}
