@@ -13,9 +13,7 @@ public class BasicBooleanMaskTest
 		int width = 7;
 		int height = 13;
 
-
 		BasicBooleanMask mask = BasicBooleanMask.onlyFalseOfWidthAndHeight(width, height);
-
 
 		Assertions.assertEquals(width, mask.getWidth());
 		Assertions.assertEquals(height, mask.getHeight());

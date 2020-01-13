@@ -15,9 +15,7 @@ public class BasicSnaportaTest
 		int width = 20;
 		int height = 10;
 
-
 		Snaporta snaporta = BasicSnaporta.blankOfWidthAndHeight(width, height);
-
 
 		Assertions.assertEquals(width, snaporta.getWidth());
 		Assertions.assertEquals(height, snaporta.getHeight());
@@ -40,7 +38,6 @@ public class BasicSnaportaTest
 	{
 		int[][] nonRectangular = {{0, 1}, {0}};
 
-
 		Assertions.assertThrows(IllegalArgumentException.class, ()->new BasicSnaporta(nonRectangular));
 	}
 
@@ -53,9 +50,7 @@ public class BasicSnaportaTest
 
 		Snaporta base = painter.toSnaporta();
 
-
 		Snaporta copy = BasicSnaporta.copyOf(base);
-
 
 		Assertions.assertEquals(base.getWidth(), copy.getWidth());
 		Assertions.assertEquals(base.getHeight(), copy.getHeight());

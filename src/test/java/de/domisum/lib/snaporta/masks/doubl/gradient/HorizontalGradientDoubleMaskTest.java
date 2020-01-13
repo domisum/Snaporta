@@ -13,7 +13,6 @@ public class HorizontalGradientDoubleMaskTest
 	{
 		DoubleMask doubleMask = new HorizontalGradientDoubleMask(200, 100, 50, 150);
 
-
 		Assertions.assertEquals(0.0, doubleMask.getValueAt(5, 10));
 		Assertions.assertEquals(0.0, doubleMask.getValueAt(50, 10));
 
@@ -29,7 +28,6 @@ public class HorizontalGradientDoubleMaskTest
 	void testRightLow()
 	{
 		DoubleMask doubleMask = new HorizontalGradientDoubleMask(1000, 20, 600, 400);
-
 
 		Assertions.assertEquals(1.0, doubleMask.getValueAt(5, 0));
 		Assertions.assertEquals(1.0, doubleMask.getValueAt(400, 0));
