@@ -10,6 +10,9 @@ public final class SnaportaEquals
 
 	public static boolean equals(Snaporta a, Snaporta b)
 	{
+		if((a == null) || (b == null))
+			return a == b;
+
 		if(a.getWidth() != b.getWidth())
 			return false;
 
