@@ -30,6 +30,8 @@ public class SmoothSnaporta implements Snaporta
 
 	private Matrix createGaussianBlurMatrix()
 	{
+		// https://en.wikipedia.org/wiki/Gaussian_blur
+
 		int W = (radius*2)+1;
 		double sigma = 1;
 		double mean = (double) W/2;
@@ -61,7 +63,6 @@ public class SmoothSnaporta implements Snaporta
 	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-
 		return matrixInterpolator.interpolateARGBAt(baseSnaporta, x, y);
 	}
 

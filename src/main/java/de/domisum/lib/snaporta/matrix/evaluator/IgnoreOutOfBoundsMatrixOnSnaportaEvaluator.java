@@ -1,5 +1,6 @@
 package de.domisum.lib.snaporta.matrix.evaluator;
 
+import de.domisum.lib.auxilium.util.math.MathUtil;
 import de.domisum.lib.snaporta.Snaporta;
 import de.domisum.lib.snaporta.color.Color;
 import de.domisum.lib.snaporta.color.ColorComponent;
@@ -13,8 +14,8 @@ public class IgnoreOutOfBoundsMatrixOnSnaportaEvaluator implements MatrixOnSnapo
 	public int evaluateToARGB(Snaporta snaporta, Matrix matrix, int x, int y)
 	{
 		double[] evaluatedComponentSum = new double[ColorComponent.values().length];
-		for(int matrixX = -matrix.getHorizontalRadius(); matrixX <= matrix.getHorizontalRadius(); matrixX++)
-			for(int matrixY = -matrix.getVerticalRadius(); matrixY <= matrix.getHorizontalRadius(); matrixY++)
+		for(int matrixY = -matrix.getVerticalRadius(); matrixY <= matrix.getVerticalRadius(); matrixY++)
+			for(int matrixX = -matrix.getHorizontalRadius(); matrixX <= matrix.getHorizontalRadius(); matrixX++)
 			{
 				int snaportaX = x+matrixX;
 				int snaportaY = y+matrixY;
@@ -39,10 +40,10 @@ public class IgnoreOutOfBoundsMatrixOnSnaportaEvaluator implements MatrixOnSnapo
 		int evaluatedGreen = (int) Math.round(evaluatedComponentSum[2]);
 		int evaluatedBlue = (int) Math.round(evaluatedComponentSum[3]);
 
-		evaluatedAlpha = Math.max(0, Math.min(evaluatedAlpha, Color.COLOR_COMPONENT_MAX));
-		evaluatedRed = Math.max(0, Math.min(evaluatedRed, Color.COLOR_COMPONENT_MAX));
-		evaluatedGreen = Math.max(0, Math.min(evaluatedGreen, Color.COLOR_COMPONENT_MAX));
-		evaluatedBlue = Math.max(0, Math.min(evaluatedBlue, Color.COLOR_COMPONENT_MAX));
+		evaluatedAlpha = MathUtil.clamp(0, Color.COLOR_COMPONENT_MAX, evaluatedAlpha);
+		evaluatedRed = MathUtil.clamp(0, Color.COLOR_COMPONENT_MAX, evaluatedRed);
+		evaluatedGreen = MathUtil.clamp(0, Color.COLOR_COMPONENT_MAX, evaluatedGreen);
+		evaluatedBlue = MathUtil.clamp(0, Color.COLOR_COMPONENT_MAX, evaluatedBlue);
 
 		return ARGBUtil.toARGB(evaluatedAlpha, evaluatedRed, evaluatedGreen, evaluatedBlue);
 	}

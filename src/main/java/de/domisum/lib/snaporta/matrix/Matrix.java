@@ -30,8 +30,8 @@ public class Matrix
 	{
 		int width = entries[0].length;
 		int height = entries.length;
-		Validate.isTrue((height%2) == 1, "matrix height has to be uneven, was "+height);
 		Validate.isTrue((width%2) == 1, "matrix width has to be uneven, was "+width);
+		Validate.isTrue((height%2) == 1, "matrix height has to be uneven, was "+height);
 
 		// copy to prevent outside modification
 		this.entries = new double[height][];
