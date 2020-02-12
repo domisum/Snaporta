@@ -6,10 +6,8 @@ import de.domisum.lib.snaporta.snaportas.transform.resize.interpolator.Interpola
 import de.domisum.lib.snaporta.snaportas.transform.resize.interpolator.matrix.BiLinearInterpolator;
 import de.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @API
-@RequiredArgsConstructor
 public final class ResizedSnaporta implements Snaporta
 {
 
@@ -28,9 +26,33 @@ public final class ResizedSnaporta implements Snaporta
 
 
 	// INIT
-	public ResizedSnaporta(int width, int height, Snaporta baseSnaporta)
+	public ResizedSnaporta(Integer width, Integer height, Snaporta baseSnaporta)
 	{
 		this(width, height, baseSnaporta, DEFAULT_INTERPOLATOR);
+	}
+
+	public ResizedSnaporta(Integer width, Integer height, Snaporta baseSnaporta, Interpolator interpolator)
+	{
+		if((width == null) && (height == null))
+			throw new IllegalArgumentException("width and height can't be null at the same time");
+
+		if(width == null)
+		{
+			double factor = height/(double) baseSnaporta.getHeight();
+			width = (int) Math.round(baseSnaporta.getWidth()*factor);
+		}
+
+		if(height == null)
+		{
+			double factor = width/(double) baseSnaporta.getWidth();
+			height = (int) Math.round(baseSnaporta.getHeight()*factor);
+		}
+
+		this.width = width;
+		this.height = height;
+		this.baseSnaporta = baseSnaporta;
+
+		this.interpolator = interpolator;
 	}
 
 

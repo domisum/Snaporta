@@ -105,7 +105,7 @@ public final class Color
 
 		if(!StringUtils.containsOnly(hexProcessed, "0123456789ABCDEF"))
 			throw new IllegalArgumentException("hex contains invalid characters: '"+hex+"'");
-		if(hexProcessed.length() != 6)
+		if(hexProcessed.length() != 6) // TODO support 3 length
 			throw new IllegalArgumentException("hex has to have length of 6, but was: '"+hex+"'");
 
 		String redHexString = hexProcessed.substring(0, 2);
