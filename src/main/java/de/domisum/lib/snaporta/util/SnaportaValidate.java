@@ -1,6 +1,7 @@
 package de.domisum.lib.snaporta.util;
 
 import de.domisum.lib.auxilium.util.PHR;
+import de.domisum.lib.snaporta.color.Color;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +20,7 @@ public final class SnaportaValidate
 	// COLOR
 	public static void validateColorComponentInRange(int componentValue, String componentName)
 	{
-		validateInInterval(0, 255, componentName+" color component", componentValue);
+		validateInInterval(0, Color.COLOR_COMPONENT_MAX, componentName+" color component", componentValue);
 	}
 
 
