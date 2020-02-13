@@ -84,6 +84,13 @@ public final class Color
 	}
 
 	@API
+	public static Color fromBrightnessRel(double brightness)
+	{
+		SnaportaValidate.validateInDoubleInterval(0, 1, "brightness", brightness);
+		return fromBrightnessAbs((int) Math.round(brightness*COLOR_COMPONENT_MAX));
+	}
+
+	@API
 	public static Color fromAwt(java.awt.Color color)
 	{
 		return new Color(color.getAlpha(), color.getRed(), color.getGreen(), color.getBlue());
