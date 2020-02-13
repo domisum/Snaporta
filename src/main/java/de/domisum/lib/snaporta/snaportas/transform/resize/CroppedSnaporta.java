@@ -26,8 +26,8 @@ public class CroppedSnaporta implements Snaporta
 	{
 		Validate.isTrue(width >= 1, "width has to be at least 1, was "+width);
 		Validate.isTrue(height >= 1, "height has to be at least 1, was "+height);
-		SnaportaValidate.validateInInterval(0, backingSnaporta.getWidth()-1, "cropX+width", cropX+width);
-		SnaportaValidate.validateInInterval(0, backingSnaporta.getHeight()-1, "cropY+height", cropY+height);
+		SnaportaValidate.validateInInterval(0, backingSnaporta.getWidth(), "cropX+width", cropX+width);
+		SnaportaValidate.validateInInterval(0, backingSnaporta.getHeight(), "cropY+height", cropY+height);
 
 		this.backingSnaporta = backingSnaporta;
 		this.cropX = cropX;
