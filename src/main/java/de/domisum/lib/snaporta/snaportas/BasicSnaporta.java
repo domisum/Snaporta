@@ -43,7 +43,7 @@ public final class BasicSnaporta implements Snaporta
 
 
 	// BASIC INIT
-	BasicSnaporta(int[][] argbPixels)
+	public BasicSnaporta(int[][] argbPixels)
 	{
 		// validate minimum dimension
 		Validate.isTrue(argbPixels.length > 0, "snaporta has to have a minimum height of 1");
