@@ -30,7 +30,12 @@ public class MultiThreadSnaportaRenderer
 		Validate.isTrue(numberOfThreads > 0, "number of threads has to be greater than 0");
 
 		this.numberOfThreads = numberOfThreads;
-		executorService = Executors.newFixedThreadPool(numberOfThreads);
+		executorService = Executors.newFixedThreadPool(numberOfThreads, r->
+		{
+			var thread = Executors.defaultThreadFactory().newThread(r);
+			thread.setDaemon(true);
+			return thread;
+		});
 	}
 
 
