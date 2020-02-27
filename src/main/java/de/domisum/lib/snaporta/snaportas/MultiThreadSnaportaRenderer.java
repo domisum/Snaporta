@@ -1,5 +1,6 @@
 package de.domisum.lib.snaporta.snaportas;
 
+import de.domisum.lib.auxilium.util.java.annotations.API;
 import de.domisum.lib.snaporta.Snaporta;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+@API
 public class MultiThreadSnaportaRenderer
 {
 
@@ -25,6 +27,17 @@ public class MultiThreadSnaportaRenderer
 
 
 	// INIT
+	@API
+	public MultiThreadSnaportaRenderer()
+	{
+		this(Runtime.getRuntime().availableProcessors());
+		logger.info("Creating {} with {} threads (number of available logical cores)",
+				getClass().getSimpleName(),
+				numberOfThreads
+		);
+	}
+
+	@API
 	public MultiThreadSnaportaRenderer(int numberOfThreads)
 	{
 		Validate.isTrue(numberOfThreads > 0, "number of threads has to be greater than 0");
@@ -40,6 +53,7 @@ public class MultiThreadSnaportaRenderer
 
 
 	// RENDER
+	@API
 	public Snaporta render(Snaporta snaporta)
 	{
 		int[][] argbPixels = new int[snaporta.getHeight()][snaporta.getWidth()];
