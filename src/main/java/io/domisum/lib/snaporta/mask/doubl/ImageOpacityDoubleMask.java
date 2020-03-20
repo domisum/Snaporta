@@ -14,7 +14,7 @@ public class ImageOpacityDoubleMask implements DoubleMask
 	@Override
 	public double getValueAt(int x, int y)
 	{
-		return image.getColorAt(x, y).getOpacity();
+		return image.getColorAt(x, y).getOpacityRelative();
 	}
 
 	@Override

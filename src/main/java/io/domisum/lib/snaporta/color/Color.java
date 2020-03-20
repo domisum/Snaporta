@@ -143,7 +143,7 @@ public final class Color
 
 	// GETTERS
 	@API
-	public double getOpacity()
+	public double getOpacityRelative()
 	{
 		return alpha/(double) COLOR_COMPONENT_MAX;
 	}

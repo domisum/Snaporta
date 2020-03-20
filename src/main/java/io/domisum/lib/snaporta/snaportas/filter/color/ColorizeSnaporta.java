@@ -37,7 +37,7 @@ public class ColorizeSnaporta implements Snaporta
 		Color colorAt = parent.getColorAt(x, y);
 		double brightness = colorAt.getRGBBrightnessRelative();
 
-		int newAlpha = (int) Math.round(colorAt.getAlpha()*color.getOpacity());
+		int newAlpha = (int) Math.round(colorAt.getAlpha()*color.getOpacityRelative());
 		int newRed = (int) Math.round(color.getRed()*brightness);
 		int newGreen = (int) Math.round(color.getGreen()*brightness);
 		int newBlue = (int) Math.round(color.getBlue()*brightness);

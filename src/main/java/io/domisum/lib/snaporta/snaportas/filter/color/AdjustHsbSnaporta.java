@@ -51,7 +51,7 @@ public class AdjustHsbSnaporta implements Snaporta
 		double brightness = parentColor.getBrightness()+deltaBrightness;
 		brightness = MathUtil.clamp(0, 1, brightness);
 
-		return Color.fromOHSB(parentColor.getOpacity(), hue, saturation, brightness).toARGBInt();
+		return Color.fromOHSB(parentColor.getOpacityRelative(), hue, saturation, brightness).toARGBInt();
 	}
 
 }

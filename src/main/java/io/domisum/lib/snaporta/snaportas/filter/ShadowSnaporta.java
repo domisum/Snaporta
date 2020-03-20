@@ -55,7 +55,7 @@ public class ShadowSnaporta implements Snaporta
 			return Colors.TRANSPARENT.toARGBInt();
 
 		Color colorAt = baseSnaporta.getColorAt(inBaseX, inBaseY);
-		double opacity = colorAt.getOpacity();
+		double opacity = colorAt.getOpacityRelative();
 		if(opacity == 0)
 			return Colors.TRANSPARENT.toARGBInt();
 
