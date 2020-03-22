@@ -26,6 +26,7 @@ import org.apache.commons.lang3.Validate;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 @API
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -142,6 +143,11 @@ public final class TextSnaporta implements Snaporta
 
 
 		// INIT
+		public TextSnaportaBuilder(int width, int height, Object toText)
+		{
+			this(width, height, Objects.toString(toText));
+		}
+
 		public TextSnaportaBuilder(int width, int height, String text)
 		{
 			textSnaporta = new TextSnaporta(width, height, text);
