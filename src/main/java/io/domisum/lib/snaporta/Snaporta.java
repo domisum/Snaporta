@@ -1,6 +1,6 @@
 package io.domisum.lib.snaporta;
 
-import io.domisum.lib.auxiliumlib.util.java.annotations.API;
+import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.color.Color;
 import io.domisum.lib.snaporta.util.ARGBUtil;
 import io.domisum.lib.snaporta.util.Sized;

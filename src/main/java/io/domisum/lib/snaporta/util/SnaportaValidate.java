@@ -1,6 +1,6 @@
 package io.domisum.lib.snaporta.util;
 
-import io.domisum.lib.auxiliumlib.util.PHR;
+import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.snaporta.color.Color;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

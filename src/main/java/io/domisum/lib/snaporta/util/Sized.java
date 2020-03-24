@@ -1,6 +1,6 @@
 package io.domisum.lib.snaporta.util;
 
-import io.domisum.lib.auxiliumlib.util.java.annotations.API;
+import io.domisum.lib.auxiliumlib.annotations.API;
 
 public interface Sized
 {

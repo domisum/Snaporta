@@ -1,6 +1,6 @@
 package io.domisum.lib.snaporta.color;
 
-import io.domisum.lib.auxiliumlib.util.java.annotations.API;
+import io.domisum.lib.auxiliumlib.annotations.API;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 

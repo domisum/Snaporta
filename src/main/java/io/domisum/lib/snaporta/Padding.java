@@ -1,6 +1,6 @@
 package io.domisum.lib.snaporta;
 
-import io.domisum.lib.auxiliumlib.util.java.annotations.API;
+import io.domisum.lib.auxiliumlib.annotations.API;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

@@ -1,17 +1,15 @@
 package io.domisum.lib.snaporta.matrix;
 
-import io.domisum.lib.auxiliumlib.util.PHR;
+import io.domisum.lib.auxiliumlib.PHR;
+import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.auxiliumlib.util.StringUtil;
-import io.domisum.lib.auxiliumlib.util.java.annotations.API;
 import io.domisum.lib.auxiliumlib.util.math.MathUtil;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 import org.apache.commons.lang3.Validate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @API
 public class Matrix
@@ -52,26 +50,25 @@ public class Matrix
 	{
 		int valueLength = 5;
 
-		List<String> rowsString = new ArrayList<>();
+		var rowsString = new ArrayList<String>();
 		for(double[] row : entries)
 			rowsString.add(generateToStringRow(row, valueLength)+"\n");
 
-		String separatorLineComponent = StringUtil.repeat("-", valueLength);
-		String separatorLine = separatorLineComponent+StringUtil.repeat("+"+separatorLineComponent, getWidth()-1)+"\n";
+		String separatorLineComponent = "-".repeat(valueLength);
+		String separatorLine = separatorLineComponent+("+"+separatorLineComponent).repeat(getWidth()-1)+"\n";
 
 		return StringUtil.listToString(rowsString, separatorLine);
 	}
 
 	private String generateToStringRow(double[] row, int padValueToLength)
 	{
-		Stream<String> roundedRowValuesStream = Arrays.stream(row).mapToObj(d->
+		var roundedRowValuesStream = Arrays.stream(row).mapToObj(d->
 		{
 			String rounded = MathUtil.round(d, padValueToLength-2)+"";
-			String pad = StringUtil.repeat("0", padValueToLength-rounded.length());
+			String pad = "0".repeat(padValueToLength-rounded.length());
 			return rounded+pad;
 		});
-		List<String> roundedRowValues = roundedRowValuesStream.collect(Collectors.toList());
-
+		var roundedRowValues = roundedRowValuesStream.collect(Collectors.toList());
 		return StringUtil.listToString(roundedRowValues, "|");
 	}
 

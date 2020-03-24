@@ -1,7 +1,7 @@
 package io.domisum.lib.snaporta.snaportas;
 
-import io.domisum.lib.auxiliumlib.util.PHR;
-import io.domisum.lib.auxiliumlib.util.java.annotations.API;
+import io.domisum.lib.auxiliumlib.PHR;
+import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 import org.apache.commons.lang3.Validate;

@@ -1,6 +1,6 @@
 package io.domisum.lib.snaporta.snaportas.text.positioner.vertical;
 
-import io.domisum.lib.auxiliumlib.util.java.annotations.API;
+import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Padding;
 import io.domisum.lib.snaporta.snaportas.text.dimensions.TextDimensions;
 

@@ -1,6 +1,6 @@
 package io.domisum.lib.snaporta.snaportas.text;
 
-import io.domisum.lib.auxiliumlib.util.java.annotations.API;
+import io.domisum.lib.auxiliumlib.annotations.API;
 import lombok.Getter;
 
 import java.awt.FontFormatException;

@@ -1,6 +1,6 @@
 package io.domisum.lib.snaporta.snaportas;
 
-import io.domisum.lib.auxiliumlib.util.java.annotations.API;
+import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Snaporta;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
