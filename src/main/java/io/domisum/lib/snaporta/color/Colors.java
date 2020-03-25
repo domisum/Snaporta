@@ -4,6 +4,7 @@ import io.domisum.lib.auxiliumlib.annotations.API;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
+@API
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Colors
 {
