@@ -6,17 +6,17 @@ import org.junit.jupiter.api.Test;
 
 public class BasicBooleanMaskTest
 {
-
+	
 	@Test
 	void testInitSize()
 	{
 		int width = 7;
 		int height = 13;
-
+		
 		BasicBooleanMask mask = BasicBooleanMask.onlyFalseOfWidthAndHeight(width, height);
-
+		
 		Assertions.assertEquals(width, mask.getWidth());
 		Assertions.assertEquals(height, mask.getHeight());
 	}
-
+	
 }

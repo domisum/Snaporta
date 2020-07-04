@@ -5,7 +5,7 @@ import io.domisum.lib.snaporta.snaportas.text.dimensions.TextDimensions;
 
 public interface VerticalTextPositioner
 {
-
+	
 	double position(int height, Padding padding, TextDimensions textDimensions);
-
+	
 }

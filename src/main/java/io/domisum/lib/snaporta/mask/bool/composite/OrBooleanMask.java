@@ -8,24 +8,25 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-public class OrBooleanMask implements BooleanMask
+public class OrBooleanMask
+		implements BooleanMask
 {
-
+	
 	// MASKS
 	private final Collection<BooleanMask> masks;
 	@Getter
 	private final int width;
 	@Getter
 	private final int height;
-
-
+	
+	
 	// INIT
 	public OrBooleanMask(Collection<BooleanMask> masks)
 	{
 		this.masks = Collections.unmodifiableCollection(masks);
 		Validate.notEmpty(masks, "masks can't be empty");
-
-
+		
+		
 		int maxWidth = 0;
 		int maxHeight = 0;
 		for(BooleanMask mask : masks)
@@ -36,13 +37,13 @@ public class OrBooleanMask implements BooleanMask
 		width = maxWidth;
 		height = maxHeight;
 	}
-
+	
 	public OrBooleanMask(BooleanMask... masks)
 	{
 		this(Arrays.asList(masks));
 	}
-
-
+	
+	
 	// MASK
 	@Override
 	public boolean getValueAt(int x, int y)
@@ -50,8 +51,8 @@ public class OrBooleanMask implements BooleanMask
 		for(BooleanMask mask : masks)
 			if(mask.isInBounds(x, y) && mask.getValueAt(x, y))
 				return true;
-
+		
 		return false;
 	}
-
+	
 }

@@ -15,17 +15,17 @@ import java.util.concurrent.Future;
 @API
 public class MultiThreadSnaportaRenderer
 {
-
+	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
-
-
+	
+	
 	// SETTINGS
 	private final int numberOfThreads;
-
+	
 	// RENDERER
 	private final ExecutorService executorService;
-
-
+	
+	
 	// INIT
 	@API
 	public MultiThreadSnaportaRenderer()
@@ -36,12 +36,12 @@ public class MultiThreadSnaportaRenderer
 				numberOfThreads
 		);
 	}
-
+	
 	@API
 	public MultiThreadSnaportaRenderer(int numberOfThreads)
 	{
 		Validate.isTrue(numberOfThreads > 0, "number of threads has to be greater than 0");
-
+		
 		this.numberOfThreads = numberOfThreads;
 		executorService = Executors.newFixedThreadPool(numberOfThreads, r->
 		{
@@ -50,14 +50,14 @@ public class MultiThreadSnaportaRenderer
 			return thread;
 		});
 	}
-
-
+	
+	
 	// RENDER
 	@API
 	public Snaporta render(Snaporta snaporta)
 	{
 		int[][] argbPixels = new int[snaporta.getHeight()][snaporta.getWidth()];
-
+		
 		var futures = new HashSet<Future<?>>();
 		int numberOfRows = snaporta.getHeight();
 		int firstUncoveredRow = 0;
@@ -66,13 +66,13 @@ public class MultiThreadSnaportaRenderer
 			int rowMinIncl = firstUncoveredRow;
 			boolean lastThread = (i+1) == numberOfThreads;
 			int rowMaxExcl = lastThread ? numberOfRows : ((i+1)*(numberOfRows/numberOfThreads));
-
+			
 			Future<?> future = executorService.submit(()->render(snaporta, argbPixels, rowMinIncl, rowMaxExcl));
 			futures.add(future);
-
+			
 			firstUncoveredRow = rowMaxExcl;
 		}
-
+		
 		try
 		{
 			for(Future<?> future : futures)
@@ -84,12 +84,12 @@ public class MultiThreadSnaportaRenderer
 		}
 		return new BasicSnaporta(argbPixels);
 	}
-
+	
 	private void render(Snaporta snaporta, int[][] argbPixels, int rowMinIncl, int rowMaxExcl)
 	{
 		for(int y = rowMinIncl; y < rowMaxExcl; y++)
 			for(int x = 0; x < snaporta.getWidth(); x++)
 				argbPixels[y][x] = snaporta.getARGBAt(x, y);
 	}
-
+	
 }

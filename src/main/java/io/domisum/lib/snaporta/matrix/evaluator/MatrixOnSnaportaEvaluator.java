@@ -7,13 +7,13 @@ import io.domisum.lib.snaporta.matrix.Matrix;
 
 public interface MatrixOnSnaportaEvaluator
 {
-
+	
 	int evaluateToARGB(Snaporta snaporta, Matrix matrix, int x, int y);
-
+	
 	@API
 	default Color evaluate(Snaporta snaporta, Matrix matrix, int x, int y)
 	{
 		return Color.fromARGBInt(evaluateToARGB(snaporta, matrix, x, y));
 	}
-
+	
 }

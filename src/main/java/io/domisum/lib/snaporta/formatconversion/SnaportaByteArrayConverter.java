@@ -14,11 +14,11 @@ import java.io.UncheckedIOException;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SnaportaByteArrayConverter
 {
-
+	
 	public static byte[] convert(Snaporta snaporta)
 	{
 		var bufferedImage = SnaportaBufferedImageConverter.convert(snaporta);
-
+		
 		try
 		{
 			var byteArrayOutputStream = new ByteArrayOutputStream();
@@ -30,5 +30,5 @@ public final class SnaportaByteArrayConverter
 			throw new UncheckedIOException(e);
 		}
 	}
-
+	
 }

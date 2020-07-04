@@ -7,22 +7,23 @@ import io.domisum.lib.snaporta.color.Color;
 import io.domisum.lib.snaporta.util.Sized;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 
-public class SnaportaPainter implements Sized
+public class SnaportaPainter
+		implements Sized
 {
-
+	
 	/**
 	 * Pixels represented as a 2D array of ARGB values. 2D array: array of horizontal rows of pixels.
 	 */
 	private final int[][] argbPixels;
-
-
+	
+	
 	// INIT
 	@API
 	public SnaportaPainter(int width, int height)
 	{
 		this(BasicSnaporta.blankOfWidthAndHeight(width, height));
 	}
-
+	
 	@API
 	public SnaportaPainter(Snaporta base)
 	{
@@ -30,27 +31,27 @@ public class SnaportaPainter implements Sized
 		for(int y = 0; y < base.getHeight(); y++)
 			for(int x = 0; x < base.getWidth(); x++)
 				argbPixelsCopy[y][x] = base.getARGBAt(x, y);
-
+		
 		argbPixels = argbPixelsCopy;
 	}
-
-
+	
+	
 	// OBJECT
 	@Override
 	public String toString()
 	{
 		return PHR.r("SnaportaPainter(width={},height={})", getWidth(), getHeight());
 	}
-
-
+	
+	
 	// CONVERSION
 	@API
 	public Snaporta toSnaporta()
 	{
 		return new BasicSnaporta(argbPixels);
 	}
-
-
+	
+	
 	// SNAPORTA
 	@API
 	@Override
@@ -58,29 +59,29 @@ public class SnaportaPainter implements Sized
 	{
 		return argbPixels[0].length;
 	}
-
+	
 	@API
 	@Override
 	public int getHeight()
 	{
 		return argbPixels.length;
 	}
-
+	
 	@API
 	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		return argbPixels[y][x];
 	}
-
+	
 	@API
 	public Color getColorAt(int x, int y)
 	{
 		int argb = getARGBAt(x, y);
 		return Color.fromARGBInt(argb);
 	}
-
-
+	
+	
 	// PAINTER
 	@API
 	public void setARGBAt(int x, int y, int argb)
@@ -88,18 +89,18 @@ public class SnaportaPainter implements Sized
 		SnaportaValidate.validateInBounds(this, x, y);
 		argbPixels[y][x] = argb;
 	}
-
+	
 	@API
 	public void setColorAt(int x, int y, Color color)
 	{
 		setARGBAt(x, y, color.toARGBInt());
 	}
-
+	
 	@API
 	public void setOpacityAt(int x, int y, double opacity)
 	{
 		var color = getColorAt(x, y).deriveWithOpacity(opacity);
 		setColorAt(x, y, color);
 	}
-
+	
 }

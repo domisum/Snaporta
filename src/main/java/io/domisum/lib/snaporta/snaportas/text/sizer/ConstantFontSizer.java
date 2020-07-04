@@ -7,18 +7,19 @@ import lombok.RequiredArgsConstructor;
 
 @API
 @RequiredArgsConstructor
-public class ConstantFontSizer implements FontSizer
+public class ConstantFontSizer
+		implements FontSizer
 {
-
+	
 	// ATTRIBUTES
 	private final double fontSize;
-
-
+	
+	
 	// SIZER
 	@Override
 	public double size(Font font, int width, int height, Padding padding, String text)
 	{
 		return fontSize;
 	}
-
+	
 }

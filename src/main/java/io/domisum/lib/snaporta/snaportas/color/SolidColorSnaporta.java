@@ -9,19 +9,20 @@ import lombok.RequiredArgsConstructor;
 
 @API
 @RequiredArgsConstructor
-public class SolidColorSnaporta implements Snaporta
+public class SolidColorSnaporta
+		implements Snaporta
 {
-
+	
 	// ATTRIBUTES
 	@Getter
 	private final int width;
 	@Getter
 	private final int height;
-
+	
 	@Getter
 	private final Color color;
-
-
+	
+	
 	// SNAPORTA
 	@Override
 	public int getARGBAt(int x, int y)
@@ -29,5 +30,5 @@ public class SolidColorSnaporta implements Snaporta
 		SnaportaValidate.validateInBounds(this, x, y);
 		return color.toARGBInt();
 	}
-
+	
 }
