@@ -35,15 +35,16 @@ public class ColorizeSnaporta
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
-		Color colorAt = parent.getColorAt(x, y);
-		double brightness = colorAt.getRGBBrightnessRelative();
+		var baseColor = parent.getColorAt(x, y);
+		double brightness = baseColor.getRGBBrightnessRelative();
 		
-		int newAlpha = (int) Math.round(colorAt.getAlpha()*color.getOpacityRelative());
+		int newAlpha = (int) Math.round(baseColor.getAlpha()*color.getOpacityRelative());
 		int newRed = (int) Math.round(color.getRed()*brightness);
 		int newGreen = (int) Math.round(color.getGreen()*brightness);
 		int newBlue = (int) Math.round(color.getBlue()*brightness);
 		
-		return ARGBUtil.toARGB(newAlpha, newRed, newGreen, newBlue);
+		int argb = ARGBUtil.toARGB(newAlpha, newRed, newGreen, newBlue);
+		return argb;
 	}
 	
 }

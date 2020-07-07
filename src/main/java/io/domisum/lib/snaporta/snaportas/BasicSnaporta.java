@@ -28,7 +28,8 @@ public final class BasicSnaporta
 		if(height < 0)
 			throw new IllegalArgumentException("height can't be negative, was "+height);
 		
-		return new BasicSnaporta(new int[height][width]);
+		var basicSnaporta = new BasicSnaporta(new int[height][width]);
+		return basicSnaporta;
 	}
 	
 	@API
@@ -38,15 +39,15 @@ public final class BasicSnaporta
 		for(int y = 0; y < snaporta.getHeight(); y++)
 			for(int x = 0; x < snaporta.getWidth(); x++)
 				argbPixels[y][x] = snaporta.getARGBAt(x, y);
+		var basicSnaporta = new BasicSnaporta(argbPixels);
 		
-		return new BasicSnaporta(argbPixels);
+		return basicSnaporta;
 	}
 	
 	
 	// BASIC INIT
 	public BasicSnaporta(int[][] argbPixels)
 	{
-		// validate minimum dimension
 		Validate.isTrue(argbPixels.length > 0, "snaporta has to have a minimum height of 1");
 		Validate.noNullElements(argbPixels);
 		Validate.isTrue(argbPixels[0].length > 0, "snaporta has to have a minimum width of 1");
@@ -93,7 +94,9 @@ public final class BasicSnaporta
 	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-		return argbPixels[y][x];
+		
+		int argb = argbPixels[y][x];
+		return argb;
 	}
 	
 }

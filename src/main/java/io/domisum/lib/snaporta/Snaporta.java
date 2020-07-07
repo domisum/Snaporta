@@ -6,7 +6,7 @@ import io.domisum.lib.snaporta.util.ARGBUtil;
 import io.domisum.lib.snaporta.util.Sized;
 
 /**
- * A snaporta is an immutable abstraction of an ARGB image.
+ * A snaporta is an abstraction of an ARGB image.
  */
 public interface Snaporta
 		extends Sized

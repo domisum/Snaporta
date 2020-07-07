@@ -49,7 +49,8 @@ public final class MaintainAspectRatioResizedSnaporta
 		if(!resizedSnaporta.isInBounds(inChildX, inChildY))
 			return Colors.TRANSPARENT.toARGBInt();
 		
-		return resizedSnaporta.getARGBAt(inChildX, inChildY);
+		int argb = resizedSnaporta.getARGBAt(inChildX, inChildY);
+		return argb;
 	}
 	
 	
@@ -59,7 +60,6 @@ public final class MaintainAspectRatioResizedSnaporta
 		
 		int availableWidth = width-padding.getHorizontalSum();
 		int availableHeight = height-padding.getVerticalSum();
-		
 		
 		double resizedWidth;
 		double resizedHeight;
@@ -76,11 +76,10 @@ public final class MaintainAspectRatioResizedSnaporta
 			resizedHeight = availableWidth/aspectRatio;
 		}
 		
-		resizedSnaporta = new ResizedSnaporta((int) Math.round(resizedWidth),
-				(int) Math.round(resizedHeight),
+		resizedSnaporta = new ResizedSnaporta(
+				(int) Math.round(resizedWidth), (int) Math.round(resizedHeight),
 				baseSnaporta,
-				interpolator
-		);
+				interpolator);
 		
 		int resizedSnaportaFromPaddingOffsetX = (width-padding.getHorizontalSum()-resizedSnaporta.getWidth())/2;
 		int resizedSnaportaFromPaddingOffsetY = (height-padding.getVerticalSum()-resizedSnaporta.getHeight())/2;

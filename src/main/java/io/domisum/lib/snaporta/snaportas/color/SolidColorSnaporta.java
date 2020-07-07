@@ -27,8 +27,14 @@ public class SolidColorSnaporta
 	@Override
 	public int getARGBAt(int x, int y)
 	{
+		return getColorAt(x, y).toARGBInt();
+	}
+	
+	@Override
+	public Color getColorAt(int x, int y)
+	{
 		SnaportaValidate.validateInBounds(this, x, y);
-		return color.toARGBInt();
+		return color;
 	}
 	
 }

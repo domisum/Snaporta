@@ -15,7 +15,6 @@ import org.apache.commons.lang3.Validate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.OptionalDouble;
 
 @RequiredArgsConstructor
 @API
@@ -37,7 +36,7 @@ public class CompositeSnaporta
 	@API
 	public void setComponentOnZ(Snaporta snaporta, int x, int y, double z)
 	{
-		CompositeSnaportaComponent component = new CompositeSnaportaComponent(snaporta, x, y, z);
+		var component = new CompositeSnaportaComponent(snaporta, x, y, z);
 		componentsTopDown.removeIf(c->c.getZ() == component.getZ());
 		addComponent(component);
 	}
@@ -60,17 +59,17 @@ public class CompositeSnaporta
 	@API
 	public void addComponentOnTop(Snaporta snaporta, int x, int y)
 	{
-		OptionalDouble maxZ = componentsTopDown.stream().mapToDouble(CompositeSnaportaComponent::getZ).max();
+		var maxZ = componentsTopDown.stream().mapToDouble(CompositeSnaportaComponent::getZ).max();
 		double onTopZ = maxZ.isPresent() ? (maxZ.getAsDouble()+1) : 0;
 		
-		CompositeSnaportaComponent component = new CompositeSnaportaComponent(snaporta, x, y, onTopZ);
+		var component = new CompositeSnaportaComponent(snaporta, x, y, onTopZ);
 		addComponent(component);
 	}
 	
 	private void validateUniqueZ(CompositeSnaportaComponent component)
 	{
 		boolean uniqueZ = componentsTopDown.stream().noneMatch(c->c.getZ() == component.getZ());
-		Validate.isTrue(uniqueZ, "component z values have to be unique, already have component with z="+component.getZ());
+		Validate.isTrue(uniqueZ, "Component z values have to be unique, already have component with z="+component.getZ());
 	}
 	
 	
@@ -89,7 +88,7 @@ public class CompositeSnaporta
 		if(depth >= componentsTopDown.size())
 			return Colors.TRANSPARENT.toARGBInt();
 		
-		CompositeSnaportaComponent component = componentsTopDown.get(depth);
+		var component = componentsTopDown.get(depth);
 		int componentARGB = component.getARGBAt(x, y);
 		
 		
@@ -100,7 +99,8 @@ public class CompositeSnaporta
 		if(ARGBUtil.getAlphaComponent(componentARGB) == Color.ALPHA_TRANSPARENT)
 			return backgroundARGB;
 		
-		return mixARGB(backgroundARGB, componentARGB);
+		int argb = mixARGB(backgroundARGB, componentARGB);
+		return argb;
 	}
 	
 	private int mixARGB(int background, int foreground)
@@ -117,25 +117,23 @@ public class CompositeSnaporta
 		double backgroundOpacity = ARGBUtil.getOpacity(background);
 		double opacityCombined = foregroundOpacity+((1-foregroundOpacity)*backgroundOpacity);
 		
-		
-		return ARGBUtil.toARGB(
+		int argb = ARGBUtil.toARGB(
 				ARGBUtil.getAlphaFromOpacity(opacityCombined),
 				(int) Math.round(redCombined),
 				(int) Math.round(greenCombined),
-				(int) Math.round(blueCombined)
-		);
+				(int) Math.round(blueCombined));
+		
+		return argb;
 	}
 	
 	private static double getColorComponentCombined(ColorComponent colorComponent, int background, int foreground)
 	{
 		double foregroundOpacity = ARGBUtil.getOpacity(foreground);
+		double combined = MathUtil.mix(
+				ARGBUtil.getComponent(colorComponent, foreground), foregroundOpacity,
+				ARGBUtil.getComponent(colorComponent, background), 1-foregroundOpacity);
 		
-		return MathUtil.mix(
-				ARGBUtil.getComponent(colorComponent, foreground),
-				foregroundOpacity,
-				ARGBUtil.getComponent(colorComponent, background),
-				1-foregroundOpacity
-		);
+		return combined;
 	}
 	
 }

@@ -68,7 +68,9 @@ public final class ResizedSnaporta
 		
 		double inChildX = baseSnaporta.getWidth()*relativeX;
 		double inChildY = baseSnaporta.getHeight()*relativeY;
-		return interpolator.interpolateARGBAt(baseSnaporta, inChildX, inChildY);
+		
+		int argb = interpolator.interpolateARGBAt(baseSnaporta, inChildX, inChildY);
+		return argb;
 	}
 	
 }

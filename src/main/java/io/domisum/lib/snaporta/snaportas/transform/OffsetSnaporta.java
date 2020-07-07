@@ -53,7 +53,8 @@ public class OffsetSnaporta
 		if(!baseSnaporta.isInBounds(inBaseX, inBaseY))
 			return Colors.TRANSPARENT.toARGBInt();
 		
-		return baseSnaporta.getARGBAt(inBaseX, inBaseY);
+		int argb = baseSnaporta.getARGBAt(inBaseX, inBaseY);
+		return argb;
 	}
 	
 }

@@ -36,16 +36,11 @@ public final class ARGBUtil
 	{
 		switch(colorComponent)
 		{
-			case ALPHA:
-				return getAlphaComponent(argb);
-			case RED:
-				return getRedComponent(argb);
-			case GREEN:
-				return getGreenComponent(argb);
-			case BLUE:
-				return getBlueComponent(argb);
-			default:
-				throw new IllegalArgumentException("invalid color component: "+colorComponent);
+			case ALPHA: return getAlphaComponent(argb);
+			case RED: return getRedComponent(argb);
+			case GREEN: return getGreenComponent(argb);
+			case BLUE: return getBlueComponent(argb);
+			default: throw new IllegalArgumentException("Invalid color component: "+colorComponent);
 		}
 	}
 	
@@ -53,7 +48,9 @@ public final class ARGBUtil
 	public static int getAlphaComponent(int argb)
 	{
 		int shiftedAlpha = argb >> (8*3);
-		return shiftedAlpha&TWO_BYTE_MASK;
+		int alphaComponent = shiftedAlpha&TWO_BYTE_MASK;
+		
+		return alphaComponent;
 	}
 	
 	public static double getOpacity(int argb)
@@ -63,7 +60,7 @@ public final class ARGBUtil
 	
 	public static int getAlphaFromOpacity(double opacity)
 	{
-		Validate.inclusiveBetween(0, 1, opacity, "opacity has to be in interval [0.0-1.0], was "+opacity);
+		Validate.inclusiveBetween(0, 1, opacity, "Opacity has to be in interval [0.0-1.0], was "+opacity);
 		return (int) Math.round(opacity*Color.COLOR_COMPONENT_MAX);
 	}
 	
@@ -71,18 +68,23 @@ public final class ARGBUtil
 	public static int getRedComponent(int argb)
 	{
 		int shiftedRed = argb >> (8*2);
-		return shiftedRed&TWO_BYTE_MASK;
+		int redComponent = shiftedRed&TWO_BYTE_MASK;
+		
+		return redComponent;
 	}
 	
 	public static int getGreenComponent(int argb)
 	{
 		int shiftedGreen = argb >> 8;
-		return shiftedGreen&TWO_BYTE_MASK;
+		int greenComponent = shiftedGreen&TWO_BYTE_MASK;
+		
+		return greenComponent;
 	}
 	
 	public static int getBlueComponent(int argb)
 	{
-		return argb&TWO_BYTE_MASK;
+		int blueComponent = argb&TWO_BYTE_MASK;
+		return blueComponent;
 	}
 	
 }

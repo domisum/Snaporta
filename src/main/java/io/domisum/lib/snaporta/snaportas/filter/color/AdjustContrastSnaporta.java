@@ -39,13 +39,14 @@ public class AdjustContrastSnaporta
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
-		Color parentColor = parent.getColorAt(x, y);
+		var parentColor = parent.getColorAt(x, y);
 		
 		int newRed = adjustContrastChannel(parentColor.getRed());
 		int newGreen = adjustContrastChannel(parentColor.getGreen());
 		int newBlue = adjustContrastChannel(parentColor.getBlue());
 		
-		return ARGBUtil.toARGB(parentColor.getAlpha(), newRed, newGreen, newBlue);
+		int argb = ARGBUtil.toARGB(parentColor.getAlpha(), newRed, newGreen, newBlue);
+		return argb;
 	}
 	
 	private int adjustContrastChannel(int value)

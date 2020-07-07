@@ -13,7 +13,9 @@ public class HorizontalCenteredTextPositioner
 	public double position(int width, Padding padding, TextDimensions textDimensions)
 	{
 		double availableWidth = width-textDimensions.getWidth()-padding.getHorizontalSum();
-		return (availableWidth/2)+padding.getLeft();
+		double pos = (availableWidth/2)+padding.getLeft();
+		
+		return pos;
 	}
 	
 }

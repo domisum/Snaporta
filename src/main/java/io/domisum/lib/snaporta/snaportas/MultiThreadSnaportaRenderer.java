@@ -32,15 +32,13 @@ public class MultiThreadSnaportaRenderer
 	{
 		this(Runtime.getRuntime().availableProcessors());
 		logger.info("Creating {} with {} threads (number of available logical cores)",
-				getClass().getSimpleName(),
-				numberOfThreads
-		);
+				getClass().getSimpleName(), numberOfThreads);
 	}
 	
 	@API
 	public MultiThreadSnaportaRenderer(int numberOfThreads)
 	{
-		Validate.isTrue(numberOfThreads > 0, "number of threads has to be greater than 0");
+		Validate.isTrue(numberOfThreads > 0, "Number of threads has to be greater than 0");
 		
 		this.numberOfThreads = numberOfThreads;
 		executorService = Executors.newFixedThreadPool(numberOfThreads, r->
@@ -67,7 +65,7 @@ public class MultiThreadSnaportaRenderer
 			boolean lastThread = (i+1) == numberOfThreads;
 			int rowMaxExcl = lastThread ? numberOfRows : ((i+1)*(numberOfRows/numberOfThreads));
 			
-			Future<?> future = executorService.submit(()->render(snaporta, argbPixels, rowMinIncl, rowMaxExcl));
+			var future = executorService.submit(()->render(snaporta, argbPixels, rowMinIncl, rowMaxExcl));
 			futures.add(future);
 			
 			firstUncoveredRow = rowMaxExcl;
@@ -75,14 +73,16 @@ public class MultiThreadSnaportaRenderer
 		
 		try
 		{
-			for(Future<?> future : futures)
+			for(var future : futures)
 				future.get();
 		}
 		catch(InterruptedException|ExecutionException e)
 		{
 			logger.error("An error occured while rendering snaporta", e);
 		}
-		return new BasicSnaporta(argbPixels);
+		
+		var basicSnaporta = new BasicSnaporta(argbPixels);
+		return basicSnaporta;
 	}
 	
 	private void render(Snaporta snaporta, int[][] argbPixels, int rowMinIncl, int rowMaxExcl)

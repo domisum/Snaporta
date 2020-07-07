@@ -53,8 +53,7 @@ public final class Color
 				ARGBUtil.getAlphaComponent(argb),
 				ARGBUtil.getRedComponent(argb),
 				ARGBUtil.getGreenComponent(argb),
-				ARGBUtil.getBlueComponent(argb)
-		);
+				ARGBUtil.getBlueComponent(argb));
 	}
 	
 	@API
@@ -74,7 +73,9 @@ public final class Color
 	{
 		var hsbColor = java.awt.Color.getHSBColor((float) hue, (float) saturation, (float) brighntess);
 		var hsb = fromAwt(hsbColor);
-		return hsb.deriveWithOpacity(opacity);
+		var color = hsb.deriveWithOpacity(opacity);
+		
+		return color;
 	}
 	
 	@API
@@ -87,7 +88,9 @@ public final class Color
 	public static Color fromBrightnessRel(double brightness)
 	{
 		SnaportaValidate.validateInDoubleInterval(0, 1, "brightness", brightness);
-		return fromBrightnessAbs((int) Math.round(brightness*COLOR_COMPONENT_MAX));
+		var color = fromBrightnessAbs((int) Math.round(brightness*COLOR_COMPONENT_MAX));
+		
+		return color;
 	}
 	
 	@API
@@ -114,7 +117,7 @@ public final class Color
 			hexProcessed = hexProcessed.substring(1);
 		
 		if(!StringUtils.containsOnly(hexProcessed, validCharacters))
-			throw new IllegalArgumentException("hex contains invalid characters: '"+hex+"'");
+			throw new IllegalArgumentException("Input contains invalid characters: '"+hex+"'");
 		
 		String redHexString;
 		String greenHexString;
@@ -133,7 +136,7 @@ public final class Color
 			blueHexString = hexProcessed.substring(2, 3).repeat(2);
 		}
 		else
-			throw new IllegalArgumentException("hex characters have to be either length 3 or length 6 but were: '"+hex+"'");
+			throw new IllegalArgumentException("Hex characters of input have to be either length 3 or length 6 but input was: '"+hex+"'");
 		
 		int red = Integer.parseInt(redHexString, hexBase);
 		int green = Integer.parseInt(greenHexString, hexBase);
@@ -174,21 +177,27 @@ public final class Color
 	public double getHue()
 	{
 		float[] hsb = java.awt.Color.RGBtoHSB(red, green, blue, null);
-		return hsb[0];
+		float hue = hsb[0];
+		
+		return hue;
 	}
 	
 	@API
 	public double getSaturation()
 	{
 		float[] hsb = java.awt.Color.RGBtoHSB(red, green, blue, null);
-		return hsb[1];
+		float saturation = hsb[1];
+		
+		return saturation;
 	}
 	
 	@API
 	public double getBrightness()
 	{
 		float[] hsb = java.awt.Color.RGBtoHSB(red, green, blue, null);
-		return hsb[2];
+		float brightness = hsb[2];
+		
+		return brightness;
 	}
 	
 	
@@ -212,7 +221,8 @@ public final class Color
 		int oppositeGreen = COLOR_COMPONENT_MAX-green;
 		int oppositeBlue = COLOR_COMPONENT_MAX-blue;
 		
-		return new Color(alpha, oppositeRed, oppositeGreen, oppositeBlue);
+		var color = new Color(alpha, oppositeRed, oppositeGreen, oppositeBlue);
+		return color;
 	}
 	
 	@API
@@ -244,15 +254,20 @@ public final class Color
 	public Color deriveWithOpacity(double opacity)
 	{
 		int newAlpha = (int) Math.round(opacity*COLOR_COMPONENT_MAX);
-		return deriveWithAlpha(newAlpha);
+		var color = deriveWithAlpha(newAlpha);
+		
+		return color;
 	}
 	
 	@API
 	public Color deriveMultiplyOpacity(double opacity)
 	{
 		SnaportaValidate.validateInDoubleInterval(0, 1, "opacity", opacity);
+		
 		int newAlpha = (int) Math.round(alpha*opacity);
-		return deriveWithAlpha(newAlpha);
+		var color = deriveWithAlpha(newAlpha);
+		
+		return color;
 	}
 	
 	

@@ -46,12 +46,13 @@ public class AddTransparencySnaporta
 		double newOpacity = parentOpacity*opacity;
 		int newAlpha = ARGBUtil.getAlphaFromOpacity(newOpacity);
 		
-		return ARGBUtil.toARGB(
+		int argb = ARGBUtil.toARGB(
 				newAlpha,
 				ARGBUtil.getRedComponent(parentARGB),
 				ARGBUtil.getGreenComponent(parentARGB),
-				ARGBUtil.getBlueComponent(parentARGB)
-		);
+				ARGBUtil.getBlueComponent(parentARGB));
+		
+		return argb;
 	}
 	
 }

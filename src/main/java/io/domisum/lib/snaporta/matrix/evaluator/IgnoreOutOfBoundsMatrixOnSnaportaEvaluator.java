@@ -29,7 +29,7 @@ public class IgnoreOutOfBoundsMatrixOnSnaportaEvaluator
 				
 				for(int i = 0; i < ColorComponent.values().length; i++)
 				{
-					ColorComponent colorComponent = ColorComponent.values()[i];
+					var colorComponent = ColorComponent.values()[i];
 					double value = ARGBUtil.getComponent(colorComponent, argbInt);
 					double weightedValue = value*matrixEntry;
 					evaluatedComponentSum[i] += weightedValue;
@@ -46,7 +46,8 @@ public class IgnoreOutOfBoundsMatrixOnSnaportaEvaluator
 		evaluatedGreen = MathUtil.clamp(0, Color.COLOR_COMPONENT_MAX, evaluatedGreen);
 		evaluatedBlue = MathUtil.clamp(0, Color.COLOR_COMPONENT_MAX, evaluatedBlue);
 		
-		return ARGBUtil.toARGB(evaluatedAlpha, evaluatedRed, evaluatedGreen, evaluatedBlue);
+		int color = ARGBUtil.toARGB(evaluatedAlpha, evaluatedRed, evaluatedGreen, evaluatedBlue);
+		return color;
 	}
 	
 }

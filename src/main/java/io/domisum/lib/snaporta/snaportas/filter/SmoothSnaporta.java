@@ -29,6 +29,7 @@ public class SmoothSnaporta
 		matrixInterpolator = new MatrixInterpolator(new IgnoreOutOfBoundsMatrixOnSnaportaEvaluator(), createGaussianBlurMatrix());
 	}
 	
+	@SuppressWarnings("MagicNumber")
 	private Matrix createGaussianBlurMatrix()
 	{
 		// https://en.wikipedia.org/wiki/Gaussian_blur
@@ -40,10 +41,10 @@ public class SmoothSnaporta
 		double[][] kernel = new double[W][W];
 		for(int x = 0; x < W; ++x)
 			for(int y = 0; y < W; ++y)
-				kernel[x][y] =
-						Math.exp(-0.5*(Math.pow((x-mean)/sigma, 2.0)+Math.pow((y-mean)/sigma, 2.0)))/(2*Math.PI*sigma*sigma);
+				kernel[x][y] = Math.exp(-0.5*(Math.pow((x-mean)/sigma, 2.0)+Math.pow((y-mean)/sigma, 2.0)))/(2*Math.PI*sigma*sigma);
 		
-		return new Matrix(kernel).deriveNormalized();
+		var matrix = new Matrix(kernel).deriveNormalized();
+		return matrix;
 	}
 	
 	
@@ -64,7 +65,9 @@ public class SmoothSnaporta
 	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-		return matrixInterpolator.interpolateARGBAt(baseSnaporta, x, y);
+		
+		int argb = matrixInterpolator.interpolateARGBAt(baseSnaporta, x, y);
+		return argb;
 	}
 	
 }

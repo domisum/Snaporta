@@ -34,6 +34,7 @@ public class SnaportaBufferedImageConverter
 	
 	
 	// CONVERT
+	@API
 	public Snaporta convertFrom(BufferedImage bufferedImage)
 	{
 		int width = bufferedImage.getWidth();
@@ -44,12 +45,16 @@ public class SnaportaBufferedImageConverter
 			for(int x = 0; x < width; x++)
 				snaportaPainter.setARGBAt(x, y, bufferedImage.getRGB(x, y));
 		
-		return snaportaPainter.toSnaporta();
+		var snaporta = snaportaPainter.toSnaporta();
+		return snaporta;
 	}
 	
+	@API
 	public BufferedImage convertTo(Snaporta snaporta, int bufferedImageType)
 	{
-		BufferedImage bufferedImage = new BufferedImage(snaporta.getWidth(), snaporta.getHeight(), bufferedImageType);
+		final int rgbMask = 0xFFFFFF;
+		
+		var bufferedImage = new BufferedImage(snaporta.getWidth(), snaporta.getHeight(), bufferedImageType);
 		
 		int[] pixelsLinear = new int[snaporta.getWidth()*snaporta.getHeight()];
 		for(int y = 0; y < snaporta.getHeight(); y++)
@@ -59,14 +64,14 @@ public class SnaportaBufferedImageConverter
 				if(bufferedImageType == BufferedImage.TYPE_INT_ARGB)
 					pixel = snaporta.getARGBAt(x, y);
 				else if(bufferedImageType == BufferedImage.TYPE_INT_RGB)
-					pixel = snaporta.getARGBAt(x, y)&0xFFFFFF;
+					pixel = snaporta.getARGBAt(x, y)&rgbMask;
 				else
-					throw new UnsupportedOperationException("unsupported BufferedImageType: "+bufferedImageType);
+					throw new UnsupportedOperationException("Unsupported BufferedImageType: "+bufferedImageType);
 				
 				pixelsLinear[(y*snaporta.getWidth())+x] = pixel;
 			}
 		
-		WritableRaster raster = (WritableRaster) bufferedImage.getData();
+		var raster = (WritableRaster) bufferedImage.getData();
 		raster.setDataElements(0, 0, snaporta.getWidth(), snaporta.getHeight(), pixelsLinear);
 		bufferedImage.setData(raster);
 		

@@ -25,7 +25,9 @@ public class DoubleMaskOpacitySnaporta
 	public Color getColorAt(int x, int y)
 	{
 		double opacityAt = opacityMask.getValueAt(x, y);
-		return base.getColorAt(x, y).deriveMultiplyOpacity(opacityAt);
+		var color = base.getColorAt(x, y).deriveMultiplyOpacity(opacityAt);
+		
+		return color;
 	}
 	
 	@Override

@@ -21,16 +21,20 @@ public class SnaportaFromFileReader
 	@API
 	public static Snaporta read(File file)
 	{
-		SnaportaFromFileReader fromFileReader = new SnaportaFromFileReader();
-		return fromFileReader.readFromFile(file);
+		var fromFileReader = new SnaportaFromFileReader();
+		var snaporta = fromFileReader.readFromFile(file);
+		
+		return snaporta;
 	}
 	
 	@API
 	public static Snaporta readUncaught(File file)
 			throws IOException
 	{
-		SnaportaFromFileReader fromFileReader = new SnaportaFromFileReader();
-		return fromFileReader.readFromFileUncaught(file);
+		var fromFileReader = new SnaportaFromFileReader();
+		var snaporta = fromFileReader.readFromFileUncaught(file);
+		
+		return snaporta;
 	}
 	
 	
@@ -38,16 +42,19 @@ public class SnaportaFromFileReader
 	@API
 	public Snaporta readFromFile(File file)
 	{
-		BufferedImage bufferedImage = readBufferedImage(file);
-		return snaportaBufferedImageConverter.convertFrom(bufferedImage);
+		var bufferedImage = readBufferedImage(file);
+		var snaporta = snaportaBufferedImageConverter.convertFrom(bufferedImage);
+		
+		return snaporta;
 	}
 	
 	@API
 	public Snaporta readFromFileUncaught(File file)
 			throws IOException
 	{
-		BufferedImage bufferedImage = readBufferedImageUncaught(file);
-		return snaportaBufferedImageConverter.convertFrom(bufferedImage);
+		var bufferedImage = readBufferedImageUncaught(file);
+		var snaporta = snaportaBufferedImageConverter.convertFrom(bufferedImage);
+		return snaporta;
 	}
 	
 	

@@ -10,6 +10,7 @@ public class VerticalGradientDoubleMask
 		super(width, height, lowValueCoord, highValueCoord);
 	}
 	
+	
 	// MASK
 	@Override
 	public double getValueAt(int x, int y)

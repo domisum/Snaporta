@@ -1,12 +1,14 @@
 package io.domisum.lib.snaporta.mask.bool;
 
 import io.domisum.lib.auxiliumlib.PHR;
+import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.util.Sized;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 import org.apache.commons.lang3.Validate;
 
 import java.util.Arrays;
 
+@SuppressWarnings("BooleanParameter")
 public final class BooleanMaskPainter
 		implements Sized
 {
@@ -15,6 +17,7 @@ public final class BooleanMaskPainter
 	
 	
 	// INIT
+	@API
 	public static BooleanMaskPainter onlyFalseOfWidthAndHeight(int width, int height)
 	{
 		boolean[][] values = new boolean[height][width];
@@ -46,6 +49,7 @@ public final class BooleanMaskPainter
 	
 	
 	// CONVERSION
+	@API
 	public BooleanMask toMask()
 	{
 		return new BasicBooleanMask(values);
@@ -65,6 +69,7 @@ public final class BooleanMaskPainter
 		return values.length;
 	}
 	
+	@API
 	public boolean getValueAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
@@ -73,6 +78,7 @@ public final class BooleanMaskPainter
 	
 	
 	// PAINTER
+	@API
 	public void setValueAt(int x, int y, boolean value)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);

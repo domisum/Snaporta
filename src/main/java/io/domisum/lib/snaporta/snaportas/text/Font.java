@@ -36,12 +36,12 @@ public final class Font
 	{
 		try
 		{
-			java.awt.Font font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, ttfFile);
+			var font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, ttfFile);
 			return fromAwtFont(font);
 		}
 		catch(FontFormatException e)
 		{
-			throw new UncheckedIOException(new IOException("loaded font contains errors", e));
+			throw new UncheckedIOException(new IOException("Loaded font contains errors", e));
 		}
 		catch(IOException e)
 		{
@@ -52,10 +52,10 @@ public final class Font
 	@API
 	public static Optional<Font> ofSystemFont(String fontName)
 	{
-		GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		var graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		java.awt.Font[] graphicsEnvironmentFonts = graphicsEnvironment.getAllFonts();
 		
-		for(java.awt.Font font : graphicsEnvironmentFonts)
+		for(var font : graphicsEnvironmentFonts)
 			if(Objects.equals(font.getName(), fontName))
 				return Optional.of(fromAwtFont(font));
 		

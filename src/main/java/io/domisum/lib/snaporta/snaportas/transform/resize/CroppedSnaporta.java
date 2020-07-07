@@ -42,7 +42,9 @@ public class CroppedSnaporta
 	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-		return backingSnaporta.getARGBAt(x+cropX, y+cropY);
+		
+		int argb = backingSnaporta.getARGBAt(x+cropX, y+cropY);
+		return argb;
 	}
 	
 }

@@ -44,7 +44,9 @@ public abstract class StraightGradientDoubleMask
 		
 		double leftDistance = (coord-left)/(double) (right-left);
 		double leftProximity = 1-leftDistance;
-		return MathUtil.mix(leftNumber, leftProximity, rightNumber);
+		
+		double gradientValue = MathUtil.mix(leftNumber, leftProximity, rightNumber);
+		return gradientValue;
 	}
 	
 }

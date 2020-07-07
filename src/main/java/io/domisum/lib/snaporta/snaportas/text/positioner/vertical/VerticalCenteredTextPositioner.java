@@ -13,7 +13,9 @@ public class VerticalCenteredTextPositioner
 	public double position(int height, Padding padding, TextDimensions textDimensions)
 	{
 		double availableHeight = height-textDimensions.getHeight()-padding.getVerticalSum();
-		return (availableHeight/2)+padding.getTop();
+		double pos = (availableHeight/2)+padding.getTop();
+		
+		return pos;
 	}
 	
 }

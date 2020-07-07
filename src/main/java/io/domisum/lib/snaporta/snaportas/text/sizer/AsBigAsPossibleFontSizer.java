@@ -3,7 +3,6 @@ package io.domisum.lib.snaporta.snaportas.text.sizer;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Padding;
 import io.domisum.lib.snaporta.snaportas.text.Font;
-import io.domisum.lib.snaporta.snaportas.text.dimensions.TextDimensions;
 import io.domisum.lib.snaporta.snaportas.text.dimensions.TextDimensionsCalculator;
 import lombok.RequiredArgsConstructor;
 
@@ -21,13 +20,14 @@ public class AsBigAsPossibleFontSizer
 		int availableHeight = height-padding.getVerticalSum();
 		
 		double baselineFontSize = 1000; // use big font size to reduce pixel rounding errors
-		TextDimensionsCalculator textDimensionsCalculator = new TextDimensionsCalculator(font, baselineFontSize);
+		var textDimensionsCalculator = new TextDimensionsCalculator(font, baselineFontSize);
 		
-		TextDimensions textDimensions = textDimensionsCalculator.calculateDimensions(text);
+		var textDimensions = textDimensionsCalculator.calculateDimensions(text);
 		double fontSizeDerivedFromWidth = baselineFontSize/(textDimensions.getWidth()/availableWidth);
 		double fontSizeDerivedFromHeight = baselineFontSize/(textDimensions.getHeight()/availableHeight);
 		
-		return Math.min(fontSizeDerivedFromWidth, fontSizeDerivedFromHeight);
+		double size = Math.min(fontSizeDerivedFromWidth, fontSizeDerivedFromHeight);
+		return size;
 	}
 	
 }

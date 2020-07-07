@@ -28,8 +28,8 @@ public class Matrix
 	{
 		int width = entries[0].length;
 		int height = entries.length;
-		Validate.isTrue((width%2) == 1, "matrix width has to be uneven, was "+width);
-		Validate.isTrue((height%2) == 1, "matrix height has to be uneven, was "+height);
+		Validate.isTrue((width%2) == 1, "Matrix width has to be uneven, was "+width);
+		Validate.isTrue((height%2) == 1, "Matrix height has to be uneven, was "+height);
 		
 		// copy to prevent outside modification
 		this.entries = new double[height][];
@@ -37,7 +37,7 @@ public class Matrix
 		{
 			double[] row = entries[i];
 			int rowLength = row.length;
-			Validate.isTrue(rowLength == width, PHR.r("row at index {} has width of {}, has to be {}", i, rowLength, width));
+			Validate.isTrue(rowLength == width, PHR.r("Row at index {} has width of {}, has to be {}", i, rowLength, width));
 			
 			this.entries[i] = Arrays.copyOf(row, rowLength);
 		}
@@ -57,7 +57,8 @@ public class Matrix
 		String separatorLineComponent = "-".repeat(valueLength);
 		String separatorLine = separatorLineComponent+("+"+separatorLineComponent).repeat(getWidth()-1)+"\n";
 		
-		return StringUtil.listToString(rowsString, separatorLine);
+		String asString = StringUtil.listToString(rowsString, separatorLine);
+		return asString;
 	}
 	
 	private String generateToStringRow(double[] row, int padValueToLength)
@@ -69,7 +70,9 @@ public class Matrix
 			return rounded+pad;
 		});
 		var roundedRowValues = roundedRowValuesStream.collect(Collectors.toList());
-		return StringUtil.listToString(roundedRowValues, "|");
+		
+		String asString = StringUtil.listToString(roundedRowValues, "|");
+		return asString;
 	}
 	
 	
@@ -105,7 +108,9 @@ public class Matrix
 		
 		SnaportaValidate.validateInInterval(-getHorizontalRadius(), getHorizontalRadius(), "x", x);
 		SnaportaValidate.validateInInterval(-getVerticalRadius(), getVerticalRadius(), "y", y);
-		return entries[inEntriesY][inEntriesX];
+		
+		double entry = entries[inEntriesY][inEntriesX];
+		return entry;
 	}
 	
 	

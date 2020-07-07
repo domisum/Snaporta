@@ -23,9 +23,9 @@ public final class BasicBooleanMask
 	BasicBooleanMask(boolean[][] values)
 	{
 		// validate minimum dimension
-		Validate.isTrue(values.length > 0, "mask has to have a minimum height of 1");
+		Validate.isTrue(values.length > 0, "Mask has to have a minimum height of 1");
 		Validate.noNullElements(values);
-		Validate.isTrue(values[0].length > 0, "mask has to have a minimum width of 1");
+		Validate.isTrue(values[0].length > 0, "Mask has to have a minimum width of 1");
 		
 		// deep copy to avoid modification through array reference
 		int width = values[0].length;
@@ -35,7 +35,7 @@ public final class BasicBooleanMask
 		{
 			boolean[] row = values[y];
 			if(row.length != width)
-				throw new IllegalArgumentException(PHR.r("rows 0 and {} have different lengths: {} vs {}", y, width, row.length));
+				throw new IllegalArgumentException(PHR.r("Rows 0 and {} have different lengths: {} vs {}", y, width, row.length));
 			
 			valuesCopy[y] = Arrays.copyOf(row, row.length);
 		}

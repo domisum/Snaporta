@@ -1,6 +1,7 @@
 package io.domisum.lib.snaporta.mask.doubl;
 
 import io.domisum.lib.auxiliumlib.PHR;
+import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.util.Sized;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 import org.apache.commons.lang3.Validate;
@@ -15,6 +16,7 @@ public final class DoubleMaskPainter
 	
 	
 	// INIT
+	@API
 	public static DoubleMaskPainter onlyFalseOfWidthAndHeight(int width, int height)
 	{
 		double[][] values = new double[height][width];
@@ -46,6 +48,7 @@ public final class DoubleMaskPainter
 	
 	
 	// CONVERSION
+	@API
 	public DoubleMask toMask()
 	{
 		return new BasicDoubleMask(values);
@@ -65,6 +68,7 @@ public final class DoubleMaskPainter
 		return values.length;
 	}
 	
+	@API
 	public double getValueAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
@@ -73,6 +77,7 @@ public final class DoubleMaskPainter
 	
 	
 	// PAINTER
+	@API
 	public void setValueAt(int x, int y, double value)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);

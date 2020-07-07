@@ -6,7 +6,6 @@ import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
 import io.domisum.lib.snaporta.color.Colors;
 import io.domisum.lib.snaporta.formatconversion.SnaportaBufferedImageConverter;
-import io.domisum.lib.snaporta.snaportas.text.dimensions.TextDimensions;
 import io.domisum.lib.snaporta.snaportas.text.dimensions.TextDimensionsCalculator;
 import io.domisum.lib.snaporta.snaportas.text.positioner.horizontal.HorizontalAlignLeftTextPositioner;
 import io.domisum.lib.snaporta.snaportas.text.positioner.horizontal.HorizontalAlignRightTextPositioner;
@@ -76,8 +75,8 @@ public final class TextSnaporta
 	// RENDERING
 	private Snaporta render()
 	{
-		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D graphics = createTextRenderingGraphics(bufferedImage);
+		var bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		var graphics = createTextRenderingGraphics(bufferedImage);
 		
 		if(drawPaddingOutline)
 			drawPaddingOutline(graphics);
@@ -87,13 +86,15 @@ public final class TextSnaporta
 		drawStringToGraphics(graphics);
 		
 		graphics.dispose();
-		SnaportaBufferedImageConverter imageConverter = new SnaportaBufferedImageConverter();
-		return imageConverter.convertFrom(bufferedImage);
+		var imageConverter = new SnaportaBufferedImageConverter();
+		var snaporta = imageConverter.convertFrom(bufferedImage);
+		
+		return snaporta;
 	}
 	
 	private Graphics2D createTextRenderingGraphics(BufferedImage bufferedImage)
 	{
-		Graphics2D graphics = bufferedImage.createGraphics();
+		var graphics = bufferedImage.createGraphics();
 		graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 		
@@ -103,9 +104,9 @@ public final class TextSnaporta
 	
 	private void drawPaddingOutline(Graphics2D graphics)
 	{
-		java.awt.Color colorBefore = graphics.getColor();
+		var colorBefore = graphics.getColor();
 		
-		Color outlineColor = color.deriveOpposite();
+		var outlineColor = color.deriveOpposite();
 		graphics.setColor(outlineColor.toAwt());
 		
 		graphics.drawRect(0, 0, width-1, height-1);
@@ -117,14 +118,14 @@ public final class TextSnaporta
 	private void setGraphicsFont(Graphics2D graphics)
 	{
 		double fontSize = fontSizer.size(font, width, height, padding, text);
-		java.awt.Font font = this.font.getFont().deriveFont((float) fontSize);
+		var font = this.font.getFont().deriveFont((float) fontSize);
 		graphics.setFont(font);
 	}
 	
 	private void drawStringToGraphics(Graphics2D graphics)
 	{
 		float fontSizePt = graphics.getFont().getSize2D();
-		TextDimensions textDimensions = new TextDimensionsCalculator(font, fontSizePt).calculateDimensions(text);
+		var textDimensions = new TextDimensionsCalculator(font, fontSizePt).calculateDimensions(text);
 		
 		double horizontalPosition = horizontalTextPositioner.position(width, padding, textDimensions);
 		double verticalPosition = verticalTextPositioner.position(height, padding, textDimensions);

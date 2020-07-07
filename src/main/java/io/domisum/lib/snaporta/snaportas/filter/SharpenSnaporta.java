@@ -23,9 +23,9 @@ public class SharpenSnaporta
 	public SharpenSnaporta(Snaporta baseSnaporta, double sharpness)
 	{
 		this.baseSnaporta = baseSnaporta;
-		matrixInterpolator = new MatrixInterpolator(new IgnoreOutOfBoundsMatrixOnSnaportaEvaluator(),
-				createSharpenMatrix(sharpness)
-		);
+		
+		var evaluator = new IgnoreOutOfBoundsMatrixOnSnaportaEvaluator();
+		matrixInterpolator = new MatrixInterpolator(evaluator, createSharpenMatrix(sharpness));
 	}
 	
 	private Matrix createSharpenMatrix(double s)
@@ -35,7 +35,9 @@ public class SharpenSnaporta
 		double[] line3 = {-1*s, -1*s, -1*s};
 		
 		double[][] kernel = {line1, line2, line3};
-		return new Matrix(kernel);
+		var matrix = new Matrix(kernel);
+		
+		return matrix;
 	}
 	
 	
@@ -57,7 +59,8 @@ public class SharpenSnaporta
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
-		return matrixInterpolator.interpolateARGBAt(baseSnaporta, x, y);
+		int argb = matrixInterpolator.interpolateARGBAt(baseSnaporta, x, y);
+		return argb;
 	}
 	
 }

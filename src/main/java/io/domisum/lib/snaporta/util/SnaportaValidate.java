@@ -31,8 +31,7 @@ public final class SnaportaValidate
 			throw new IllegalArgumentException(PHR.r(valueName+" has to be in interval [{}-{}], but was {}",
 					minValue,
 					maxValue,
-					value
-			));
+					value));
 	}
 	
 	public static void validateInDoubleInterval(double minValue, double maxValue, String valueName, double value)
@@ -41,8 +40,7 @@ public final class SnaportaValidate
 			throw new IllegalArgumentException(PHR.r(valueName+" has to be in interval [{}-{}], but was {}",
 					minValue,
 					maxValue,
-					value
-			));
+					value));
 	}
 	
 }

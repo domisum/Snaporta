@@ -48,19 +48,25 @@ public class ShadowSnaporta
 	@Override
 	public int getARGBAt(int x, int y)
 	{
+		return getColorAt(x, y).toARGBInt();
+	}
+	
+	@Override
+	public Color getColorAt(int x, int y)
+	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
 		int inBaseX = x-offsetX;
 		int inBaseY = y-offsetY;
 		if(!baseSnaporta.isInBounds(inBaseX, inBaseY))
-			return Colors.TRANSPARENT.toARGBInt();
+			return Colors.TRANSPARENT;
 		
-		Color colorAt = baseSnaporta.getColorAt(inBaseX, inBaseY);
+		var colorAt = baseSnaporta.getColorAt(inBaseX, inBaseY);
 		double opacity = colorAt.getOpacityRelative();
 		if(opacity == 0)
-			return Colors.TRANSPARENT.toARGBInt();
+			return Colors.TRANSPARENT;
 		
-		return color.deriveWithOpacity(opacity).toARGBInt();
+		return color.deriveWithOpacity(opacity);
 	}
 	
 }
