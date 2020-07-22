@@ -285,7 +285,7 @@ public final class TextSnaporta
 		double renderStartPointX = padding.getLeft()+unoccoupiedWidthOnLeft;
 		
 		double insidePaddingUnoccupiedHeight = insidePaddingHeight-textVisualHeight;
-		double topVisualBoundsEdgeToBaseline = -visualBounds.getMinY(); // minus because top edge has negative y coordinate
+		double topVisualBoundsEdgeToBaseline = -visualBounds.getMinY(); // top edge of visual bounds has negative y coordinate
 		double unoccoupiedHeightOnTop = getUnoccoupiedHeightOnTop(insidePaddingUnoccupiedHeight);
 		double renderStartPointY = padding.getTop()+unoccoupiedHeightOnTop+topVisualBoundsEdgeToBaseline;
 		
@@ -293,10 +293,8 @@ public final class TextSnaporta
 		// coordinate system: render start point is origin, x -> right, y -> down
 		graphics.drawGlyphVector(glyphVector, (float) renderStartPointX, (float) renderStartPointY);
 		
-		var imageConverter = new SnaportaBufferedImageConverter();
-		var snaporta = imageConverter.convertFrom(bufferedImage);
+		var snaporta = SnaportaBufferedImageConverter.convert(bufferedImage);
 		graphics.dispose();
-		
 		return snaporta;
 	}
 	
