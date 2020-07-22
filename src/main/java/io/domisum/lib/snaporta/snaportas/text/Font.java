@@ -15,13 +15,13 @@ public final class Font
 {
 	
 	@Getter
-	private final java.awt.Font font;
+	private final java.awt.Font awtFont;
 	
 	
 	// INIT
-	private Font(java.awt.Font font)
+	private Font(java.awt.Font awtFont)
 	{
-		this.font = font.deriveFont(1f);
+		this.awtFont = awtFont.deriveFont(1f);
 	}
 	
 	@API

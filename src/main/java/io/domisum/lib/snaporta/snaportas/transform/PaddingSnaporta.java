@@ -1,11 +1,11 @@
 package io.domisum.lib.snaporta.snaportas.transform;
 
 import io.domisum.lib.auxiliumlib.annotations.API;
+import io.domisum.lib.auxiliumlib.util.ValidationUtil;
 import io.domisum.lib.snaporta.Padding;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Colors;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
-import org.apache.commons.lang3.Validate;
 
 @API
 public class PaddingSnaporta
@@ -22,8 +22,8 @@ public class PaddingSnaporta
 		this.baseSnaporta = baseSnaporta;
 		this.padding = padding;
 		
-		Validate.notNull(baseSnaporta, "baseSnaporta can't be null");
-		Validate.notNull(padding, "padding can't be null");
+		ValidationUtil.notNull(baseSnaporta, "baseSnaporta");
+		ValidationUtil.notNull(padding, "padding");
 	}
 	
 	

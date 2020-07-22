@@ -1,31 +1,21 @@
 package io.domisum.lib.snaporta.snaportas.text;
 
+import com.google.common.base.Suppliers;
 import io.domisum.lib.auxiliumlib.annotations.API;
+import io.domisum.lib.auxiliumlib.util.ValidationUtil;
 import io.domisum.lib.snaporta.Padding;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
-import io.domisum.lib.snaporta.color.Colors;
 import io.domisum.lib.snaporta.formatconversion.SnaportaBufferedImageConverter;
-import io.domisum.lib.snaporta.snaportas.text.dimensions.TextDimensionsCalculator;
-import io.domisum.lib.snaporta.snaportas.text.positioner.horizontal.HorizontalAlignLeftTextPositioner;
-import io.domisum.lib.snaporta.snaportas.text.positioner.horizontal.HorizontalAlignRightTextPositioner;
-import io.domisum.lib.snaporta.snaportas.text.positioner.horizontal.HorizontalCenteredTextPositioner;
-import io.domisum.lib.snaporta.snaportas.text.positioner.horizontal.HorizontalTextPositioner;
-import io.domisum.lib.snaporta.snaportas.text.positioner.vertical.VerticalCenteredTextPositioner;
-import io.domisum.lib.snaporta.snaportas.text.positioner.vertical.VerticalTextPositioner;
-import io.domisum.lib.snaporta.snaportas.text.sizer.AsBigAsPossibleFontSizer;
-import io.domisum.lib.snaporta.snaportas.text.sizer.ConstantFontSizer;
-import io.domisum.lib.snaporta.snaportas.text.sizer.FontSizer;
-import io.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.Validate;
 
-import java.awt.Graphics2D;
+import javax.annotation.Nullable;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.util.Objects;
+import java.util.function.Supplier;
 
 @API
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -33,212 +23,197 @@ public final class TextSnaporta
 		implements Snaporta
 {
 	
-	// CONSTANTS
-	private static final int DEFAULT_FONT_SIZE = 24;
-	
-	// SNAPORTA
+	// ESSENTIAL
 	@Getter
 	private final int width;
 	@Getter
 	private final int height;
-	
-	// FONT
-	private Font font = Font.defaultFont();
-	private Color color = Colors.BLACK;
-	
-	// POSITIONING
-	private Padding padding = Padding.none();
-	private FontSizer fontSizer = new ConstantFontSizer(DEFAULT_FONT_SIZE);
-	private HorizontalTextPositioner horizontalTextPositioner;
-	private VerticalTextPositioner verticalTextPositioner;
-	
-	// CONTENT
 	private final String text;
 	
-	// DEBUG
-	private boolean drawPaddingOutline = false;
+	// FONT
+	private final Font font;
+	@Nullable
+	private final Integer maxFontSize; // null means 'as big as possible'
+	private final Color fontColor;
+	
+	// POSITIONING
+	private final Padding padding;
+	private final HorizontalAlignment horizontalAlignment;
+	private final VerticalAlignment verticalAlignment;
+	
+	// RENDERED
+	private final Supplier<Snaporta> lazyInitRendered = Suppliers.memoize(this::render);
 	
 	
-	// TEMP
-	private Snaporta renderedText;
-	
-	
-	// SNAPORTA
-	@Override
-	public int getARGBAt(int x, int y)
-	{
-		SnaportaValidate.validateInBounds(this, x, y);
-		return renderedText.getARGBAt(x, y);
-	}
-	
-	
-	// RENDERING
-	private Snaporta render()
-	{
-		var bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		var graphics = createTextRenderingGraphics(bufferedImage);
-		
-		if(drawPaddingOutline)
-			drawPaddingOutline(graphics);
-		
-		setGraphicsFont(graphics);
-		graphics.setColor(color.toAwt());
-		drawStringToGraphics(graphics);
-		
-		graphics.dispose();
-		var imageConverter = new SnaportaBufferedImageConverter();
-		var snaporta = imageConverter.convertFrom(bufferedImage);
-		
-		return snaporta;
-	}
-	
-	private Graphics2D createTextRenderingGraphics(BufferedImage bufferedImage)
-	{
-		var graphics = bufferedImage.createGraphics();
-		graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-		
-		return graphics;
-	}
-	
-	
-	private void drawPaddingOutline(Graphics2D graphics)
-	{
-		var colorBefore = graphics.getColor();
-		
-		var outlineColor = color.deriveOpposite();
-		graphics.setColor(outlineColor.toAwt());
-		
-		graphics.drawRect(0, 0, width-1, height-1);
-		graphics.drawRect(padding.getLeft(), padding.getTop(), width-padding.getHorizontalSum(), height-padding.getVerticalSum());
-		
-		graphics.setColor(colorBefore);
-	}
-	
-	private void setGraphicsFont(Graphics2D graphics)
-	{
-		double fontSize = fontSizer.size(font, width, height, padding, text);
-		var font = this.font.getFont().deriveFont((float) fontSize);
-		graphics.setFont(font);
-	}
-	
-	private void drawStringToGraphics(Graphics2D graphics)
-	{
-		float fontSizePt = graphics.getFont().getSize2D();
-		var textDimensions = new TextDimensionsCalculator(font, fontSizePt).calculateDimensions(text);
-		
-		double horizontalPosition = horizontalTextPositioner.position(width, padding, textDimensions);
-		double verticalPosition = verticalTextPositioner.position(height, padding, textDimensions);
-		
-		int graphicsHorizontalPosition = (int) Math.round(horizontalPosition);
-		int graphicsVerticalPosition = (int) Math.round(verticalPosition+textDimensions.getHeight());
-		graphics.drawString(text, graphicsHorizontalPosition, graphicsVerticalPosition);
-	}
-	
-	
-	// BUILDER
+	// INIT
 	@API
-	public static final class TextSnaportaBuilder
+	public static final class Builder
 	{
 		
-		private final TextSnaporta textSnaporta;
+		// ESSENTIAL
+		private final int width;
+		private final int height;
+		private final String text;
+		
+		// FONT
+		private Font font = null;
+		private Integer maxFontSize = -1; // null is already used for 'as big as possible', so use -1 to indicate 'not yet set'
+		private Color fontColor = null;
+		
+		// POSITIONING
+		private Padding padding = Padding.none();
+		private HorizontalAlignment horizontalAlignment = null;
+		private VerticalAlignment verticalAlignment = null;
 		
 		
 		// INIT
-		public TextSnaportaBuilder(int width, int height, Object toText)
-		{
-			this(width, height, Objects.toString(toText));
-		}
-		
-		public TextSnaportaBuilder(int width, int height, String text)
-		{
-			textSnaporta = new TextSnaporta(width, height, text);
-		}
-		
-		
-		// SETTINGS
 		@API
-		public TextSnaportaBuilder font(Font font)
+		public Builder(int width, int height, String text)
 		{
-			textSnaporta.font = font;
+			ValidationUtil.greaterZero(width, "width");
+			ValidationUtil.greaterZero(height, "height");
+			ValidationUtil.notBlank(text, "text");
+			
+			this.width = width;
+			this.height = height;
+			this.text = text;
+		}
+		
+		
+		// SETTERS
+		@API
+		public Builder font(Font font)
+		{
+			ValidationUtil.notNull(font, "font");
+			this.font = font;
 			return this;
 		}
 		
 		@API
-		public TextSnaportaBuilder color(Color color)
+		public Builder systemDefaultFont()
 		{
-			textSnaporta.color = color;
+			return font(Font.defaultFont());
+		}
+		
+		@API
+		public Builder fontSize(int maxFontSize)
+		{
+			ValidationUtil.greaterZero(maxFontSize, "maxFontSize");
+			this.maxFontSize = maxFontSize;
+			
 			return this;
 		}
 		
 		@API
-		public TextSnaportaBuilder padding(Padding padding)
+		public Builder fontAsBigAsPossible()
 		{
-			textSnaporta.padding = padding;
+			maxFontSize = null;
 			return this;
 		}
 		
 		@API
-		public TextSnaportaBuilder fontSizer(FontSizer fontSizer)
+		public Builder fontColor(Color fontColor)
 		{
-			textSnaporta.fontSizer = fontSizer;
+			ValidationUtil.notNull(fontColor, "fontColor");
+			this.fontColor = fontColor;
 			return this;
 		}
 		
 		@API
-		public TextSnaportaBuilder horizontalTextPositioner(HorizontalTextPositioner horizontalTextPositioner)
+		public Builder padding(Padding padding)
 		{
-			textSnaporta.horizontalTextPositioner = horizontalTextPositioner;
+			ValidationUtil.notNull(padding, "padding");
+			// todo validate padding leaves room for text
+			
+			this.padding = padding;
 			return this;
 		}
 		
 		@API
-		public TextSnaportaBuilder verticalTextPositioner(VerticalTextPositioner verticalTextPositioner)
+		public Builder horizontalAlignment(HorizontalAlignment horizontalAlignment)
 		{
-			textSnaporta.verticalTextPositioner = verticalTextPositioner;
-			return this;
-		}
-		
-		
-		@API
-		public TextSnaportaBuilder drawPaddingOutline()
-		{
-			textSnaporta.drawPaddingOutline = true;
-			return this;
-		}
-		
-		
-		// SETTINGS SHORTCUTS
-		@API
-		public TextSnaportaBuilder fontAsBigAsPossible()
-		{
-			return fontSizer(new AsBigAsPossibleFontSizer());
-		}
-		
-		
-		@API
-		public TextSnaportaBuilder centerHorizontally()
-		{
-			return horizontalTextPositioner(new HorizontalCenteredTextPositioner());
-		}
-		
-		@API
-		public TextSnaportaBuilder centerVertically()
-		{
-			return verticalTextPositioner(new VerticalCenteredTextPositioner());
-		}
-		
-		@API
-		public TextSnaportaBuilder alignLeft()
-		{
-			textSnaporta.horizontalTextPositioner = new HorizontalAlignLeftTextPositioner();
+			ValidationUtil.notNull(horizontalAlignment, "horizontalAlignment");
+			this.horizontalAlignment = horizontalAlignment;
 			return this;
 		}
 		
 		@API
-		public TextSnaportaBuilder alignRight()
+		public Builder verticalAlignment(VerticalAlignment verticalAlignment)
 		{
-			textSnaporta.horizontalTextPositioner = new HorizontalAlignRightTextPositioner();
+			ValidationUtil.notNull(verticalAlignment, "verticalAlignment");
+			this.verticalAlignment = verticalAlignment;
+			return this;
+		}
+		
+		@API
+		public Builder alignTopLeft()
+		{
+			verticalAlignment = VerticalAlignment.TOP;
+			horizontalAlignment = HorizontalAlignment.LEFT;
+			return this;
+		}
+		
+		@API
+		public Builder alignTopCenter()
+		{
+			verticalAlignment = VerticalAlignment.TOP;
+			horizontalAlignment = HorizontalAlignment.CENTER;
+			return this;
+		}
+		
+		@API
+		public Builder alignTopRight()
+		{
+			verticalAlignment = VerticalAlignment.TOP;
+			horizontalAlignment = HorizontalAlignment.RIGHT;
+			return this;
+		}
+		
+		@API
+		public Builder alignCenterRight()
+		{
+			verticalAlignment = VerticalAlignment.CENTER;
+			horizontalAlignment = HorizontalAlignment.RIGHT;
+			return this;
+		}
+		
+		@API
+		public Builder alignBottomRight()
+		{
+			verticalAlignment = VerticalAlignment.BOTTOM;
+			horizontalAlignment = HorizontalAlignment.RIGHT;
+			return this;
+		}
+		
+		@API
+		public Builder alignBottomCenter()
+		{
+			verticalAlignment = VerticalAlignment.BOTTOM;
+			horizontalAlignment = HorizontalAlignment.CENTER;
+			return this;
+		}
+		
+		@API
+		public Builder alignBottomLeft()
+		{
+			verticalAlignment = VerticalAlignment.BOTTOM;
+			horizontalAlignment = HorizontalAlignment.LEFT;
+			return this;
+		}
+		
+		@API
+		public Builder alignCenterLeft()
+		{
+			verticalAlignment = VerticalAlignment.CENTER;
+			horizontalAlignment = HorizontalAlignment.LEFT;
+			return this;
+		}
+		
+		@API
+		public Builder alignCenterCenter()
+		{
+			verticalAlignment = VerticalAlignment.CENTER;
+			horizontalAlignment = HorizontalAlignment.CENTER;
 			return this;
 		}
 		
@@ -247,12 +222,116 @@ public final class TextSnaporta
 		@API
 		public TextSnaporta build()
 		{
-			Validate.notNull(textSnaporta.horizontalTextPositioner, "horizontalTextPositioner not set");
-			Validate.notNull(textSnaporta.verticalTextPositioner, "verticalTextPositioner not set");
+			// essential attributes are validated in constructor, don't need to do that here
 			
-			textSnaporta.renderedText = textSnaporta.render();
+			Validate.notNull(font, "You have to set a font before building");
+			Validate.isTrue(maxFontSize != -1, "You have to set the font size before building");
+			Validate.notNull(fontColor, "You have to set the font color before building");
+			Validate.notNull(horizontalAlignment, "You have to set the horizontal alignment before building");
+			Validate.notNull(verticalAlignment, "You have to set the vertical alignment before building");
+			
+			var textSnaporta = new TextSnaporta(
+					width,
+					height,
+					text,
+					font,
+					maxFontSize,
+					fontColor,
+					padding,
+					horizontalAlignment,
+					verticalAlignment);
 			return textSnaporta;
 		}
+		
+	}
+	
+	
+	// SNAPORTA
+	@Override
+	public int getARGBAt(int x, int y)
+	{
+		return lazyInitRendered.get().getARGBAt(x, y);
+	}
+	
+	
+	// RENDERING
+	private Snaporta render()
+	{
+		var bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		var graphics = bufferedImage.createGraphics();
+		graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		
+		double insidePaddingWidth = width-padding.getHorizontalSum();
+		double insidePaddingHeight = height-padding.getVerticalSum();
+		
+		graphics.setFont(font.getAwtFont().deriveFont((float) maxFontSize));
+		graphics.setColor(fontColor.toAwt());
+		
+		var glyphVector = graphics.getFont().createGlyphVector(graphics.getFontRenderContext(), text);
+		var visualBounds = glyphVector.getVisualBounds();
+		double textVisualWidth = visualBounds.getWidth();
+		double textVisualHeight = visualBounds.getHeight();
+		
+		double insidePaddingUnoccupiedWidth = insidePaddingWidth-textVisualWidth;
+		double unoccoupiedWidthOnLeft = getUnoccoupiedWidthOnLeft(insidePaddingUnoccupiedWidth);
+		double renderStartPointX = padding.getLeft()+unoccoupiedWidthOnLeft;
+		
+		double insidePaddingUnoccupiedHeight = insidePaddingHeight-textVisualHeight;
+		double topVisualBoundsEdgeToBaseline = visualBounds.getMinY();
+		double unoccoupiedHeightOnTop = getUnoccoupiedHeightOnTop(insidePaddingUnoccupiedHeight);
+		double renderStartPointY = padding.getTop()+unoccoupiedHeightOnTop+topVisualBoundsEdgeToBaseline;
+		
+		// render start point is where the left edge of the visual bounds and the baseline intersect
+		// coordinate system: render start point is origin, x -> right, y -> down
+		graphics.drawGlyphVector(glyphVector, (float) renderStartPointX, (float) renderStartPointY);
+		
+		var imageConverter = new SnaportaBufferedImageConverter();
+		var snaporta = imageConverter.convertFrom(bufferedImage);
+		graphics.dispose();
+		
+		return snaporta;
+	}
+	
+	private double getUnoccoupiedWidthOnLeft(double unoccupiedWidth)
+	{
+		double proportion = horizontalAlignment.getProportionOfUnoccupiedWidthOnLeft();
+		double unoccupiedWidthOnLeft = proportion*unoccupiedWidth;
+		return unoccupiedWidthOnLeft;
+	}
+	
+	private double getUnoccoupiedHeightOnTop(double unoccupiedHeight)
+	{
+		double proportion = verticalAlignment.getProportionOfUnoccupiedHeightOnTop();
+		double unoccupiedHeightOnTop = proportion*unoccupiedHeight;
+		return unoccupiedHeightOnTop;
+	}
+	
+	
+	// OPTIONS
+	@RequiredArgsConstructor
+	public enum HorizontalAlignment
+	{
+		
+		LEFT(0),
+		CENTER(0.5),
+		RIGHT(1);
+		
+		@Getter
+		private final double proportionOfUnoccupiedWidthOnLeft;
+		
+	}
+	
+	@RequiredArgsConstructor
+	public enum VerticalAlignment
+	{
+		
+		TOP(0),
+		CENTER(0.5),
+		BOTTOM(1);
+		
+		@Getter
+		private final double proportionOfUnoccupiedHeightOnTop;
 		
 	}
 	
