@@ -124,9 +124,9 @@ public final class TextSnaporta
 		{
 			ValidationUtil.notNull(padding, "padding");
 			Validate.isTrue(width-padding.getHorizontalSum() > 0,
-					"padding "+padding+" leaves no horizontal space for the text (width: "+width+")");
+					"padding "+padding+" leaves no horizontal space for the text (snaporta width: "+width+")");
 			Validate.isTrue(height-padding.getVerticalSum() > 0,
-					"padding "+padding+" leaves no vertical space for the text (height: "+height+")");
+					"padding "+padding+" leaves no vertical space for the text (snaporta height: "+height+")");
 			
 			this.padding = padding;
 			return this;
