@@ -271,7 +271,7 @@ public final class TextSnaporta
 		double insidePaddingWidth = width-padding.getHorizontalSum();
 		double insidePaddingHeight = height-padding.getVerticalSum();
 		
-		int fontSize = getFontSize(graphics, insidePaddingWidth, insidePaddingHeight);
+		int fontSize = determineFontSize(graphics, insidePaddingWidth, insidePaddingHeight);
 		var sizedFont = font.getAwtFont().deriveFont((float) fontSize);
 		graphics.setFont(sizedFont);
 		
@@ -300,7 +300,7 @@ public final class TextSnaporta
 		return snaporta;
 	}
 	
-	private int getFontSize(Graphics2D graphics, double maxWidth, double maxHeight)
+	private int determineFontSize(Graphics2D graphics, double maxWidth, double maxHeight)
 	{
 		final double testFontSize = 1000f;
 		
