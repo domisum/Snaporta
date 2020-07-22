@@ -228,7 +228,8 @@ public final class TextSnaporta
 			// essential attributes are validated in constructor, don't need to do that here
 			
 			Validate.notNull(font, "You have to set a font before building");
-			Validate.isTrue(maxFontSize != -1, "You have to set the font size before building");
+			if(maxFontSize != null)
+				Validate.isTrue(maxFontSize != -1, "You have to set the font size before building");
 			Validate.notNull(fontColor, "You have to set the font color before building");
 			Validate.notNull(horizontalAlignment, "You have to set the horizontal alignment before building");
 			Validate.notNull(verticalAlignment, "You have to set the vertical alignment before building");
