@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nullable;
+import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.function.Supplier;
@@ -265,12 +266,14 @@ public final class TextSnaporta
 		var graphics = bufferedImage.createGraphics();
 		graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		graphics.setColor(fontColor.toAwt());
 		
 		double insidePaddingWidth = width-padding.getHorizontalSum();
 		double insidePaddingHeight = height-padding.getVerticalSum();
 		
-		graphics.setFont(font.getAwtFont().deriveFont((float) maxFontSize));
-		graphics.setColor(fontColor.toAwt());
+		int fontSize = getFontSize(graphics, insidePaddingWidth, insidePaddingHeight);
+		var sizedFont = font.getAwtFont().deriveFont((float) fontSize);
+		graphics.setFont(sizedFont);
 		
 		var glyphVector = graphics.getFont().createGlyphVector(graphics.getFontRenderContext(), text);
 		var visualBounds = glyphVector.getVisualBounds();
@@ -282,7 +285,7 @@ public final class TextSnaporta
 		double renderStartPointX = padding.getLeft()+unoccoupiedWidthOnLeft;
 		
 		double insidePaddingUnoccupiedHeight = insidePaddingHeight-textVisualHeight;
-		double topVisualBoundsEdgeToBaseline = visualBounds.getMinY();
+		double topVisualBoundsEdgeToBaseline = -visualBounds.getMinY(); // minus because top edge has negative y coordinate
 		double unoccoupiedHeightOnTop = getUnoccoupiedHeightOnTop(insidePaddingUnoccupiedHeight);
 		double renderStartPointY = padding.getTop()+unoccoupiedHeightOnTop+topVisualBoundsEdgeToBaseline;
 		
@@ -296,6 +299,32 @@ public final class TextSnaporta
 		
 		return snaporta;
 	}
+	
+	private int getFontSize(Graphics2D graphics, double maxWidth, double maxHeight)
+	{
+		final double testFontSize = 1000f;
+		
+		var testFont = font.getAwtFont().deriveFont((float) testFontSize);
+		var testGlyphVector = testFont.createGlyphVector(graphics.getFontRenderContext(), text);
+		
+		var testGlyphVectorVisualBounds = testGlyphVector.getVisualBounds();
+		double testTextWidth = testGlyphVectorVisualBounds.getWidth();
+		double testTextHeight = testGlyphVectorVisualBounds.getHeight();
+		
+		double testWidthFactor = testTextWidth/maxWidth;
+		double testHeightFactor = testTextHeight/maxHeight;
+		
+		double biggerFactor = Math.max(testWidthFactor, testHeightFactor);
+		double fontSizeDecimal = testFontSize/biggerFactor;
+		
+		
+		if(maxFontSize != null && maxFontSize < fontSizeDecimal)
+			return maxFontSize;
+		
+		int fontSize = (int) Math.floor(fontSizeDecimal);
+		return fontSize;
+	}
+	
 	
 	private double getUnoccoupiedWidthOnLeft(double unoccupiedWidth)
 	{
