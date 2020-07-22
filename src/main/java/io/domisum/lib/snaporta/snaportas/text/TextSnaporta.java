@@ -282,11 +282,12 @@ public final class TextSnaporta
 		
 		double insidePaddingUnoccupiedWidth = insidePaddingWidth-textVisualWidth;
 		double unoccoupiedWidthOnLeft = getUnoccoupiedWidthOnLeft(insidePaddingUnoccupiedWidth);
-		double renderStartPointX = padding.getLeft()+unoccoupiedWidthOnLeft;
+		double widthPastRenderStartPointOnLeft = -visualBounds.getMinX(); // overflow to left has negative x coordinate -> minus
+		double renderStartPointX = padding.getLeft()+unoccoupiedWidthOnLeft+widthPastRenderStartPointOnLeft;
 		
 		double insidePaddingUnoccupiedHeight = insidePaddingHeight-textVisualHeight;
-		double topVisualBoundsEdgeToBaseline = -visualBounds.getMinY(); // top edge of visual bounds has negative y coordinate
 		double unoccoupiedHeightOnTop = getUnoccoupiedHeightOnTop(insidePaddingUnoccupiedHeight);
+		double topVisualBoundsEdgeToBaseline = -visualBounds.getMinY(); // top edge of visual bounds has negative y coordinate -> minus
 		double renderStartPointY = padding.getTop()+unoccoupiedHeightOnTop+topVisualBoundsEdgeToBaseline;
 		
 		// render start point is where the left edge of the visual bounds and the baseline intersect
