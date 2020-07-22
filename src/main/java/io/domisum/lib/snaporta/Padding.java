@@ -1,11 +1,10 @@
 package io.domisum.lib.snaporta;
 
 import io.domisum.lib.auxiliumlib.annotations.API;
+import io.domisum.lib.auxiliumlib.util.ValidationUtil;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-@RequiredArgsConstructor
 @ToString
 public class Padding
 {
@@ -22,10 +21,19 @@ public class Padding
 	
 	
 	// INIT
-	public Padding()
+	public Padding(int left, int right, int top, int bottom)
 	{
-		this(0, 0, 0, 0);
+		ValidationUtil.greaterZero(left, "left");
+		ValidationUtil.greaterZero(right, "right");
+		ValidationUtil.greaterZero(top, "top");
+		ValidationUtil.greaterZero(bottom, "bottom");
+		
+		this.left = left;
+		this.right = right;
+		this.top = top;
+		this.bottom = bottom;
 	}
+	
 	
 	@API
 	public static Padding none()

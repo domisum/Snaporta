@@ -123,7 +123,10 @@ public final class TextSnaporta
 		public Builder padding(Padding padding)
 		{
 			ValidationUtil.notNull(padding, "padding");
-			// todo validate padding leaves room for text
+			Validate.isTrue(width-padding.getHorizontalSum() > 0,
+					"padding "+padding+" leaves no horizontal space for the text (width: "+width+")");
+			Validate.isTrue(height-padding.getVerticalSum() > 0,
+					"padding "+padding+" leaves no vertical space for the text (height: "+height+")");
 			
 			this.padding = padding;
 			return this;
