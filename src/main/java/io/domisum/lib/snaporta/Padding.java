@@ -23,10 +23,10 @@ public class Padding
 	// INIT
 	public Padding(int left, int right, int top, int bottom)
 	{
-		ValidationUtil.greaterZero(left, "left");
-		ValidationUtil.greaterZero(right, "right");
-		ValidationUtil.greaterZero(top, "top");
-		ValidationUtil.greaterZero(bottom, "bottom");
+		ValidationUtil.notNegative(left, "left");
+		ValidationUtil.notNegative(right, "right");
+		ValidationUtil.notNegative(top, "top");
+		ValidationUtil.notNegative(bottom, "bottom");
 		
 		this.left = left;
 		this.right = right;
