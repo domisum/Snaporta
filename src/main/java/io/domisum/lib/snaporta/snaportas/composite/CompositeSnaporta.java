@@ -32,6 +32,16 @@ public class CompositeSnaporta
 	private final List<CompositeSnaportaComponent> componentsTopDown = new ArrayList<>();
 	
 	
+	// INIT
+	public CompositeSnaporta(Snaporta... componentsBottomUp)
+	{
+		this(componentsBottomUp[0].getWidth(), componentsBottomUp[0].getHeight());
+		
+		for(var component : componentsBottomUp)
+			addComponentOnTop(component);
+	}
+	
+	
 	// COMPONENTS
 	@API
 	public void setComponentOnZ(Snaporta snaporta, int x, int y, double z)
