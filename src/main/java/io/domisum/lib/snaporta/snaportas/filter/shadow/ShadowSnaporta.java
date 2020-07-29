@@ -1,4 +1,4 @@
-package io.domisum.lib.snaporta.snaportas.filter;
+package io.domisum.lib.snaporta.snaportas.filter.shadow;
 
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Snaporta;
@@ -62,11 +62,12 @@ public class ShadowSnaporta
 			return Colors.TRANSPARENT;
 		
 		var colorAt = baseSnaporta.getColorAt(inBaseX, inBaseY);
-		double opacity = colorAt.getOpacityRelative();
-		if(opacity == 0)
+		double opacityAt = colorAt.getOpacityRelative();
+		if(opacityAt == 0)
 			return Colors.TRANSPARENT;
 		
-		return color.deriveWithOpacity(opacity);
+		var shadowColorAt = color.deriveWithOpacity(opacityAt);
+		return shadowColorAt;
 	}
 	
 }
