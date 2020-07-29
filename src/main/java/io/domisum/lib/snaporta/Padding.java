@@ -66,6 +66,31 @@ public class Padding
 	}
 	
 	@API
+	public static Padding toLeft(int leftPadding)
+	{
+		return new Padding(leftPadding, 0, 0, 0);
+	}
+	
+	@API
+	public static Padding toRight(int rightPadding)
+	{
+		return new Padding(0, rightPadding, 0, 0);
+	}
+	
+	@API
+	public static Padding toTop(int topPadding)
+	{
+		return new Padding(0, 0, topPadding, 0);
+	}
+	
+	@API
+	public static Padding toBottom(int bottomPadding)
+	{
+		return new Padding(0, 0, 0, bottomPadding);
+	}
+	
+	
+	@API
 	public static Padding toEveryExceptLeft(int padding)
 	{
 		return new Padding(0, padding, padding, padding);
