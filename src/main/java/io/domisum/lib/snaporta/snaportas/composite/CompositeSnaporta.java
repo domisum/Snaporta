@@ -33,10 +33,11 @@ public class CompositeSnaporta
 	
 	
 	// INIT
-	public CompositeSnaporta(Snaporta... componentsBottomUp)
+	public CompositeSnaporta(Snaporta bottomMostComponent, Snaporta... componentsBottomUp)
 	{
-		this(componentsBottomUp[0].getWidth(), componentsBottomUp[0].getHeight());
+		this(bottomMostComponent.getWidth(), bottomMostComponent.getHeight());
 		
+		addComponentOnTop(bottomMostComponent);
 		for(var component : componentsBottomUp)
 			addComponentOnTop(component);
 	}
