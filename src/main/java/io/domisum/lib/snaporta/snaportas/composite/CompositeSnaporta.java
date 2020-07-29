@@ -1,5 +1,6 @@
 package io.domisum.lib.snaporta.snaportas.composite;
 
+import com.google.common.collect.Iterables;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.auxiliumlib.util.math.MathUtil;
 import io.domisum.lib.snaporta.Snaporta;
@@ -75,6 +76,13 @@ public class CompositeSnaporta
 		
 		var component = new CompositeSnaportaComponent(snaporta, x, y, onTopZ);
 		addComponent(component);
+	}
+	
+	@API
+	public void addComponentBelow(Snaporta snaporta, int x, int y)
+	{
+		double zBelow = componentsTopDown.isEmpty() ? -1 : Iterables.getLast(componentsTopDown).getZ()-1;
+		setComponentOnZ(snaporta, x, y, zBelow);
 	}
 	
 	private void validateUniqueZ(CompositeSnaportaComponent component)
