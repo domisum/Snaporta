@@ -29,7 +29,7 @@ public final class MaintainAspectRatioResizedSnaporta
 	private final Padding padding;
 	
 	// RESIZED
-	private ResizedSnaporta resizedSnaporta;
+	private ResizeSnaporta resizeSnaporta;
 	private int resizedSnaportaX = -1;
 	private int resizedSnaportaY = -1;
 	
@@ -40,16 +40,16 @@ public final class MaintainAspectRatioResizedSnaporta
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
-		if(resizedSnaporta == null)
+		if(resizeSnaporta == null)
 			buildResizedSnaporta();
 		
 		int inChildX = x-resizedSnaportaX;
 		int inChildY = y-resizedSnaportaY;
 		
-		if(!resizedSnaporta.isInBounds(inChildX, inChildY))
+		if(!resizeSnaporta.isInBounds(inChildX, inChildY))
 			return Colors.TRANSPARENT.toARGBInt();
 		
-		int argb = resizedSnaporta.getARGBAt(inChildX, inChildY);
+		int argb = resizeSnaporta.getARGBAt(inChildX, inChildY);
 		return argb;
 	}
 	
@@ -76,13 +76,12 @@ public final class MaintainAspectRatioResizedSnaporta
 			resizedHeight = availableWidth/aspectRatio;
 		}
 		
-		resizedSnaporta = new ResizedSnaporta(
-				(int) Math.round(resizedWidth), (int) Math.round(resizedHeight),
-				baseSnaporta,
+		resizeSnaporta = new ResizeSnaporta(
+				baseSnaporta, (int) Math.round(resizedWidth), (int) Math.round(resizedHeight),
 				interpolator);
 		
-		int resizedSnaportaFromPaddingOffsetX = (width-padding.getHorizontalSum()-resizedSnaporta.getWidth())/2;
-		int resizedSnaportaFromPaddingOffsetY = (height-padding.getVerticalSum()-resizedSnaporta.getHeight())/2;
+		int resizedSnaportaFromPaddingOffsetX = (width-padding.getHorizontalSum()-resizeSnaporta.getWidth())/2;
+		int resizedSnaportaFromPaddingOffsetY = (height-padding.getVerticalSum()-resizeSnaporta.getHeight())/2;
 		resizedSnaportaX = resizedSnaportaFromPaddingOffsetX+padding.getLeft();
 		resizedSnaportaY = resizedSnaportaFromPaddingOffsetY+padding.getTop();
 	}

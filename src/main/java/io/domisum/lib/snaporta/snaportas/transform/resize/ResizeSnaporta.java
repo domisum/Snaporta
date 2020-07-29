@@ -8,7 +8,7 @@ import io.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.Getter;
 
 @API
-public final class ResizedSnaporta
+public final class ResizeSnaporta
 		implements Snaporta
 {
 	
@@ -27,12 +27,12 @@ public final class ResizedSnaporta
 	
 	
 	// INIT
-	public ResizedSnaporta(Integer width, Integer height, Snaporta baseSnaporta)
+	public ResizeSnaporta(Snaporta baseSnaporta, Integer width, Integer height)
 	{
-		this(width, height, baseSnaporta, DEFAULT_INTERPOLATOR);
+		this(baseSnaporta, width, height, DEFAULT_INTERPOLATOR);
 	}
 	
-	public ResizedSnaporta(Integer width, Integer height, Snaporta baseSnaporta, Interpolator interpolator)
+	public ResizeSnaporta(Snaporta baseSnaporta, Integer width, Integer height, Interpolator interpolator)
 	{
 		if((width == null) && (height == null))
 			throw new IllegalArgumentException("width and height can't be null at the same time");
