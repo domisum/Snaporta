@@ -3,7 +3,7 @@ package io.domisum.lib.snaporta.snaportas.filter.shadow;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
-import io.domisum.lib.snaporta.snaportas.composite.CompositeSnaporta;
+import io.domisum.lib.snaporta.snaportas.LayeredSnaporta;
 
 @API
 public class AddShadowBelowSnaporta
@@ -19,7 +19,7 @@ public class AddShadowBelowSnaporta
 	public AddShadowBelowSnaporta(Snaporta baseSnaporta, Color shadowColor, int shadowOffsetX, int shadowOffsetY)
 	{
 		var shadow = new ShadowSnaporta(baseSnaporta, shadowColor, shadowOffsetX, shadowOffsetY);
-		rendered = new CompositeSnaporta(shadow, baseSnaporta);
+		rendered = new LayeredSnaporta(shadow, baseSnaporta);
 	}
 	
 	

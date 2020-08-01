@@ -1,4 +1,4 @@
-package io.domisum.lib.snaporta.snaportas.composite;
+package io.domisum.lib.snaporta.snaportas;
 
 import com.google.common.collect.Iterables;
 import io.domisum.lib.auxiliumlib.annotations.API;
@@ -13,13 +13,15 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.Validate;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RequiredArgsConstructor
 @API
-public class CompositeSnaporta
+public class LayeredSnaporta
 		implements Snaporta
 {
 	
@@ -30,70 +32,73 @@ public class CompositeSnaporta
 	private final int height;
 	
 	// COMPONENTS
-	private final List<CompositeSnaportaComponent> componentsTopDown = new ArrayList<>();
+	private final List<Layer> layersTopDown = new ArrayList<>();
 	
 	
 	// INIT
-	public CompositeSnaporta(Snaporta bottomMostComponent, Snaporta... componentsBottomUp)
+	public LayeredSnaporta(Snaporta bottomMostLayer, Snaporta... layersBottomUp)
 	{
-		this(bottomMostComponent.getWidth(), bottomMostComponent.getHeight());
+		this(bottomMostLayer.getWidth(), bottomMostLayer.getHeight());
 		
-		addComponentOnTop(bottomMostComponent);
-		for(var component : componentsBottomUp)
-			addComponentOnTop(component);
+		addLayerOnTop(bottomMostLayer);
+		for(var component : layersBottomUp)
+			addLayerOnTop(component);
 	}
 	
 	
-	// COMPONENTS
+	// GETTERS
 	@API
-	public void setComponentOnZ(Snaporta snaporta, int x, int y, double z)
+	public int getNumberOfLayers()
 	{
-		var component = new CompositeSnaportaComponent(snaporta, x, y, z);
-		componentsTopDown.removeIf(c->c.getZ() == component.getZ());
-		addComponent(component);
+		return layersTopDown.size();
+	}
+	
+	
+	// LAYERS
+	@API
+	public void setLayerOnZ(Snaporta snaporta, int x, int y, double z)
+	{
+		var component = new Layer(snaporta, x, y, z);
+		layersTopDown.removeIf(c->c.getZ() == component.getZ());
+		addLayer(component);
 	}
 	
 	@API
-	public void addComponent(CompositeSnaportaComponent component)
+	public void addLayer(Layer layer)
 	{
-		validateUniqueZ(component);
+		validateUniqueZ(layer);
 		
-		componentsTopDown.add(component);
-		Collections.sort(componentsTopDown);
+		layersTopDown.add(layer);
+		Collections.sort(layersTopDown);
 	}
 	
 	@API
-	public void addComponentOnTop(Snaporta snaporta)
+	public void addLayerOnTop(Snaporta snaporta)
 	{
-		addComponentOnTop(snaporta, 0, 0);
+		addLayerOnTop(snaporta, 0, 0);
 	}
 	
 	@API
-	public void addComponentOnTop(Snaporta snaporta, int x, int y)
+	public void addLayerOnTop(Snaporta snaporta, int x, int y)
 	{
-		var maxZ = componentsTopDown.stream().mapToDouble(CompositeSnaportaComponent::getZ).max();
+		var maxZ = layersTopDown.stream().mapToDouble(Layer::getZ).max();
 		double onTopZ = maxZ.isPresent() ? (maxZ.getAsDouble()+1) : 0;
 		
-		var component = new CompositeSnaportaComponent(snaporta, x, y, onTopZ);
-		addComponent(component);
+		var component = new Layer(snaporta, x, y, onTopZ);
+		addLayer(component);
 	}
 	
 	@API
-	public void addComponentBelow(Snaporta snaporta, int x, int y)
+	public void addLayerBelow(Snaporta snaporta, int x, int y)
 	{
-		double zBelow = componentsTopDown.isEmpty() ? -1 : Iterables.getLast(componentsTopDown).getZ()-1;
-		setComponentOnZ(snaporta, x, y, zBelow);
+		double zBelow = layersTopDown.isEmpty() ? -1 : Iterables.getLast(layersTopDown).getZ()-1;
+		setLayerOnZ(snaporta, x, y, zBelow);
 	}
 	
-	private void validateUniqueZ(CompositeSnaportaComponent component)
+	private void validateUniqueZ(Layer component)
 	{
-		boolean uniqueZ = componentsTopDown.stream().noneMatch(c->c.getZ() == component.getZ());
-		Validate.isTrue(uniqueZ, "Component z values have to be unique, already have component with z="+component.getZ());
-	}
-	
-	public int getNumberOfComponents()
-	{
-		return componentsTopDown.size();
+		boolean uniqueZ = layersTopDown.stream().noneMatch(c->c.getZ() == component.getZ());
+		Validate.isTrue(uniqueZ, "Layer z values have to be unique, already have a layer with z="+component.getZ());
 	}
 	
 	
@@ -102,17 +107,19 @@ public class CompositeSnaporta
 	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-		return getARGBAtDepth(x, y, 0);
+		
+		int argbAt = getARGBAtDepth(x, y, 0);
+		return argbAt;
 	}
 	
 	
 	// COLOR MIXING
 	private int getARGBAtDepth(int x, int y, int depth)
 	{
-		if(depth >= componentsTopDown.size())
+		if(depth >= layersTopDown.size())
 			return Colors.TRANSPARENT.toARGBInt();
 		
-		var component = componentsTopDown.get(depth);
+		var component = layersTopDown.get(depth);
 		int componentARGB = component.getARGBAt(x, y);
 		
 		
@@ -131,7 +138,6 @@ public class CompositeSnaporta
 	{
 		if(ARGBUtil.getAlphaComponent(background) == Color.ALPHA_TRANSPARENT)
 			return foreground;
-		
 		
 		double redCombined = getColorComponentCombined(ColorComponent.RED, background, foreground);
 		double greenCombined = getColorComponentCombined(ColorComponent.GREEN, background, foreground);
@@ -158,6 +164,43 @@ public class CompositeSnaporta
 				ARGBUtil.getComponent(colorComponent, background), 1-foregroundOpacity);
 		
 		return combined;
+	}
+	
+	
+	// LAYER
+	@RequiredArgsConstructor
+	public static class Layer
+			implements Comparable<Layer>
+	{
+		
+		private final Snaporta snaporta;
+		private final int x;
+		private final int y;
+		
+		@Getter
+		private final double z;
+		
+		
+		// COMPARE
+		@Override
+		public int compareTo(@Nonnull Layer other)
+		{
+			return Comparator.comparing(Layer::getZ).reversed().compare(this, other);
+		}
+		
+		
+		// COMPONENT
+		public int getARGBAt(int x, int y)
+		{
+			int inSnaportaX = x-this.x;
+			int inSnaportaY = y-this.y;
+			
+			if(snaporta.isInBounds(inSnaportaX, inSnaportaY))
+				return snaporta.getARGBAt(inSnaportaX, inSnaportaY);
+			else
+				return Colors.TRANSPARENT.toARGBInt();
+		}
+		
 	}
 	
 }
