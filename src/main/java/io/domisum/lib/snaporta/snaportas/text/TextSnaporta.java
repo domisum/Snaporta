@@ -2,6 +2,7 @@ package io.domisum.lib.snaporta.snaportas.text;
 
 import com.google.common.base.Suppliers;
 import io.domisum.lib.auxiliumlib.annotations.API;
+import io.domisum.lib.auxiliumlib.datacontainers.bound.IntBounds2D;
 import io.domisum.lib.auxiliumlib.util.ValidationUtil;
 import io.domisum.lib.snaporta.Padding;
 import io.domisum.lib.snaporta.Snaporta;
@@ -43,7 +44,7 @@ public final class TextSnaporta
 	private final VerticalAlignment verticalAlignment;
 	
 	// RENDERED
-	private final Supplier<Snaporta> lazyInitRendered = Suppliers.memoize(this::render);
+	private final Supplier<Render> lazyInitRender = Suppliers.memoize(this::render);
 	
 	
 	// INIT
@@ -255,12 +256,19 @@ public final class TextSnaporta
 	@Override
 	public int getARGBAt(int x, int y)
 	{
-		return lazyInitRendered.get().getARGBAt(x, y);
+		return lazyInitRender.get().getImage().getARGBAt(x, y);
+	}
+	
+	// GETTERS
+	@API
+	public Render getRender()
+	{
+		return lazyInitRender.get();
 	}
 	
 	
 	// RENDERING
-	private Snaporta render()
+	private Render render()
 	{
 		var bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		var graphics = bufferedImage.createGraphics();
@@ -283,20 +291,30 @@ public final class TextSnaporta
 		double insidePaddingUnoccupiedWidth = insidePaddingWidth-textVisualWidth;
 		double unoccoupiedWidthOnLeft = getUnoccoupiedWidthOnLeft(insidePaddingUnoccupiedWidth);
 		double widthPastRenderStartPointOnLeft = -visualBounds.getMinX(); // overflow to left has negative x coordinate -> minus
-		double renderStartPointX = padding.getLeft()+unoccoupiedWidthOnLeft+widthPastRenderStartPointOnLeft;
+		double textMinX = padding.getLeft()+unoccoupiedWidthOnLeft;
+		double renderStartPointX = textMinX+widthPastRenderStartPointOnLeft;
 		
 		double insidePaddingUnoccupiedHeight = insidePaddingHeight-textVisualHeight;
 		double unoccoupiedHeightOnTop = getUnoccoupiedHeightOnTop(insidePaddingUnoccupiedHeight);
 		double topVisualBoundsEdgeToBaseline = -visualBounds.getMinY(); // top edge of visual bounds has negative y coordinate -> minus
-		double renderStartPointY = padding.getTop()+unoccoupiedHeightOnTop+topVisualBoundsEdgeToBaseline;
+		double textMinY = padding.getTop()+unoccoupiedHeightOnTop;
+		double renderStartPointY = textMinY+topVisualBoundsEdgeToBaseline;
 		
-		// render start point is where the left edge of the visual bounds and the baseline intersect
-		// coordinate system: render start point is origin, x -> right, y -> down
+		// render start point is at (0,0) of the visual bounds (x -> right, y -> down); the x axis is equal to the baseline
 		graphics.drawGlyphVector(glyphVector, (float) renderStartPointX, (float) renderStartPointY);
+		
 		
 		var snaporta = SnaportaBufferedImageConverter.convert(bufferedImage);
 		graphics.dispose();
-		return snaporta;
+		
+		int visibleBoundsMinX = (int) Math.floor(textMinX);
+		int visibleBoundsMinY = (int) Math.floor(textMinY);
+		int visibleWidth = (int) Math.ceil(textVisualWidth);
+		int visibleHeight = (int) Math.ceil(textVisualHeight);
+		var visibleBounds = IntBounds2D.fromPosAndSize(visibleBoundsMinX, visibleBoundsMinY, visibleWidth, visibleHeight);
+		
+		var render = new Render(snaporta, visibleBounds);
+		return render;
 	}
 	
 	private int determineFontSize(Graphics2D graphics, double maxWidth, double maxHeight)
@@ -364,6 +382,18 @@ public final class TextSnaporta
 		
 		@Getter
 		private final double proportionOfUnoccupiedHeightOnTop;
+		
+	}
+	
+	@API
+	@RequiredArgsConstructor
+	public static class Render
+	{
+		
+		@Getter
+		private final Snaporta image;
+		@Getter
+		private final IntBounds2D visibleBounds;
 		
 	}
 	
