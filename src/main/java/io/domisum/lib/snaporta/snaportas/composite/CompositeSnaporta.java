@@ -91,6 +91,11 @@ public class CompositeSnaporta
 		Validate.isTrue(uniqueZ, "Component z values have to be unique, already have component with z="+component.getZ());
 	}
 	
+	public int getNumberOfComponents()
+	{
+		return componentsTopDown.size();
+	}
+	
 	
 	// SNAPORTA
 	@Override
