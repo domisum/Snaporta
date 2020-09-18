@@ -91,25 +91,25 @@ public class Padding
 	
 	
 	@API
-	public static Padding toEveryExceptLeft(int padding)
+	public static Padding toEverySideExceptLeft(int padding)
 	{
 		return new Padding(0, padding, padding, padding);
 	}
 	
 	@API
-	public static Padding toEveryExceptRight(int padding)
+	public static Padding toEverySideExceptRight(int padding)
 	{
 		return new Padding(padding, 0, padding, padding);
 	}
 	
 	@API
-	public static Padding toEveryExceptTop(int padding)
+	public static Padding toEverySideExceptTop(int padding)
 	{
 		return new Padding(padding, padding, 0, padding);
 	}
 	
 	@API
-	public static Padding toEveryExceptBottom(int padding)
+	public static Padding toEverySideExceptBottom(int padding)
 	{
 		return new Padding(padding, padding, padding, 0);
 	}
