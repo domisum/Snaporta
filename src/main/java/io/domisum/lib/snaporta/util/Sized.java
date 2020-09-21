@@ -23,4 +23,11 @@ public interface Sized
 		return true;
 	}
 	
+	
+	@API
+	default boolean isSquare()
+	{
+		return getWidth() == getHeight();
+	}
+	
 }
