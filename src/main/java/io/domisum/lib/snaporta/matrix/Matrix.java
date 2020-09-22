@@ -48,13 +48,13 @@ public class Matrix
 	@Override
 	public String toString()
 	{
-		int valueLength = 5;
+		int valueDisplayCharacters = 7;
 		
 		var rowsString = new ArrayList<String>();
 		for(double[] row : entries)
-			rowsString.add(generateToStringRow(row, valueLength)+"\n");
+			rowsString.add(generateToStringRow(row, valueDisplayCharacters)+"\n");
 		
-		String separatorLineComponent = "-".repeat(valueLength);
+		String separatorLineComponent = "-".repeat(valueDisplayCharacters);
 		String separatorLine = separatorLineComponent+("+"+separatorLineComponent).repeat(getWidth()-1)+"\n";
 		
 		String asString = StringUtil.listToString(rowsString, separatorLine);

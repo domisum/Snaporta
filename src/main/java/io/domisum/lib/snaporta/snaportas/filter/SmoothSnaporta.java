@@ -9,39 +9,50 @@ import io.domisum.lib.snaporta.util.SnaportaValidate;
 
 @API
 public class SmoothSnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	// SETTINGS
 	private final Snaporta baseSnaporta;
-	private final int radius;
+	private final double sigma;
 	
 	// UTIL
 	private final MatrixInterpolator matrixInterpolator;
 	
 	
 	// INIT
-	public SmoothSnaporta(Snaporta baseSnaporta, int radius)
+	public SmoothSnaporta(Snaporta baseSnaporta, int sigma)
 	{
 		this.baseSnaporta = baseSnaporta;
-		this.radius = radius;
+		this.sigma = sigma;
 		
 		matrixInterpolator = new MatrixInterpolator(new IgnoreOutOfBoundsMatrixOnSnaportaEvaluator(), createGaussianBlurMatrix());
 	}
 	
-	@SuppressWarnings("MagicNumber")
 	private Matrix createGaussianBlurMatrix()
 	{
 		// https://en.wikipedia.org/wiki/Gaussian_blur
 		
-		int W = (radius*2)+1;
-		double sigma = 1;
-		double mean = (double) W/2;
+		int radius = (int) Math.ceil(3*sigma);
+		int matrixSize = (radius*2)+1;
 		
-		double[][] kernel = new double[W][W];
-		for(int x = 0; x < W; ++x)
-			for(int y = 0; y < W; ++y)
-				kernel[x][y] = Math.exp(-0.5*(Math.pow((x-mean)/sigma, 2.0)+Math.pow((y-mean)/sigma, 2.0)))/(2*Math.PI*sigma*sigma);
+		double[][] kernel = new double[matrixSize][matrixSize];
+		for(int kernelX = 0; kernelX < matrixSize; kernelX++)
+			for(int kernelY = 0; kernelY < matrixSize; kernelY++)
+			{
+				double x = kernelX-radius;
+				double y = kernelY-radius;
+				
+				double exponentNumerator = (x*x)+(y*y);
+				double exponentDenominator = 2*sigma*sigma;
+				double exponent = -exponentNumerator/exponentDenominator;
+				
+				double numerator = Math.exp(exponent);
+				double denominator = 2*Math.PI*sigma*sigma;
+				
+				double value = numerator/denominator;
+				kernel[kernelX][kernelY] = value;
+			}
 		
 		var matrix = new Matrix(kernel).deriveNormalized();
 		return matrix;
