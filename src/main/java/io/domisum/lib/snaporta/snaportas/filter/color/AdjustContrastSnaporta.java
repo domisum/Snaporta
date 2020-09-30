@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @API
 @RequiredArgsConstructor
 public class AdjustContrastSnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	// INPUT

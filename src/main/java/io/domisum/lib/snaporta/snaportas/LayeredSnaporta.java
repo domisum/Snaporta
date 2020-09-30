@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @API
 public class LayeredSnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	// ATTRIBUTES
@@ -148,10 +148,10 @@ public class LayeredSnaporta
 		double opacityCombined = foregroundOpacity+((1-foregroundOpacity)*backgroundOpacity);
 		
 		int argb = ARGBUtil.toARGB(
-				ARGBUtil.getAlphaFromOpacity(opacityCombined),
-				(int) Math.round(redCombined),
-				(int) Math.round(greenCombined),
-				(int) Math.round(blueCombined));
+			ARGBUtil.getAlphaFromOpacity(opacityCombined),
+			(int) Math.round(redCombined),
+			(int) Math.round(greenCombined),
+			(int) Math.round(blueCombined));
 		
 		return argb;
 	}
@@ -160,8 +160,8 @@ public class LayeredSnaporta
 	{
 		double foregroundOpacity = ARGBUtil.getOpacity(foreground);
 		double combined = MathUtil.mix(
-				ARGBUtil.getComponent(colorComponent, foreground), foregroundOpacity,
-				ARGBUtil.getComponent(colorComponent, background), 1-foregroundOpacity);
+			ARGBUtil.getComponent(colorComponent, foreground), foregroundOpacity,
+			ARGBUtil.getComponent(colorComponent, background), 1-foregroundOpacity);
 		
 		return combined;
 	}
@@ -170,7 +170,7 @@ public class LayeredSnaporta
 	// LAYER
 	@RequiredArgsConstructor
 	public static class Layer
-			implements Comparable<Layer>
+		implements Comparable<Layer>
 	{
 		
 		private final Snaporta snaporta;

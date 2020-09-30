@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @API
 @RequiredArgsConstructor
 public class ColorizeSnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	private final Snaporta parent;

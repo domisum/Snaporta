@@ -1,7 +1,7 @@
 package io.domisum.lib.snaporta.mask.doubl.gradient;
 
 public class VerticalGradientDoubleMask
-		extends StraightGradientDoubleMask
+	extends StraightGradientDoubleMask
 {
 	
 	// INIT

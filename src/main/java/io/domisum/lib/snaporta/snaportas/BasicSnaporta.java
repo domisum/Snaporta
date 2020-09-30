@@ -9,7 +9,7 @@ import org.apache.commons.lang3.Validate;
 import java.util.Arrays;
 
 public final class BasicSnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	/**

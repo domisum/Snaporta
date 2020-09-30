@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @API
 @RequiredArgsConstructor
 public final class MaintainAspectRatioResizedSnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	// ATTRIBUTES
@@ -77,8 +77,8 @@ public final class MaintainAspectRatioResizedSnaporta
 		}
 		
 		resizeSnaporta = new ResizeSnaporta(
-				baseSnaporta, (int) Math.round(resizedWidth), (int) Math.round(resizedHeight),
-				interpolator);
+			baseSnaporta, (int) Math.round(resizedWidth), (int) Math.round(resizedHeight),
+			interpolator);
 		
 		int resizedSnaportaFromPaddingOffsetX = (width-padding.getHorizontalSum()-resizeSnaporta.getWidth())/2;
 		int resizedSnaportaFromPaddingOffsetY = (height-padding.getVerticalSum()-resizeSnaporta.getHeight())/2;

@@ -3,7 +3,7 @@ package io.domisum.lib.snaporta.snaportas.transform.resize.interpolator;
 import io.domisum.lib.snaporta.Snaporta;
 
 public class ClosestPixelInterpolator
-		implements Interpolator
+	implements Interpolator
 {
 	
 	@Override

@@ -9,7 +9,7 @@ import io.domisum.lib.snaporta.util.SnaportaValidate;
 
 @API
 public class SharpenSnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	// INPUT

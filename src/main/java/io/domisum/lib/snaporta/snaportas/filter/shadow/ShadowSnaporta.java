@@ -9,7 +9,7 @@ import org.apache.commons.lang3.Validate;
 
 @API
 public class ShadowSnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	// SETTINGS

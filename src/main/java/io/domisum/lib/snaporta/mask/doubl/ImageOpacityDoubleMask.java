@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ImageOpacityDoubleMask
-		implements DoubleMask
+	implements DoubleMask
 {
 	
 	private final Snaporta image;

@@ -8,7 +8,7 @@ import org.apache.commons.lang3.Validate;
 
 @API
 public class CroppedSnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	private final Snaporta backingSnaporta;

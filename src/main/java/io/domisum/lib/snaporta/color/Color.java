@@ -50,10 +50,10 @@ public final class Color
 	public static Color fromARGBInt(int argb)
 	{
 		return fromARGB(
-				ARGBUtil.getAlphaComponent(argb),
-				ARGBUtil.getRedComponent(argb),
-				ARGBUtil.getGreenComponent(argb),
-				ARGBUtil.getBlueComponent(argb));
+			ARGBUtil.getAlphaComponent(argb),
+			ARGBUtil.getRedComponent(argb),
+			ARGBUtil.getGreenComponent(argb),
+			ARGBUtil.getBlueComponent(argb));
 	}
 	
 	@API

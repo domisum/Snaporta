@@ -9,7 +9,7 @@ import io.domisum.lib.snaporta.util.SnaportaValidate;
 
 @API
 public class PaddingSnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	private final Snaporta baseSnaporta;

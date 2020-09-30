@@ -5,7 +5,7 @@ import io.domisum.lib.snaporta.Snaporta;
 
 @API
 public class CenteredSnaporta
-		extends OffsetSnaporta
+	extends OffsetSnaporta
 {
 	
 	// INIT

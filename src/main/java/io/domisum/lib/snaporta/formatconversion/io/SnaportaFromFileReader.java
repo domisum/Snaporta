@@ -29,7 +29,7 @@ public class SnaportaFromFileReader
 	
 	@API
 	public static Snaporta readUncaught(File file)
-			throws IOException
+		throws IOException
 	{
 		var fromFileReader = new SnaportaFromFileReader();
 		var snaporta = fromFileReader.readFromFileUncaught(file);
@@ -50,7 +50,7 @@ public class SnaportaFromFileReader
 	
 	@API
 	public Snaporta readFromFileUncaught(File file)
-			throws IOException
+		throws IOException
 	{
 		var bufferedImage = readBufferedImageUncaught(file);
 		var snaporta = snaportaBufferedImageConverter.convertFrom(bufferedImage);
@@ -64,7 +64,7 @@ public class SnaportaFromFileReader
 	}
 	
 	private BufferedImage readBufferedImageUncaught(File file)
-			throws IOException
+		throws IOException
 	{
 		return FileUtil.readImageUncaught(file);
 	}

@@ -32,7 +32,7 @@ public class MultiThreadSnaportaRenderer
 	{
 		this(Runtime.getRuntime().availableProcessors());
 		logger.info("Creating {} with {} threads (number of available logical cores)",
-				getClass().getSimpleName(), numberOfThreads);
+			getClass().getSimpleName(), numberOfThreads);
 	}
 	
 	@API

@@ -7,7 +7,7 @@ import org.apache.commons.lang3.Validate;
 import java.util.Arrays;
 
 public final class BasicBooleanMask
-		implements BooleanMask
+	implements BooleanMask
 {
 	
 	private final boolean[][] values;

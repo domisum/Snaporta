@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.HashSet;
 
 public class BiLinearInterpolator
-		implements Interpolator
+	implements Interpolator
 {
 	
 	@Override

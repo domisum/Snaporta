@@ -8,7 +8,7 @@ import org.apache.commons.lang3.Validate;
 
 @API
 public class OffsetSnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	private final Snaporta baseSnaporta;

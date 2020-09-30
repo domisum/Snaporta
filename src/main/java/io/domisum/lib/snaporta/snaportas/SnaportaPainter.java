@@ -8,7 +8,7 @@ import io.domisum.lib.snaporta.util.Sized;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 
 public class SnaportaPainter
-		implements Sized
+	implements Sized
 {
 	
 	/**

@@ -9,7 +9,7 @@ import lombok.Getter;
 
 @API
 public final class ResizeSnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	// DEFAULTS

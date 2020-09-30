@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @API
 @RequiredArgsConstructor
 public class SolidColorSnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	// ATTRIBUTES

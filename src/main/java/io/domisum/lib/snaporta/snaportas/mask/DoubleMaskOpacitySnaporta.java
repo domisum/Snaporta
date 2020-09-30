@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class DoubleMaskOpacitySnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	private final Snaporta base;

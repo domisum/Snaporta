@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class MatrixInterpolator
-		implements Interpolator
+	implements Interpolator
 {
 	
 	// REFERENCES

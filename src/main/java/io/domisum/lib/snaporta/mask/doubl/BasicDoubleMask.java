@@ -8,7 +8,7 @@ import org.apache.commons.lang3.Validate;
 import java.util.Arrays;
 
 public final class BasicDoubleMask
-		implements DoubleMask
+	implements DoubleMask
 {
 	
 	private final double[][] values;

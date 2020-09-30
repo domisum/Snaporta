@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 @SuppressWarnings("BooleanParameter")
 public final class BooleanMaskPainter
-		implements Sized
+	implements Sized
 {
 	
 	private final boolean[][] values;

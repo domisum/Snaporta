@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.HashSet;
 
 public class OrBooleanMask
-		implements BooleanMask
+	implements BooleanMask
 {
 	
 	// MASKS

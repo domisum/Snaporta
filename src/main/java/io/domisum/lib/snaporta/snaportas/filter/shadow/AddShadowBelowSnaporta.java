@@ -7,7 +7,7 @@ import io.domisum.lib.snaporta.snaportas.LayeredSnaporta;
 
 @API
 public class AddShadowBelowSnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	// RENDERED

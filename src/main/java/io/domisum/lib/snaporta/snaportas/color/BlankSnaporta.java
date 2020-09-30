@@ -5,7 +5,7 @@ import io.domisum.lib.snaporta.color.Colors;
 
 @API
 public class BlankSnaporta
-		extends SolidColorSnaporta
+	extends SolidColorSnaporta
 {
 	
 	// INIT

@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @API
 @RequiredArgsConstructor
 public class AdjustHsbSnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	// INPUT

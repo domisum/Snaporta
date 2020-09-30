@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @API
 @RequiredArgsConstructor
 public class AddTransparencySnaporta
-		implements Snaporta
+	implements Snaporta
 {
 	
 	private final Snaporta parent;
@@ -47,10 +47,10 @@ public class AddTransparencySnaporta
 		int newAlpha = ARGBUtil.getAlphaFromOpacity(newOpacity);
 		
 		int argb = ARGBUtil.toARGB(
-				newAlpha,
-				ARGBUtil.getRedComponent(parentARGB),
-				ARGBUtil.getGreenComponent(parentARGB),
-				ARGBUtil.getBlueComponent(parentARGB));
+			newAlpha,
+			ARGBUtil.getRedComponent(parentARGB),
+			ARGBUtil.getGreenComponent(parentARGB),
+			ARGBUtil.getBlueComponent(parentARGB));
 		
 		return argb;
 	}

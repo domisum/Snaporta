@@ -8,7 +8,7 @@ import io.domisum.lib.snaporta.matrix.Matrix;
 import io.domisum.lib.snaporta.util.ARGBUtil;
 
 public class IgnoreOutOfBoundsMatrixOnSnaportaEvaluator
-		implements MatrixOnSnaportaEvaluator
+	implements MatrixOnSnaportaEvaluator
 {
 	
 	@Override

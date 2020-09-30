@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public abstract class StraightGradientDoubleMask
-		implements DoubleMask
+	implements DoubleMask
 {
 	
 	// CONSTANTS
