@@ -7,8 +7,7 @@ import org.apache.commons.lang3.Validate;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.List;
 
 public class OrBooleanMask
 	implements BooleanMask
@@ -26,8 +25,8 @@ public class OrBooleanMask
 	@API
 	public OrBooleanMask(Collection<BooleanMask> masks)
 	{
-		this.masks = Collections.unmodifiableCollection(new HashSet<>(masks));
-		Validate.notEmpty(masks, "masks can't be empty");
+		Validate.notEmpty(masks, "Masks can't be empty");
+		this.masks = List.copyOf(masks);
 		
 		int maxWidth = 0;
 		int maxHeight = 0;
