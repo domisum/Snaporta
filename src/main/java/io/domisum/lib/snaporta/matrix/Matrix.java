@@ -2,7 +2,7 @@ package io.domisum.lib.snaporta.matrix;
 
 import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.auxiliumlib.annotations.API;
-import io.domisum.lib.auxiliumlib.util.StringUtil;
+import io.domisum.lib.auxiliumlib.util.StringListUtil;
 import io.domisum.lib.auxiliumlib.util.math.MathUtil;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 import org.apache.commons.lang3.Validate;
@@ -57,7 +57,7 @@ public class Matrix
 		String separatorLineComponent = "-".repeat(valueDisplayCharacters);
 		String separatorLine = separatorLineComponent+("+"+separatorLineComponent).repeat(getWidth()-1)+"\n";
 		
-		String asString = StringUtil.listToString(rowsString, separatorLine);
+		String asString = StringListUtil.listHorizontally(rowsString, separatorLine);
 		return asString;
 	}
 	
@@ -71,7 +71,7 @@ public class Matrix
 		});
 		var roundedRowValues = roundedRowValuesStream.collect(Collectors.toList());
 		
-		String asString = StringUtil.listToString(roundedRowValues, "|");
+		String asString = StringListUtil.listHorizontally(roundedRowValues, "|");
 		return asString;
 	}
 	
