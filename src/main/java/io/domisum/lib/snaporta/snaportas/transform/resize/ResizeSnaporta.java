@@ -27,11 +27,22 @@ public final class ResizeSnaporta
 	
 	
 	// INIT
+	@API
+	public static ResizeSnaporta withFactor(Snaporta baseSnaporta, double factor)
+	{
+		int resizedWidth = (int) Math.round(baseSnaporta.getWidth()*factor);
+		int resizedHeight = (int) Math.round(baseSnaporta.getHeight()*factor);
+		
+		return new ResizeSnaporta(baseSnaporta, resizedWidth, resizedHeight);
+	}
+	
+	@API
 	public ResizeSnaporta(Snaporta baseSnaporta, Integer width, Integer height)
 	{
 		this(baseSnaporta, width, height, DEFAULT_INTERPOLATOR);
 	}
 	
+	@API
 	public ResizeSnaporta(Snaporta baseSnaporta, Integer width, Integer height, Interpolator interpolator)
 	{
 		if((width == null) && (height == null))

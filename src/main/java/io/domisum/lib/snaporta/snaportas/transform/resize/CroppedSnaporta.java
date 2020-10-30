@@ -23,6 +23,12 @@ public class CroppedSnaporta
 	
 	// INIT
 	@API
+	public CroppedSnaporta(Snaporta backingSnaporta, int width, int height)
+	{
+		this(backingSnaporta, 0, 0, width, height);
+	}
+	
+	@API
 	public CroppedSnaporta(Snaporta backingSnaporta, int cropX, int cropY, int width, int height)
 	{
 		Validate.isTrue(width >= 1, "width has to be at least 1, was "+width);
@@ -42,9 +48,7 @@ public class CroppedSnaporta
 	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-		
-		int argb = backingSnaporta.getARGBAt(x+cropX, y+cropY);
-		return argb;
+		return backingSnaporta.getARGBAt(x+cropX, y+cropY);
 	}
 	
 }

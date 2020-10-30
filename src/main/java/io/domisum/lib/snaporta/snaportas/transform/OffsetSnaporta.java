@@ -17,6 +17,7 @@ public class OffsetSnaporta
 	
 	
 	// INIT
+	@API
 	public OffsetSnaporta(Snaporta baseSnaporta, int offsetX, int offsetY)
 	{
 		this.baseSnaporta = baseSnaporta;
@@ -53,8 +54,7 @@ public class OffsetSnaporta
 		if(!baseSnaporta.isInBounds(inBaseX, inBaseY))
 			return Colors.TRANSPARENT.toARGBInt();
 		
-		int argb = baseSnaporta.getARGBAt(inBaseX, inBaseY);
-		return argb;
+		return baseSnaporta.getARGBAt(inBaseX, inBaseY);
 	}
 	
 }
