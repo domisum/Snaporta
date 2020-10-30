@@ -11,6 +11,8 @@ public final class Colors
 	
 	@API
 	public static final Color TRANSPARENT = Color.fromARGB(0, 0, 0, 0);
+	@API
+	public static final Color HALF_TRANSPARENT_RED =  Color.fromARGB(Color.COLOR_COMPONENT_MAX/2, Color.COLOR_COMPONENT_MAX, 0, 0);
 	
 	@API
 	public static final Color BLACK = Color.fromBrightnessAbs(0);
