@@ -13,20 +13,20 @@ public class SolidColorBorderSnaporta
 {
 	
 	private final Snaporta containedImage;
-	private final Padding borderTicknesses;
+	private final Padding borderPadding;
 	private final Color borderColor;
 	
 	
 	// INIT
 	@API
-	public SolidColorBorderSnaporta(Snaporta containedImage, Padding borderTicknesses, Color borderColor)
+	public SolidColorBorderSnaporta(Snaporta containedImage, Padding borderPadding, Color borderColor)
 	{
 		this.containedImage = containedImage;
-		this.borderTicknesses = borderTicknesses;
+		this.borderPadding = borderPadding;
 		this.borderColor = borderColor;
 		
 		ValidationUtil.notNull(containedImage, "containedImage");
-		ValidationUtil.notNull(borderTicknesses, "borderTicknesses");
+		ValidationUtil.notNull(borderPadding, "borderPadding");
 		ValidationUtil.notNull(borderColor, "borderColor");
 	}
 	
@@ -35,13 +35,13 @@ public class SolidColorBorderSnaporta
 	@Override
 	public int getWidth()
 	{
-		return containedImage.getWidth()+borderTicknesses.getHorizontalSum();
+		return containedImage.getWidth()+borderPadding.getHorizontalSum();
 	}
 	
 	@Override
 	public int getHeight()
 	{
-		return containedImage.getHeight()+borderTicknesses.getVerticalSum();
+		return containedImage.getHeight()+borderPadding.getVerticalSum();
 	}
 	
 	@Override
@@ -49,8 +49,8 @@ public class SolidColorBorderSnaporta
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
-		int inContainedX = x-borderTicknesses.getLeft();
-		int inContainedY = y-borderTicknesses.getTop();
+		int inContainedX = x-borderPadding.getLeft();
+		int inContainedY = y-borderPadding.getTop();
 		
 		if(containedImage.isInBounds(inContainedX, inContainedY))
 			return containedImage.getARGBAt(inContainedX, inContainedY);
