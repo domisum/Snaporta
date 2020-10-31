@@ -7,6 +7,8 @@ import io.domisum.lib.snaporta.util.Sized;
 
 /**
  * A snaporta is an abstraction of an ARGB image.
+ * The coordinate origin is in the top left corner,
+ * the x-axis extends to the right and the y-axis down.
  */
 public interface Snaporta
 	extends Sized
