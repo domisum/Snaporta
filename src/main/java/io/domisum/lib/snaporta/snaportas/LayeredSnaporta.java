@@ -2,6 +2,7 @@ package io.domisum.lib.snaporta.snaportas;
 
 import com.google.common.collect.Iterables;
 import io.domisum.lib.auxiliumlib.annotations.API;
+import io.domisum.lib.auxiliumlib.contracts.SmartComparatorComparable;
 import io.domisum.lib.auxiliumlib.util.math.MathUtil;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
@@ -13,7 +14,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.Validate;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -170,7 +170,7 @@ public class LayeredSnaporta
 	// LAYER
 	@RequiredArgsConstructor
 	public static class Layer
-		implements Comparable<Layer>
+		implements SmartComparatorComparable<Layer>
 	{
 		
 		private final Snaporta snaporta;
@@ -181,11 +181,11 @@ public class LayeredSnaporta
 		private final double z;
 		
 		
-		// COMPARE
+		// CONSTANT METHODS
 		@Override
-		public int compareTo(@Nonnull Layer other)
+		public Comparator<Layer> COMPARATOR()
 		{
-			return Comparator.comparing(Layer::getZ).reversed().compare(this, other);
+			return Comparator.comparing(Layer::getZ).reversed();
 		}
 		
 		
