@@ -14,7 +14,7 @@ public class AddTransparencySnaporta
 {
 	
 	private final Snaporta parent;
-	private final double opacity;
+	private final double opacityRel;
 	
 	
 	// SNAPORTA
@@ -35,15 +35,15 @@ public class AddTransparencySnaporta
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
-		if(opacity == 0)
+		if(opacityRel == 0)
 			return Colors.TRANSPARENT.toARGBInt();
 		
 		int parentARGB = parent.getARGBAt(x, y);
-		if(opacity == 1)
+		if(opacityRel == 1)
 			return parentARGB;
 		
 		double parentOpacity = ARGBUtil.getOpacity(parentARGB);
-		double newOpacity = parentOpacity*opacity;
+		double newOpacity = parentOpacity*opacityRel;
 		int newAlpha = ARGBUtil.getAlphaFromOpacity(newOpacity);
 		
 		int argb = ARGBUtil.toARGB(
