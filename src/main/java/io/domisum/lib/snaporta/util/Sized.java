@@ -23,6 +23,11 @@ public interface Sized
 		return true;
 	}
 	
+	default boolean isOutOfBounds(int x, int y)
+	{
+		return !isInBounds(x, y);
+	}
+	
 	
 	@API
 	default boolean isSquare()

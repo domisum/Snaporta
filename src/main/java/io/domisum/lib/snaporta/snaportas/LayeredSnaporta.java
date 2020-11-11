@@ -122,9 +122,7 @@ public class LayeredSnaporta
 	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-		
-		int argbAt = getARGBAtDepth(x, y, 0);
-		return argbAt;
+		return getARGBAtDepth(x, y, 0);
 	}
 	
 	
@@ -137,7 +135,6 @@ public class LayeredSnaporta
 		var component = layersTopDown.get(depth);
 		int componentARGB = component.getARGBAt(x, y);
 		
-		
 		if(ARGBUtil.getAlphaComponent(componentARGB) == Color.ALPHA_OPAQUE)
 			return componentARGB;
 		
@@ -145,8 +142,7 @@ public class LayeredSnaporta
 		if(ARGBUtil.getAlphaComponent(componentARGB) == Color.ALPHA_TRANSPARENT)
 			return backgroundARGB;
 		
-		int argb = mixARGB(backgroundARGB, componentARGB);
-		return argb;
+		return mixARGB(backgroundARGB, componentARGB);
 	}
 	
 	private int mixARGB(int background, int foreground)
@@ -162,23 +158,19 @@ public class LayeredSnaporta
 		double backgroundOpacity = ARGBUtil.getOpacity(background);
 		double opacityCombined = foregroundOpacity+((1-foregroundOpacity)*backgroundOpacity);
 		
-		int argb = ARGBUtil.toARGB(
+		return ARGBUtil.toARGB(
 			ARGBUtil.getAlphaFromOpacity(opacityCombined),
 			(int) Math.round(redCombined),
 			(int) Math.round(greenCombined),
 			(int) Math.round(blueCombined));
-		
-		return argb;
 	}
 	
 	private static double getColorComponentCombined(ColorComponent colorComponent, int background, int foreground)
 	{
 		double foregroundOpacity = ARGBUtil.getOpacity(foreground);
-		double combined = MathUtil.mix(
+		return MathUtil.mix(
 			ARGBUtil.getComponent(colorComponent, foreground), foregroundOpacity,
 			ARGBUtil.getComponent(colorComponent, background), 1-foregroundOpacity);
-		
-		return combined;
 	}
 	
 	
@@ -210,10 +202,10 @@ public class LayeredSnaporta
 			int inSnaportaX = x-this.x;
 			int inSnaportaY = y-this.y;
 			
-			if(snaporta.isInBounds(inSnaportaX, inSnaportaY))
-				return snaporta.getARGBAt(inSnaportaX, inSnaportaY);
-			else
+			if(snaporta.isOutOfBounds(inSnaportaX, inSnaportaY))
 				return Colors.TRANSPARENT.toARGBInt();
+			
+			return snaporta.getARGBAt(inSnaportaX, inSnaportaY);
 		}
 		
 	}
