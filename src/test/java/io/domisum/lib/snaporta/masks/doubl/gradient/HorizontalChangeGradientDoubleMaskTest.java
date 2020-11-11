@@ -1,17 +1,17 @@
 package io.domisum.lib.snaporta.masks.doubl.gradient;
 
 import io.domisum.lib.snaporta.mask.doubl.DoubleMask;
-import io.domisum.lib.snaporta.mask.doubl.gradient.HorizontalGradientDoubleMask;
+import io.domisum.lib.snaporta.mask.doubl.gradient.HorizontalChangeGradientDoubleMask;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class HorizontalGradientDoubleMaskTest
+public class HorizontalChangeGradientDoubleMaskTest
 {
 	
 	@Test
 	void testLeftLow()
 	{
-		DoubleMask doubleMask = new HorizontalGradientDoubleMask(200, 100, 50, 150);
+		DoubleMask doubleMask = new HorizontalChangeGradientDoubleMask(200, 100, 50, 150);
 		
 		Assertions.assertEquals(0.0, doubleMask.getValueAt(5, 10));
 		Assertions.assertEquals(0.0, doubleMask.getValueAt(50, 10));
@@ -27,7 +27,7 @@ public class HorizontalGradientDoubleMaskTest
 	@Test
 	void testRightLow()
 	{
-		DoubleMask doubleMask = new HorizontalGradientDoubleMask(1000, 20, 600, 400);
+		DoubleMask doubleMask = new HorizontalChangeGradientDoubleMask(1000, 20, 600, 400);
 		
 		Assertions.assertEquals(1.0, doubleMask.getValueAt(5, 0));
 		Assertions.assertEquals(1.0, doubleMask.getValueAt(400, 0));

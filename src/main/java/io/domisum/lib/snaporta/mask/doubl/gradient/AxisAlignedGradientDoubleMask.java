@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public abstract class StraightGradientDoubleMask
+public abstract class AxisAlignedGradientDoubleMask
 	implements DoubleMask
 {
 	
@@ -45,8 +45,7 @@ public abstract class StraightGradientDoubleMask
 		double leftDistance = (coord-left)/(double) (right-left);
 		double leftProximity = 1-leftDistance;
 		
-		double gradientValue = MathUtil.mix(leftNumber, leftProximity, rightNumber);
-		return gradientValue;
+		return MathUtil.mix(leftNumber, leftProximity, rightNumber);
 	}
 	
 }
