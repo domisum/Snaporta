@@ -56,7 +56,7 @@ public class BasicSnaportaTest
 		Assertions.assertEquals(base.getHeight(), copy.getHeight());
 		for(int y = 0; y < base.getHeight(); y++)
 			for(int x = 0; x < base.getWidth(); x++)
-				Assertions.assertEquals(base.getARGBAt(x, y), copy.getARGBAt(x, y));
+				Assertions.assertEquals(base.getArgbAt(x, y), copy.getArgbAt(x, y));
 	}
 	
 }

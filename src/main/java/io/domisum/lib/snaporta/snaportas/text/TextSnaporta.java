@@ -255,9 +255,9 @@ public final class TextSnaporta
 	
 	// SNAPORTA
 	@Override
-	public int getARGBAt(int x, int y)
+	public int getArgbAt(int x, int y)
 	{
-		return lazyInitRender.get().getImage().getARGBAt(x, y);
+		return lazyInitRender.get().getImage().getArgbAt(x, y);
 	}
 	
 	// GETTERS

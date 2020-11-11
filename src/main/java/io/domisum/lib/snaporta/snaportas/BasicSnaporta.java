@@ -38,7 +38,7 @@ public final class BasicSnaporta
 		int[][] argbPixels = new int[snaporta.getHeight()][snaporta.getWidth()];
 		for(int y = 0; y < snaporta.getHeight(); y++)
 			for(int x = 0; x < snaporta.getWidth(); x++)
-				argbPixels[y][x] = snaporta.getARGBAt(x, y);
+				argbPixels[y][x] = snaporta.getArgbAt(x, y);
 		var basicSnaporta = new BasicSnaporta(argbPixels);
 		
 		return basicSnaporta;
@@ -91,7 +91,7 @@ public final class BasicSnaporta
 	}
 	
 	@Override
-	public int getARGBAt(int x, int y)
+	public int getArgbAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		

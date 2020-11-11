@@ -8,7 +8,7 @@ import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
 import io.domisum.lib.snaporta.color.ColorComponent;
 import io.domisum.lib.snaporta.color.Colors;
-import io.domisum.lib.snaporta.util.ARGBUtil;
+import io.domisum.lib.snaporta.util.ArgbUtil;
 import io.domisum.lib.snaporta.util.Sized;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.Getter;
@@ -119,7 +119,7 @@ public class LayeredSnaporta
 	
 	// SNAPORTA
 	@Override
-	public int getARGBAt(int x, int y)
+	public int getArgbAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		return getArgbAtDepth(x, y, 0);
@@ -135,11 +135,11 @@ public class LayeredSnaporta
 		var component = layersTopDown.get(depth);
 		int componentARGB = component.getARGBAt(x, y);
 		
-		if(ARGBUtil.getAlphaComponent(componentARGB) == Color.ALPHA_OPAQUE)
+		if(ArgbUtil.getAlphaComponent(componentARGB) == Color.ALPHA_OPAQUE)
 			return componentARGB;
 		
 		int backgroundARGB = getArgbAtDepth(x, y, depth+1);
-		if(ARGBUtil.getAlphaComponent(componentARGB) == Color.ALPHA_TRANSPARENT)
+		if(ArgbUtil.getAlphaComponent(componentARGB) == Color.ALPHA_TRANSPARENT)
 			return backgroundARGB;
 		
 		return mixArgb(backgroundARGB, componentARGB);
@@ -147,27 +147,27 @@ public class LayeredSnaporta
 	
 	private int mixArgb(int backgroundArgb, int foregroundArgb)
 	{
-		if(ARGBUtil.getAlphaComponent(backgroundArgb) == Color.ALPHA_TRANSPARENT)
+		if(ArgbUtil.getAlphaComponent(backgroundArgb) == Color.ALPHA_TRANSPARENT)
 			return foregroundArgb;
 		
 		int redCombined = getColorComponentCombined(ColorComponent.RED, backgroundArgb, foregroundArgb);
 		int greenCombined = getColorComponentCombined(ColorComponent.GREEN, backgroundArgb, foregroundArgb);
 		int blueCombined = getColorComponentCombined(ColorComponent.BLUE, backgroundArgb, foregroundArgb);
 		
-		double foregroundOpacity = ARGBUtil.getOpacity(foregroundArgb);
-		double backgroundOpacity = ARGBUtil.getOpacity(backgroundArgb);
+		double foregroundOpacity = ArgbUtil.getOpacity(foregroundArgb);
+		double backgroundOpacity = ArgbUtil.getOpacity(backgroundArgb);
 		double opacityCombined = foregroundOpacity+((1-foregroundOpacity)*backgroundOpacity);
-		int alphaCombined = ARGBUtil.getAlphaFromOpacity(opacityCombined);
+		int alphaCombined = ArgbUtil.getAlphaFromOpacity(opacityCombined);
 		
-		return ARGBUtil.toARGB(alphaCombined, redCombined, greenCombined, blueCombined);
+		return ArgbUtil.toArgb(alphaCombined, redCombined, greenCombined, blueCombined);
 	}
 	
 	private static int getColorComponentCombined(ColorComponent colorComponent, int background, int foreground)
 	{
-		double foregroundOpacity = ARGBUtil.getOpacity(foreground);
+		double foregroundOpacity = ArgbUtil.getOpacity(foreground);
 		double mixed = MathUtil.mix(
-			ARGBUtil.getComponent(colorComponent, foreground), foregroundOpacity,
-			ARGBUtil.getComponent(colorComponent, background), 1-foregroundOpacity);
+			ArgbUtil.getComponent(colorComponent, foreground), foregroundOpacity,
+			ArgbUtil.getComponent(colorComponent, background), 1-foregroundOpacity);
 		
 		return (int) Math.round(mixed);
 	}
@@ -204,7 +204,7 @@ public class LayeredSnaporta
 			if(snaporta.isOutOfBounds(inSnaportaX, inSnaportaY))
 				return Colors.TRANSPARENT.toARGBInt();
 			
-			return snaporta.getARGBAt(inSnaportaX, inSnaportaY);
+			return snaporta.getArgbAt(inSnaportaX, inSnaportaY);
 		}
 		
 	}

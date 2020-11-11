@@ -3,7 +3,7 @@ package io.domisum.lib.snaporta.snaportas.filter.color;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Colors;
-import io.domisum.lib.snaporta.util.ARGBUtil;
+import io.domisum.lib.snaporta.util.ArgbUtil;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.RequiredArgsConstructor;
 
@@ -31,26 +31,26 @@ public class AddTransparencySnaporta
 	}
 	
 	@Override
-	public int getARGBAt(int x, int y)
+	public int getArgbAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
 		if(opacityRel == 0)
 			return Colors.TRANSPARENT.toARGBInt();
 		
-		int parentARGB = parent.getARGBAt(x, y);
+		int parentARGB = parent.getArgbAt(x, y);
 		if(opacityRel == 1)
 			return parentARGB;
 		
-		double parentOpacity = ARGBUtil.getOpacity(parentARGB);
+		double parentOpacity = ArgbUtil.getOpacity(parentARGB);
 		double newOpacity = parentOpacity*opacityRel;
-		int newAlpha = ARGBUtil.getAlphaFromOpacity(newOpacity);
+		int newAlpha = ArgbUtil.getAlphaFromOpacity(newOpacity);
 		
-		int argb = ARGBUtil.toARGB(
+		int argb = ArgbUtil.toArgb(
 			newAlpha,
-			ARGBUtil.getRedComponent(parentARGB),
-			ARGBUtil.getGreenComponent(parentARGB),
-			ARGBUtil.getBlueComponent(parentARGB));
+			ArgbUtil.getRedComponent(parentARGB),
+			ArgbUtil.getGreenComponent(parentARGB),
+			ArgbUtil.getBlueComponent(parentARGB));
 		
 		return argb;
 	}

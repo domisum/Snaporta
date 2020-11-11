@@ -55,7 +55,7 @@ public class SharpenSnaporta
 	}
 	
 	@Override
-	public int getARGBAt(int x, int y)
+	public int getArgbAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		

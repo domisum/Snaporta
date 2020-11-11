@@ -4,7 +4,7 @@ import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.auxiliumlib.util.math.MathUtil;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
-import io.domisum.lib.snaporta.util.ARGBUtil;
+import io.domisum.lib.snaporta.util.ArgbUtil;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.RequiredArgsConstructor;
 
@@ -35,7 +35,7 @@ public class AdjustContrastSnaporta
 	}
 	
 	@Override
-	public int getARGBAt(int x, int y)
+	public int getArgbAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
@@ -45,7 +45,7 @@ public class AdjustContrastSnaporta
 		int newGreen = adjustContrastChannel(parentColor.getGreen());
 		int newBlue = adjustContrastChannel(parentColor.getBlue());
 		
-		int argb = ARGBUtil.toARGB(parentColor.getAlpha(), newRed, newGreen, newBlue);
+		int argb = ArgbUtil.toArgb(parentColor.getAlpha(), newRed, newGreen, newBlue);
 		return argb;
 	}
 	

@@ -21,7 +21,7 @@ public final class SnaportaEquals
 		
 		for(int y = 0; y < a.getHeight(); y++)
 			for(int x = 0; x < a.getWidth(); x++)
-				if(a.getARGBAt(x, y) != b.getARGBAt(x, y))
+				if(a.getArgbAt(x, y) != b.getArgbAt(x, y))
 					return false;
 		
 		return true;

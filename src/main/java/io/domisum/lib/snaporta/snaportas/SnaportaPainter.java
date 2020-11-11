@@ -30,7 +30,7 @@ public class SnaportaPainter
 		int[][] argbPixelsCopy = new int[base.getHeight()][base.getWidth()];
 		for(int y = 0; y < base.getHeight(); y++)
 			for(int x = 0; x < base.getWidth(); x++)
-				argbPixelsCopy[y][x] = base.getARGBAt(x, y);
+				argbPixelsCopy[y][x] = base.getArgbAt(x, y);
 		
 		argbPixels = argbPixelsCopy;
 	}

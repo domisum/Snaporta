@@ -45,10 +45,10 @@ public class CroppedSnaporta
 	
 	
 	@Override
-	public int getARGBAt(int x, int y)
+	public int getArgbAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-		return backingSnaporta.getARGBAt(x+cropX, y+cropY);
+		return backingSnaporta.getArgbAt(x+cropX, y+cropY);
 	}
 	
 }

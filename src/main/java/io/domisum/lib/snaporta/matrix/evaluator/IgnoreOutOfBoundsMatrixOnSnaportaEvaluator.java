@@ -5,7 +5,7 @@ import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
 import io.domisum.lib.snaporta.color.ColorComponent;
 import io.domisum.lib.snaporta.matrix.Matrix;
-import io.domisum.lib.snaporta.util.ARGBUtil;
+import io.domisum.lib.snaporta.util.ArgbUtil;
 
 public class IgnoreOutOfBoundsMatrixOnSnaportaEvaluator
 	implements MatrixOnSnaportaEvaluator
@@ -24,13 +24,13 @@ public class IgnoreOutOfBoundsMatrixOnSnaportaEvaluator
 				if(!snaporta.isInBounds(snaportaX, snaportaY))
 					continue;
 				
-				int argbInt = snaporta.getARGBAt(snaportaX, snaportaY);
+				int argbInt = snaporta.getArgbAt(snaportaX, snaportaY);
 				double matrixEntry = matrix.getEntryAt(matrixX, matrixY);
 				
 				for(int i = 0; i < ColorComponent.values().length; i++)
 				{
 					var colorComponent = ColorComponent.values()[i];
-					double value = ARGBUtil.getComponent(colorComponent, argbInt);
+					double value = ArgbUtil.getComponent(colorComponent, argbInt);
 					double weightedValue = value*matrixEntry;
 					evaluatedComponentSum[i] += weightedValue;
 				}
@@ -46,7 +46,7 @@ public class IgnoreOutOfBoundsMatrixOnSnaportaEvaluator
 		evaluatedGreen = MathUtil.clamp(0, Color.COLOR_COMPONENT_MAX, evaluatedGreen);
 		evaluatedBlue = MathUtil.clamp(0, Color.COLOR_COMPONENT_MAX, evaluatedBlue);
 		
-		int color = ARGBUtil.toARGB(evaluatedAlpha, evaluatedRed, evaluatedGreen, evaluatedBlue);
+		int color = ArgbUtil.toArgb(evaluatedAlpha, evaluatedRed, evaluatedGreen, evaluatedBlue);
 		return color;
 	}
 	

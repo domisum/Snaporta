@@ -41,7 +41,7 @@ public class PaddingSnaporta
 	}
 	
 	@Override
-	public int getARGBAt(int x, int y)
+	public int getArgbAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
@@ -51,7 +51,7 @@ public class PaddingSnaporta
 		if(!baseSnaporta.isInBounds(inBaseX, inBaseY))
 			return Colors.TRANSPARENT.toARGBInt();
 		
-		int argb = baseSnaporta.getARGBAt(inBaseX, inBaseY);
+		int argb = baseSnaporta.getArgbAt(inBaseX, inBaseY);
 		return argb;
 	}
 	

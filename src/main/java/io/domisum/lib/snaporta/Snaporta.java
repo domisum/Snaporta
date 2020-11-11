@@ -2,7 +2,7 @@ package io.domisum.lib.snaporta;
 
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.color.Color;
-import io.domisum.lib.snaporta.util.ARGBUtil;
+import io.domisum.lib.snaporta.util.ArgbUtil;
 import io.domisum.lib.snaporta.util.Sized;
 
 /**
@@ -15,12 +15,12 @@ public interface Snaporta
 {
 	
 	@API
-	int getARGBAt(int x, int y);
+	int getArgbAt(int x, int y);
 	
 	@API
 	default Color getColorAt(int x, int y)
 	{
-		int argb = getARGBAt(x, y);
+		int argb = getArgbAt(x, y);
 		return Color.fromARGBInt(argb);
 	}
 	
@@ -28,25 +28,25 @@ public interface Snaporta
 	@API
 	default int getAlphaAt(int x, int y)
 	{
-		return ARGBUtil.getAlphaComponent(getARGBAt(x, y));
+		return ArgbUtil.getAlphaComponent(getArgbAt(x, y));
 	}
 	
 	@API
 	default int getRedAt(int x, int y)
 	{
-		return ARGBUtil.getRedComponent(getARGBAt(x, y));
+		return ArgbUtil.getRedComponent(getArgbAt(x, y));
 	}
 	
 	@API
 	default int getGreenAt(int x, int y)
 	{
-		return ARGBUtil.getGreenComponent(getARGBAt(x, y));
+		return ArgbUtil.getGreenComponent(getArgbAt(x, y));
 	}
 	
 	@API
 	default int getBlueAt(int x, int y)
 	{
-		return ARGBUtil.getBlueComponent(getARGBAt(x, y));
+		return ArgbUtil.getBlueComponent(getArgbAt(x, y));
 	}
 	
 	

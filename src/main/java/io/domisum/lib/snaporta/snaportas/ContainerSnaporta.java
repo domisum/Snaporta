@@ -35,9 +35,9 @@ public class ContainerSnaporta
 	}
 	
 	@Override
-	public int getARGBAt(int x, int y)
+	public int getArgbAt(int x, int y)
 	{
-		return contained.getARGBAt(x, y);
+		return contained.getArgbAt(x, y);
 	}
 	
 }

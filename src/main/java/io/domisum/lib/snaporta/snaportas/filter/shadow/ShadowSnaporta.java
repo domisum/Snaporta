@@ -46,7 +46,7 @@ public class ShadowSnaporta
 	}
 	
 	@Override
-	public int getARGBAt(int x, int y)
+	public int getArgbAt(int x, int y)
 	{
 		return getColorAt(x, y).toARGBInt();
 	}

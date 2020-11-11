@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.Validate;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ARGBUtil
+public final class ArgbUtil
 {
 	
 	// CONSTANTS
@@ -15,7 +15,7 @@ public final class ARGBUtil
 	
 	
 	// CONVERSION
-	public static int toARGB(int alpha, int red, int green, int blue)
+	public static int toArgb(int alpha, int red, int green, int blue)
 	{
 		int alphaMasked = alpha&TWO_BYTE_MASK;
 		int redMasked = red&TWO_BYTE_MASK;
@@ -40,6 +40,7 @@ public final class ARGBUtil
 			case RED: return getRedComponent(argb);
 			case GREEN: return getGreenComponent(argb);
 			case BLUE: return getBlueComponent(argb);
+			
 			default: throw new IllegalArgumentException("Invalid color component: "+colorComponent);
 		}
 	}
@@ -48,9 +49,7 @@ public final class ARGBUtil
 	public static int getAlphaComponent(int argb)
 	{
 		int shiftedAlpha = argb >> (8*3);
-		int alphaComponent = shiftedAlpha&TWO_BYTE_MASK;
-		
-		return alphaComponent;
+		return shiftedAlpha&TWO_BYTE_MASK;
 	}
 	
 	public static double getOpacity(int argb)
@@ -68,23 +67,18 @@ public final class ARGBUtil
 	public static int getRedComponent(int argb)
 	{
 		int shiftedRed = argb >> (8*2);
-		int redComponent = shiftedRed&TWO_BYTE_MASK;
-		
-		return redComponent;
+		return shiftedRed&TWO_BYTE_MASK;
 	}
 	
 	public static int getGreenComponent(int argb)
 	{
 		int shiftedGreen = argb >> 8;
-		int greenComponent = shiftedGreen&TWO_BYTE_MASK;
-		
-		return greenComponent;
+		return shiftedGreen&TWO_BYTE_MASK;
 	}
 	
 	public static int getBlueComponent(int argb)
 	{
-		int blueComponent = argb&TWO_BYTE_MASK;
-		return blueComponent;
+		return argb&TWO_BYTE_MASK;
 	}
 	
 }

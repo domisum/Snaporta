@@ -62,9 +62,9 @@ public class SnaportaBufferedImageConverter
 			{
 				int pixel;
 				if(bufferedImageType == BufferedImage.TYPE_INT_ARGB)
-					pixel = snaporta.getARGBAt(x, y);
+					pixel = snaporta.getArgbAt(x, y);
 				else if(bufferedImageType == BufferedImage.TYPE_INT_RGB)
-					pixel = snaporta.getARGBAt(x, y)&rgbMask;
+					pixel = snaporta.getArgbAt(x, y)&rgbMask;
 				else
 					throw new UnsupportedOperationException("Unsupported BufferedImageType: "+bufferedImageType);
 				

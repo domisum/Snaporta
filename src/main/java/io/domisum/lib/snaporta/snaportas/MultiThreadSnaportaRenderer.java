@@ -89,7 +89,7 @@ public class MultiThreadSnaportaRenderer
 	{
 		for(int y = rowMinIncl; y < rowMaxExcl; y++)
 			for(int x = 0; x < snaporta.getWidth(); x++)
-				argbPixels[y][x] = snaporta.getARGBAt(x, y);
+				argbPixels[y][x] = snaporta.getArgbAt(x, y);
 	}
 	
 }

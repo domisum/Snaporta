@@ -12,7 +12,7 @@ public class ClosestPixelInterpolator
 		int closestPixelX = (int) Math.floor(x);
 		int closestPixelY = (int) Math.floor(y);
 		
-		int argb = snaporta.getARGBAt(closestPixelX, closestPixelY);
+		int argb = snaporta.getArgbAt(closestPixelX, closestPixelY);
 		return argb;
 	}
 	

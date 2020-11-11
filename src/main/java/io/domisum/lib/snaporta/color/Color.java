@@ -1,7 +1,7 @@
 package io.domisum.lib.snaporta.color;
 
 import io.domisum.lib.auxiliumlib.annotations.API;
-import io.domisum.lib.snaporta.util.ARGBUtil;
+import io.domisum.lib.snaporta.util.ArgbUtil;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -50,10 +50,10 @@ public final class Color
 	public static Color fromARGBInt(int argb)
 	{
 		return fromARGB(
-			ARGBUtil.getAlphaComponent(argb),
-			ARGBUtil.getRedComponent(argb),
-			ARGBUtil.getGreenComponent(argb),
-			ARGBUtil.getBlueComponent(argb));
+			ArgbUtil.getAlphaComponent(argb),
+			ArgbUtil.getRedComponent(argb),
+			ArgbUtil.getGreenComponent(argb),
+			ArgbUtil.getBlueComponent(argb));
 	}
 	
 	@API
@@ -209,7 +209,7 @@ public final class Color
 	
 	public int toARGBInt()
 	{
-		return ARGBUtil.toARGB(alpha, red, green, blue);
+		return ArgbUtil.toArgb(alpha, red, green, blue);
 	}
 	
 	

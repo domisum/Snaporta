@@ -25,9 +25,9 @@ public class AddShadowBelowSnaporta
 	
 	// SNAPORTA
 	@Override
-	public synchronized int getARGBAt(int x, int y)
+	public synchronized int getArgbAt(int x, int y)
 	{
-		return rendered.getARGBAt(x, y);
+		return rendered.getArgbAt(x, y);
 	}
 	
 	@Override

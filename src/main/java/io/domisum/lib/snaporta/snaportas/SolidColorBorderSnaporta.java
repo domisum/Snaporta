@@ -45,7 +45,7 @@ public class SolidColorBorderSnaporta
 	}
 	
 	@Override
-	public int getARGBAt(int x, int y)
+	public int getArgbAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
@@ -53,7 +53,7 @@ public class SolidColorBorderSnaporta
 		int inContainedY = y-borderPadding.getTop();
 		
 		if(containedImage.isInBounds(inContainedX, inContainedY))
-			return containedImage.getARGBAt(inContainedX, inContainedY);
+			return containedImage.getArgbAt(inContainedX, inContainedY);
 		else
 			return borderColor.toARGBInt();
 	}

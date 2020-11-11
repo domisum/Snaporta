@@ -3,7 +3,7 @@ package io.domisum.lib.snaporta.snaportas.filter.color;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
-import io.domisum.lib.snaporta.util.ARGBUtil;
+import io.domisum.lib.snaporta.util.ArgbUtil;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +31,7 @@ public class ColorizeSnaporta
 	}
 	
 	@Override
-	public int getARGBAt(int x, int y)
+	public int getArgbAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
@@ -43,7 +43,7 @@ public class ColorizeSnaporta
 		int newGreen = (int) Math.round(color.getGreen()*brightness);
 		int newBlue = (int) Math.round(color.getBlue()*brightness);
 		
-		int argb = ARGBUtil.toARGB(newAlpha, newRed, newGreen, newBlue);
+		int argb = ArgbUtil.toArgb(newAlpha, newRed, newGreen, newBlue);
 		return argb;
 	}
 	
