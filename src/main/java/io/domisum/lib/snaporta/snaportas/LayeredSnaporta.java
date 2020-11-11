@@ -9,18 +9,20 @@ import io.domisum.lib.snaporta.color.Color;
 import io.domisum.lib.snaporta.color.ColorComponent;
 import io.domisum.lib.snaporta.color.Colors;
 import io.domisum.lib.snaporta.util.ARGBUtil;
+import io.domisum.lib.snaporta.util.Sized;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.Validate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-@RequiredArgsConstructor
 @API
+@RequiredArgsConstructor
 public class LayeredSnaporta
 	implements Snaporta
 {
@@ -36,13 +38,26 @@ public class LayeredSnaporta
 	
 	
 	// INIT
-	public LayeredSnaporta(Snaporta bottomMostLayer, Snaporta... layersBottomUp)
+	public LayeredSnaporta(List<Snaporta> layersBottomUp)
 	{
-		this(bottomMostLayer.getWidth(), bottomMostLayer.getHeight());
+		this(getDimensions(layersBottomUp).getWidth(), getDimensions(layersBottomUp).getHeight());
 		
-		addLayerOnTop(bottomMostLayer);
 		for(var component : layersBottomUp)
 			addLayerOnTop(component);
+	}
+	
+	public LayeredSnaporta(Snaporta... layersBottomUp)
+	{
+		this(Arrays.asList(layersBottomUp));
+	}
+	
+	private static Sized getDimensions(List<Snaporta> layersBottomUp)
+	{
+		if(layersBottomUp.isEmpty())
+			throw new IllegalArgumentException("Can't determine dimensions of layered snaporta "
+				+"when empty list of layers is given");
+		
+		return layersBottomUp.get(0);
 	}
 	
 	
