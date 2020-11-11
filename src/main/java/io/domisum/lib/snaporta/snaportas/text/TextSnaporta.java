@@ -8,6 +8,7 @@ import io.domisum.lib.snaporta.Padding;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
 import io.domisum.lib.snaporta.formatconversion.SnaportaBufferedImageConverter;
+import io.domisum.lib.snaporta.snaportas.transform.ViewportSnaporta;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -266,6 +267,18 @@ public final class TextSnaporta
 		return lazyInitRender.get();
 	}
 	
+	public Snaporta getCroppedHorizontally(int padding)
+	{
+		var visibleBounds = getRender().getVisibleBounds();
+		
+		int cropLeft = visibleBounds.getMinX()-padding;
+		int cropRight = getWidth()-visibleBounds.getMaxX()-padding;
+		int cropTop = 0;
+		int cropBottom = 0;
+		
+		return ViewportSnaporta.cropOnAllSides(this, cropLeft, cropRight, cropTop, cropBottom);
+	}
+	
 	
 	// RENDERING
 	private Render render()
@@ -313,8 +326,7 @@ public final class TextSnaporta
 		int visibleHeight = (int) Math.ceil(textVisualHeight);
 		var visibleBounds = IntBounds2D.fromPosAndSize(visibleBoundsMinX, visibleBoundsMinY, visibleWidth, visibleHeight);
 		
-		var render = new Render(snaporta, visibleBounds);
-		return render;
+		return new Render(snaporta, visibleBounds);
 	}
 	
 	private int determineFontSize(Graphics2D graphics, double maxWidth, double maxHeight)
@@ -338,23 +350,20 @@ public final class TextSnaporta
 		if(maxFontSize != null && maxFontSize < fontSizeDecimal)
 			return maxFontSize;
 		
-		int fontSize = (int) Math.floor(fontSizeDecimal);
-		return fontSize;
+		return (int) Math.floor(fontSizeDecimal);
 	}
 	
 	
 	private double getUnoccoupiedWidthOnLeft(double unoccupiedWidth)
 	{
 		double proportion = horizontalAlignment.getProportionOfUnoccupiedWidthOnLeft();
-		double unoccupiedWidthOnLeft = proportion*unoccupiedWidth;
-		return unoccupiedWidthOnLeft;
+		return proportion*unoccupiedWidth;
 	}
 	
 	private double getUnoccoupiedHeightOnTop(double unoccupiedHeight)
 	{
 		double proportion = verticalAlignment.getProportionOfUnoccupiedHeightOnTop();
-		double unoccupiedHeightOnTop = proportion*unoccupiedHeight;
-		return unoccupiedHeightOnTop;
+		return proportion*unoccupiedHeight;
 	}
 	
 	
