@@ -122,12 +122,12 @@ public class LayeredSnaporta
 	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-		return getARGBAtDepth(x, y, 0);
+		return getArgbAtDepth(x, y, 0);
 	}
 	
 	
 	// COLOR MIXING
-	private int getARGBAtDepth(int x, int y, int depth)
+	private int getArgbAtDepth(int x, int y, int depth)
 	{
 		if(depth >= layersTopDown.size())
 			return Colors.TRANSPARENT.toARGBInt();
@@ -138,39 +138,38 @@ public class LayeredSnaporta
 		if(ARGBUtil.getAlphaComponent(componentARGB) == Color.ALPHA_OPAQUE)
 			return componentARGB;
 		
-		int backgroundARGB = getARGBAtDepth(x, y, depth+1);
+		int backgroundARGB = getArgbAtDepth(x, y, depth+1);
 		if(ARGBUtil.getAlphaComponent(componentARGB) == Color.ALPHA_TRANSPARENT)
 			return backgroundARGB;
 		
-		return mixARGB(backgroundARGB, componentARGB);
+		return mixArgb(backgroundARGB, componentARGB);
 	}
 	
-	private int mixARGB(int background, int foreground)
+	private int mixArgb(int backgroundArgb, int foregroundArgb)
 	{
-		if(ARGBUtil.getAlphaComponent(background) == Color.ALPHA_TRANSPARENT)
-			return foreground;
+		if(ARGBUtil.getAlphaComponent(backgroundArgb) == Color.ALPHA_TRANSPARENT)
+			return foregroundArgb;
 		
-		double redCombined = getColorComponentCombined(ColorComponent.RED, background, foreground);
-		double greenCombined = getColorComponentCombined(ColorComponent.GREEN, background, foreground);
-		double blueCombined = getColorComponentCombined(ColorComponent.BLUE, background, foreground);
+		int redCombined = getColorComponentCombined(ColorComponent.RED, backgroundArgb, foregroundArgb);
+		int greenCombined = getColorComponentCombined(ColorComponent.GREEN, backgroundArgb, foregroundArgb);
+		int blueCombined = getColorComponentCombined(ColorComponent.BLUE, backgroundArgb, foregroundArgb);
 		
-		double foregroundOpacity = ARGBUtil.getOpacity(foreground);
-		double backgroundOpacity = ARGBUtil.getOpacity(background);
+		double foregroundOpacity = ARGBUtil.getOpacity(foregroundArgb);
+		double backgroundOpacity = ARGBUtil.getOpacity(backgroundArgb);
 		double opacityCombined = foregroundOpacity+((1-foregroundOpacity)*backgroundOpacity);
+		int alphaCombined = ARGBUtil.getAlphaFromOpacity(opacityCombined);
 		
-		return ARGBUtil.toARGB(
-			ARGBUtil.getAlphaFromOpacity(opacityCombined),
-			(int) Math.round(redCombined),
-			(int) Math.round(greenCombined),
-			(int) Math.round(blueCombined));
+		return ARGBUtil.toARGB(alphaCombined, redCombined, greenCombined, blueCombined);
 	}
 	
-	private static double getColorComponentCombined(ColorComponent colorComponent, int background, int foreground)
+	private static int getColorComponentCombined(ColorComponent colorComponent, int background, int foreground)
 	{
 		double foregroundOpacity = ARGBUtil.getOpacity(foreground);
-		return MathUtil.mix(
+		double mixed = MathUtil.mix(
 			ARGBUtil.getComponent(colorComponent, foreground), foregroundOpacity,
 			ARGBUtil.getComponent(colorComponent, background), 1-foregroundOpacity);
+		
+		return (int) Math.round(mixed);
 	}
 	
 	
