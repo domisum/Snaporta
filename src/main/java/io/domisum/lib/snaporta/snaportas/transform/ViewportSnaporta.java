@@ -23,6 +23,21 @@ public class ViewportSnaporta
 	
 	// INIT
 	@API
+	public static ViewportSnaporta cropOnAllSides(Snaporta baseSnaporta, int cropLeft, int cropRight, int cropTop, int cropBottom)
+	{
+		int croppedWidth = baseSnaporta.getWidth()-cropLeft-cropRight;
+		int croppedHeight = baseSnaporta.getHeight()-cropTop-cropBottom;
+		
+		return new ViewportSnaporta(croppedWidth, croppedHeight, baseSnaporta, -cropLeft, -cropTop);
+	}
+	
+	@API
+	public static ViewportSnaporta cropLeftTopWithWidthAndHeight(Snaporta baseSnaporta, int cropLeft, int cropTop, int croppedWidth, int croppedHeight)
+	{
+		return new ViewportSnaporta(croppedWidth, croppedHeight, baseSnaporta, -cropLeft, -cropTop);
+	}
+	
+	@API
 	public ViewportSnaporta(int width, int height, Snaporta baseSnaporta, int offsetX, int offsetY)
 	{
 		ValidationUtil.greaterZero(width, "width");
