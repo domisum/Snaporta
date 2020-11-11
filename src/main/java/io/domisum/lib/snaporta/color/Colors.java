@@ -26,4 +26,11 @@ public final class Colors
 	@API
 	public static final Color BLUE = Color.fromRGB(0, 0, Color.COLOR_COMPONENT_MAX);
 	
+	@API
+	public static final Color CYAN = Color.fromRGB(0, Color.COLOR_COMPONENT_MAX, Color.COLOR_COMPONENT_MAX);
+	@API
+	public static final Color PURPLE = Color.fromRGB(Color.COLOR_COMPONENT_MAX, 0, Color.COLOR_COMPONENT_MAX);
+	@API
+	public static final Color YELLOW = Color.fromRGB(Color.COLOR_COMPONENT_MAX, Color.COLOR_COMPONENT_MAX, 0);
+	
 }
