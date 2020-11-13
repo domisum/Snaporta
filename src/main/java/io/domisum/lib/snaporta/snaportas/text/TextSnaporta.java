@@ -267,14 +267,14 @@ public final class TextSnaporta
 		return lazyInitRender.get();
 	}
 	
-	public Snaporta getCroppedHorizontally(int padding)
+	public Snaporta getCropped(Padding padding)
 	{
 		var visibleBounds = getRender().getVisibleBounds();
 		
-		int cropLeft = visibleBounds.getMinX()-padding;
-		int cropRight = getWidth()-visibleBounds.getMaxX()-padding;
-		int cropTop = 0;
-		int cropBottom = 0;
+		int cropLeft = visibleBounds.getMinX()-padding.getLeft();
+		int cropRight = getWidth()-visibleBounds.getMaxX()-padding.getRight();
+		int cropTop = visibleBounds.getMinY()-padding.getTop();
+		int cropBottom = height-visibleBounds.getMaxY()-padding.getBottom();
 		
 		return ViewportSnaporta.cropOnAllSides(this, cropLeft, cropRight, cropTop, cropBottom);
 	}
