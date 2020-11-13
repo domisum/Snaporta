@@ -1,14 +1,14 @@
-package io.domisum.lib.snaporta.snaportas.transform.resize;
+package io.domisum.lib.snaporta.snaportas.transform;
 
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Snaporta;
-import io.domisum.lib.snaporta.snaportas.transform.resize.interpolator.Interpolator;
-import io.domisum.lib.snaporta.snaportas.transform.resize.interpolator.matrix.BiLinearInterpolator;
+import io.domisum.lib.snaporta.snaportas.transform.interpolator.Interpolator;
+import io.domisum.lib.snaporta.snaportas.transform.interpolator.matrix.BiLinearInterpolator;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.Getter;
 
 @API
-public final class ResizeSnaporta
+public final class ScaleSnaporta
 	implements Snaporta
 {
 	
@@ -28,22 +28,22 @@ public final class ResizeSnaporta
 	
 	// INIT
 	@API
-	public static ResizeSnaporta withFactor(Snaporta baseSnaporta, double factor)
+	public static ScaleSnaporta withFactor(Snaporta baseSnaporta, double factor)
 	{
 		int resizedWidth = (int) Math.round(baseSnaporta.getWidth()*factor);
 		int resizedHeight = (int) Math.round(baseSnaporta.getHeight()*factor);
 		
-		return new ResizeSnaporta(baseSnaporta, resizedWidth, resizedHeight);
+		return new ScaleSnaporta(baseSnaporta, resizedWidth, resizedHeight);
 	}
 	
 	@API
-	public ResizeSnaporta(Snaporta baseSnaporta, Integer width, Integer height)
+	public ScaleSnaporta(Snaporta baseSnaporta, Integer width, Integer height)
 	{
 		this(baseSnaporta, width, height, DEFAULT_INTERPOLATOR);
 	}
 	
 	@API
-	public ResizeSnaporta(Snaporta baseSnaporta, Integer width, Integer height, Interpolator interpolator)
+	public ScaleSnaporta(Snaporta baseSnaporta, Integer width, Integer height, Interpolator interpolator)
 	{
 		if((width == null) && (height == null))
 			throw new IllegalArgumentException("width and height can't be null at the same time");
@@ -80,8 +80,7 @@ public final class ResizeSnaporta
 		double inChildX = baseSnaporta.getWidth()*relativeX;
 		double inChildY = baseSnaporta.getHeight()*relativeY;
 		
-		int argb = interpolator.interpolateARGBAt(baseSnaporta, inChildX, inChildY);
-		return argb;
+		return interpolator.interpolateARGBAt(baseSnaporta, inChildX, inChildY);
 	}
 	
 }

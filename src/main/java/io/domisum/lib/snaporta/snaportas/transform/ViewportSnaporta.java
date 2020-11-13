@@ -2,6 +2,7 @@ package io.domisum.lib.snaporta.snaportas.transform;
 
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.auxiliumlib.util.ValidationUtil;
+import io.domisum.lib.snaporta.Padding;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Colors;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
@@ -16,37 +17,58 @@ public class ViewportSnaporta
 	private final int width;
 	@Getter
 	private final int height;
-	private final Snaporta baseSnaporta;
+	private final Snaporta base;
 	private final int offsetX;
 	private final int offsetY;
 	
 	
 	// INIT
 	@API
-	public static ViewportSnaporta cropOnAllSides(Snaporta baseSnaporta, int cropLeft, int cropRight, int cropTop, int cropBottom)
+	public static ViewportSnaporta cropOnAllSides(Snaporta base, int cropLeft, int cropRight, int cropTop, int cropBottom)
 	{
-		int croppedWidth = baseSnaporta.getWidth()-cropLeft-cropRight;
-		int croppedHeight = baseSnaporta.getHeight()-cropTop-cropBottom;
-		
-		return new ViewportSnaporta(croppedWidth, croppedHeight, baseSnaporta, -cropLeft, -cropTop);
+		int croppedWidth = base.getWidth()-cropLeft-cropRight;
+		int croppedHeight = base.getHeight()-cropTop-cropBottom;
+		return new ViewportSnaporta(croppedWidth, croppedHeight, base, -cropLeft, -cropTop);
 	}
 	
 	@API
-	public static ViewportSnaporta cropLeftTopWithWidthAndHeight(Snaporta baseSnaporta, int cropLeft, int cropTop, int croppedWidth, int croppedHeight)
+	public static ViewportSnaporta cropLeftTopWithWidthAndHeight(Snaporta base, int cropLeft, int cropTop, int croppedWidth, int croppedHeight)
 	{
-		return new ViewportSnaporta(croppedWidth, croppedHeight, baseSnaporta, -cropLeft, -cropTop);
+		return new ViewportSnaporta(croppedWidth, croppedHeight, base, -cropLeft, -cropTop);
 	}
 	
 	@API
-	public ViewportSnaporta(int width, int height, Snaporta baseSnaporta, int offsetX, int offsetY)
+	public static ViewportSnaporta offset(Snaporta base, int offsetX, int offsetY)
+	{
+		return new ViewportSnaporta(base.getWidth()+offsetX, base.getHeight()+offsetY, base, offsetX, offsetY);
+	}
+	
+	@API
+	public static ViewportSnaporta center(int width, int height, Snaporta base)
+	{
+		int offsetX = (width-base.getWidth())/2;
+		int offsetY = (height-base.getHeight())/2;
+		return new ViewportSnaporta(width, height, base, offsetX, offsetY);
+	}
+	
+	@API
+	public static ViewportSnaporta pad(Snaporta base, Padding padding)
+	{
+		int width = base.getWidth()+padding.getHorizontalSum();
+		int height = base.getHeight()+padding.getVerticalSum();
+		return new ViewportSnaporta(width, height, base, padding.getLeft(), padding.getTop());
+	}
+	
+	@API
+	public ViewportSnaporta(int width, int height, Snaporta base, int offsetX, int offsetY)
 	{
 		ValidationUtil.greaterZero(width, "width");
 		ValidationUtil.greaterZero(height, "height");
-		ValidationUtil.notNull(baseSnaporta, "baseSnaporta");
+		ValidationUtil.notNull(base, "base");
 		
 		this.width = width;
 		this.height = height;
-		this.baseSnaporta = baseSnaporta;
+		this.base = base;
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
 	}
@@ -61,10 +83,10 @@ public class ViewportSnaporta
 		int inBaseX = x-offsetX;
 		int inBaseY = y-offsetY;
 		
-		if(!baseSnaporta.isInBounds(inBaseX, inBaseY))
+		if(!base.isInBounds(inBaseX, inBaseY))
 			return Colors.TRANSPARENT.toARGBInt();
 		
-		return baseSnaporta.getArgbAt(inBaseX, inBaseY);
+		return base.getArgbAt(inBaseX, inBaseY);
 	}
 	
 }

@@ -1,9 +1,9 @@
-package io.domisum.lib.snaporta.snaportas.transform.resize.interpolator.matrix;
+package io.domisum.lib.snaporta.snaportas.transform.interpolator.matrix;
 
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.matrix.Matrix;
 import io.domisum.lib.snaporta.matrix.evaluator.MatrixOnSnaportaEvaluator;
-import io.domisum.lib.snaporta.snaportas.transform.resize.interpolator.Interpolator;
+import io.domisum.lib.snaporta.snaportas.transform.interpolator.Interpolator;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

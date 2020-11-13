@@ -1,4 +1,4 @@
-package io.domisum.lib.snaporta.snaportas;
+package io.domisum.lib.snaporta.snaportas.color;
 
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.auxiliumlib.util.ValidationUtil;

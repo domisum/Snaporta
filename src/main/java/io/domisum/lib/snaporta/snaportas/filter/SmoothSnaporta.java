@@ -4,7 +4,7 @@ import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.matrix.Matrix;
 import io.domisum.lib.snaporta.matrix.evaluator.IgnoreOutOfBoundsMatrixOnSnaportaEvaluator;
-import io.domisum.lib.snaporta.snaportas.transform.resize.interpolator.matrix.MatrixInterpolator;
+import io.domisum.lib.snaporta.snaportas.transform.interpolator.matrix.MatrixInterpolator;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 
 @API
