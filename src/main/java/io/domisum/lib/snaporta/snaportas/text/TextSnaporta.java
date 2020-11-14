@@ -279,6 +279,11 @@ public final class TextSnaporta
 		return ViewportSnaporta.cropOnAllSides(this, cropLeft, cropRight, cropTop, cropBottom);
 	}
 	
+	public Snaporta getCropped()
+	{
+		return getCropped(Padding.none());
+	}
+	
 	
 	// RENDERING
 	private Render render()
