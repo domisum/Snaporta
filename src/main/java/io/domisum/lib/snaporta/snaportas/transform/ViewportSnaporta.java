@@ -9,7 +9,7 @@ import io.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.Getter;
 
 @API
-public class ViewportSnaporta
+public final class ViewportSnaporta
 	implements Snaporta
 {
 	
@@ -24,23 +24,15 @@ public class ViewportSnaporta
 	
 	// INIT
 	@API
-	public static ViewportSnaporta cropOnAllSides(Snaporta base, int cropLeft, int cropRight, int cropTop, int cropBottom)
+	public static ViewportSnaporta sizeAndOffset(int width, int height, Snaporta base, int offsetX, int offsetY)
 	{
-		int croppedWidth = base.getWidth()-cropLeft-cropRight;
-		int croppedHeight = base.getHeight()-cropTop-cropBottom;
-		return new ViewportSnaporta(croppedWidth, croppedHeight, base, -cropLeft, -cropTop);
-	}
-	
-	@API
-	public static ViewportSnaporta cropLeftTopWithWidthAndHeight(Snaporta base, int cropLeft, int cropTop, int croppedWidth, int croppedHeight)
-	{
-		return new ViewportSnaporta(croppedWidth, croppedHeight, base, -cropLeft, -cropTop);
+		return new ViewportSnaporta(width, height, base, offsetX, offsetY);
 	}
 	
 	@API
 	public static ViewportSnaporta offset(Snaporta base, int offsetX, int offsetY)
 	{
-		return new ViewportSnaporta(base.getWidth()+offsetX, base.getHeight()+offsetY, base, offsetX, offsetY);
+		return sizeAndOffset(base.getWidth()+offsetX, base.getHeight()+offsetY, base, offsetX, offsetY);
 	}
 	
 	@API
@@ -48,7 +40,7 @@ public class ViewportSnaporta
 	{
 		int offsetX = (width-base.getWidth())/2;
 		int offsetY = (height-base.getHeight())/2;
-		return new ViewportSnaporta(width, height, base, offsetX, offsetY);
+		return sizeAndOffset(width, height, base, offsetX, offsetY);
 	}
 	
 	@API
@@ -56,11 +48,25 @@ public class ViewportSnaporta
 	{
 		int width = base.getWidth()+padding.getHorizontalSum();
 		int height = base.getHeight()+padding.getVerticalSum();
-		return new ViewportSnaporta(width, height, base, padding.getLeft(), padding.getTop());
+		return sizeAndOffset(width, height, base, padding.getLeft(), padding.getTop());
 	}
 	
 	@API
-	public ViewportSnaporta(int width, int height, Snaporta base, int offsetX, int offsetY)
+	public static ViewportSnaporta cropOnAllSides(Snaporta base, int cropLeft, int cropRight, int cropTop, int cropBottom)
+	{
+		int croppedWidth = base.getWidth()-cropLeft-cropRight;
+		int croppedHeight = base.getHeight()-cropTop-cropBottom;
+		return sizeAndOffset(croppedWidth, croppedHeight, base, -cropLeft, -cropTop);
+	}
+	
+	@API
+	public static ViewportSnaporta cropLeftTopWithSize(Snaporta base, int cropLeft, int cropTop, int croppedWidth, int croppedHeight)
+	{
+		return sizeAndOffset(croppedWidth, croppedHeight, base, -cropLeft, -cropTop);
+	}
+	
+	
+	private ViewportSnaporta(int width, int height, Snaporta base, int offsetX, int offsetY)
 	{
 		ValidationUtil.greaterZero(width, "width");
 		ValidationUtil.greaterZero(height, "height");
