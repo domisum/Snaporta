@@ -81,8 +81,7 @@ public class MultiThreadSnaportaRenderer
 			logger.error("An error occured while rendering snaporta", e);
 		}
 		
-		var basicSnaporta = new BasicSnaporta(argbPixels);
-		return basicSnaporta;
+		return new BasicSnaporta(argbPixels);
 	}
 	
 	private void render(Snaporta snaporta, int[][] argbPixels, int rowMinIncl, int rowMaxExcl)

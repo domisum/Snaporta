@@ -17,7 +17,7 @@ public final class DoubleMaskPainter
 	
 	// INIT
 	@API
-	public static DoubleMaskPainter onlyFalseOfWidthAndHeight(int width, int height)
+	public static DoubleMaskPainter sized(int width, int height)
 	{
 		double[][] values = new double[height][width];
 		return new DoubleMaskPainter(values);
