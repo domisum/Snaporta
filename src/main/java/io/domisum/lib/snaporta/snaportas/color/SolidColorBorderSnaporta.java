@@ -16,7 +16,7 @@ public class SolidColorBorderSnaporta
 	@API
 	public SolidColorBorderSnaporta(Snaporta containedImage, Padding borderPadding, Color borderColor)
 	{
-		super(build(containedImage, borderPadding, borderColor));
+		super(()->build(containedImage, borderPadding, borderColor));
 	}
 	
 	private static Snaporta build(Snaporta containedImage, Padding borderPadding, Color borderColor)
