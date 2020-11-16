@@ -73,9 +73,7 @@ public final class Color
 	{
 		var hsbColor = java.awt.Color.getHSBColor((float) hue, (float) saturation, (float) brighntess);
 		var hsb = fromAwt(hsbColor);
-		var color = hsb.deriveWithOpacity(opacity);
-		
-		return color;
+		return hsb.deriveWithOpacity(opacity);
 	}
 	
 	@API
@@ -88,9 +86,7 @@ public final class Color
 	public static Color fromBrightnessRel(double brightness)
 	{
 		SnaportaValidate.validateInDoubleInterval(0, 1, "brightness", brightness);
-		var color = fromBrightnessAbs((int) Math.round(brightness*COLOR_COMPONENT_MAX));
-		
-		return color;
+		return fromBrightnessAbs((int) Math.round(brightness*COLOR_COMPONENT_MAX));
 	}
 	
 	@API
@@ -177,27 +173,21 @@ public final class Color
 	public double getHue()
 	{
 		float[] hsb = java.awt.Color.RGBtoHSB(red, green, blue, null);
-		float hue = hsb[0];
-		
-		return hue;
+		return hsb[0];
 	}
 	
 	@API
 	public double getSaturation()
 	{
 		float[] hsb = java.awt.Color.RGBtoHSB(red, green, blue, null);
-		float saturation = hsb[1];
-		
-		return saturation;
+		return hsb[1];
 	}
 	
 	@API
 	public double getBrightness()
 	{
 		float[] hsb = java.awt.Color.RGBtoHSB(red, green, blue, null);
-		float brightness = hsb[2];
-		
-		return brightness;
+		return hsb[2];
 	}
 	
 	
@@ -221,8 +211,7 @@ public final class Color
 		int oppositeGreen = COLOR_COMPONENT_MAX-green;
 		int oppositeBlue = COLOR_COMPONENT_MAX-blue;
 		
-		var color = new Color(alpha, oppositeRed, oppositeGreen, oppositeBlue);
-		return color;
+		return new Color(alpha, oppositeRed, oppositeGreen, oppositeBlue);
 	}
 	
 	@API
@@ -253,21 +242,16 @@ public final class Color
 	@API
 	public Color deriveWithOpacity(double opacity)
 	{
+		SnaportaValidate.validateInDoubleInterval(0, 1, "opacity", opacity);
 		int newAlpha = (int) Math.round(opacity*COLOR_COMPONENT_MAX);
-		var color = deriveWithAlpha(newAlpha);
-		
-		return color;
+		return deriveWithAlpha(newAlpha);
 	}
 	
 	@API
-	public Color deriveMultiplyOpacity(double opacity)
+	public Color deriveMultiplyOpacity(double opacityFactor)
 	{
-		SnaportaValidate.validateInDoubleInterval(0, 1, "opacity", opacity);
-		
-		int newAlpha = (int) Math.round(alpha*opacity);
-		var color = deriveWithAlpha(newAlpha);
-		
-		return color;
+		SnaportaValidate.validateInDoubleInterval(0, 1, "opacityFactor", opacityFactor);
+		return deriveWithOpacity(getOpacityRelative()*opacityFactor);
 	}
 	
 	
