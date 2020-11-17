@@ -56,10 +56,10 @@ public class HaloSnaporta
 	private static boolean isSurroundedByFullOpacity(Snaporta base, int pX, int pY)
 	{
 		for(var neighborPixel : NeighborPixel.values())
-			if(base.getAlphaAt(pX+neighborPixel.dX, pY+neighborPixel.dY) != Color.COLOR_COMPONENT_MAX)
-				return true;
+			if(base.getAlphaAt(pX+neighborPixel.dX, pY+neighborPixel.dY) != Color.ALPHA_OPAQUE)
+				return false;
 		
-		return false;
+		return true;
 	}
 	
 	private static void visitSourcePixel(Snaporta base, int radius, DoubleMaskPainter intensityMaskPainter, int pX, int pY)
