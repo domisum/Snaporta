@@ -23,6 +23,7 @@ public interface Sized
 		return true;
 	}
 	
+	@API
 	default boolean isOutOfBounds(int x, int y)
 	{
 		return !isInBounds(x, y);
