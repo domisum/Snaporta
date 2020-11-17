@@ -8,6 +8,7 @@ import io.domisum.lib.snaporta.mask.doubl.DoubleMaskPainter;
 import io.domisum.lib.snaporta.snaportas.color.SolidColorSnaporta;
 import io.domisum.lib.snaporta.snaportas.mask.DoubleMaskOpacitySnaporta;
 import io.domisum.lib.snaporta.snaportas.transform.ViewportSnaporta;
+import lombok.RequiredArgsConstructor;
 
 public class HaloSnaporta
 	extends ContainerSnaporta
@@ -35,13 +36,33 @@ public class HaloSnaporta
 		
 		for(int pY = radius; pY < base.getHeight()-radius; pY++)
 			for(int pX = radius; pX < base.getWidth()-radius; pX++)
-				if(base.getColorAt(pX, pY).getAlpha() > 0)
-					visitSourcePoint(base, radius, intensityMaskPainter, pY, pX);
+				if(shouldSourcePixelBeVisited(base, pX, pY))
+					visitSourcePixel(base, radius, intensityMaskPainter, pX, pY);
 		
 		return intensityMaskPainter.toMask();
 	}
 	
-	private static void visitSourcePoint(Snaporta base, int radius, DoubleMaskPainter intensityMaskPainter, int pY, int pX)
+	private static boolean shouldSourcePixelBeVisited(Snaporta base, int pX, int pY)
+	{
+		if(base.getColorAt(pX, pY).isFullyTransparent())
+			return false;
+		
+		if(isSurroundedByFullOpacity(base, pX, pY))
+			return false;
+		
+		return true;
+	}
+	
+	private static boolean isSurroundedByFullOpacity(Snaporta base, int pX, int pY)
+	{
+		for(var neighborPixel : NeighborPixel.values())
+			if(base.getAlphaAt(pX+neighborPixel.dX, pY+neighborPixel.dY) != Color.COLOR_COMPONENT_MAX)
+				return true;
+		
+		return false;
+	}
+	
+	private static void visitSourcePixel(Snaporta base, int radius, DoubleMaskPainter intensityMaskPainter, int pX, int pY)
 	{
 		double sourceOpacity = base.getColorAt(pX, pY).getOpacityRelative();
 		
@@ -64,6 +85,22 @@ public class HaloSnaporta
 				if(intensity > intensityMaskPainter.getValueAt(x, y))
 					intensityMaskPainter.setValueAt(x, y, intensity);
 			}
+	}
+	
+	
+	// UTIL
+	@RequiredArgsConstructor
+	private enum NeighborPixel
+	{
+		
+		RIGHT(1, 0),
+		BOTTOM(0, 1),
+		LEFT(-1, 0),
+		TOP(0, -1);
+		
+		private final int dX;
+		private final int dY;
+		
 	}
 	
 }
