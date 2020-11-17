@@ -57,7 +57,7 @@ public class AdjustHsbSnaporta
 		double brightness = parentColor.getBrightness()+deltaBrightness;
 		brightness = MathUtil.clamp(0, 1, brightness);
 		
-		var adjustedColor = Color.fromOHSB(parentColor.getOpacityRelative(), hue, saturation, brightness);
+		var adjustedColor = Color.fromOHSB(parentColor.getOpacity(), hue, saturation, brightness);
 		return adjustedColor;
 	}
 	

@@ -15,7 +15,7 @@ public class ImageOpacityDoubleMask
 	@Override
 	public double getValueAt(int x, int y)
 	{
-		return image.getColorAt(x, y).getOpacityRelative();
+		return image.getColorAt(x, y).getOpacity();
 	}
 	
 	@Override

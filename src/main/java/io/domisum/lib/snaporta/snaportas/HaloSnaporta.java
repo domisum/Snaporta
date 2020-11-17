@@ -64,14 +64,14 @@ public class HaloSnaporta
 	
 	private static void visitSourcePixel(Snaporta base, int radius, DoubleMaskPainter intensityMaskPainter, int pX, int pY)
 	{
-		double sourceOpacity = base.getColorAt(pX, pY).getOpacityRelative();
+		double sourceOpacity = base.getColorAt(pX, pY).getOpacity();
 		
 		for(int dY = -radius; dY <= radius; dY++)
 			for(int dX = -radius; dX <= radius; dX++)
 			{
 				int x = pX+dX;
 				int y = pY+dY;
-				double targetOpacity = base.getColorAt(x, y).getOpacityRelative();
+				double targetOpacity = base.getColorAt(x, y).getOpacity();
 				if(targetOpacity == 1)
 					continue;
 				

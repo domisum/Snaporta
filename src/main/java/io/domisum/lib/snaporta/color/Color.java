@@ -20,6 +20,10 @@ public final class Color
 	public static final int ALPHA_TRANSPARENT = 0;
 	@API
 	public static final int ALPHA_OPAQUE = COLOR_COMPONENT_MAX;
+	@API
+	public static final double OPACITY_TRANSPARENT = 0;
+	@API
+	public static final double OPACITY_OPAQUE = 1;
 	
 	// ATTRIBUTES
 	@Getter
@@ -157,16 +161,9 @@ public final class Color
 	
 	// GETTERS
 	@API
-	public double getOpacityRelative()
+	public double getOpacity()
 	{
 		return alpha/(double) COLOR_COMPONENT_MAX;
-	}
-	
-	@API
-	public double getRGBBrightnessRelative()
-	{
-		double componentSum = red+green+blue;
-		return componentSum/3/COLOR_COMPONENT_MAX;
 	}
 	
 	@API
@@ -211,16 +208,6 @@ public final class Color
 	
 	// DERIVE
 	@API
-	public Color deriveOpposite()
-	{
-		int oppositeRed = COLOR_COMPONENT_MAX-red;
-		int oppositeGreen = COLOR_COMPONENT_MAX-green;
-		int oppositeBlue = COLOR_COMPONENT_MAX-blue;
-		
-		return new Color(alpha, oppositeRed, oppositeGreen, oppositeBlue);
-	}
-	
-	@API
 	public Color deriveWithAlpha(int deriveAlpha)
 	{
 		return fromARGB(deriveAlpha, getRed(), getGreen(), getBlue());
@@ -257,7 +244,7 @@ public final class Color
 	public Color deriveMultiplyOpacity(double opacityFactor)
 	{
 		SnaportaValidate.validateInDoubleInterval(0, 1, "opacityFactor", opacityFactor);
-		return deriveWithOpacity(getOpacityRelative()*opacityFactor);
+		return deriveWithOpacity(getOpacity()*opacityFactor);
 	}
 	
 	

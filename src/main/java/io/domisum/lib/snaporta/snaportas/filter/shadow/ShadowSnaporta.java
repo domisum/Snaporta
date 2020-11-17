@@ -62,7 +62,7 @@ public class ShadowSnaporta
 			return Colors.TRANSPARENT;
 		
 		var colorAt = baseSnaporta.getColorAt(inBaseX, inBaseY);
-		double opacityAt = colorAt.getOpacityRelative();
+		double opacityAt = colorAt.getOpacity();
 		if(opacityAt == 0)
 			return Colors.TRANSPARENT;
 		
