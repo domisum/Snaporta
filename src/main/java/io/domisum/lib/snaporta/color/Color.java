@@ -190,6 +190,12 @@ public final class Color
 		return hsb[2];
 	}
 	
+	@API
+	public boolean isFullyTransparent()
+	{
+		return alpha == ALPHA_TRANSPARENT;
+	}
+	
 	
 	// CONVERSION
 	public java.awt.Color toAwt()
