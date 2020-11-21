@@ -132,17 +132,17 @@ public class LayeredSnaporta
 		if(depth >= layersTopDown.size())
 			return Colors.TRANSPARENT.toARGBInt();
 		
-		var component = layersTopDown.get(depth);
-		int componentARGB = component.getARGBAt(x, y);
+		var componentAtThisDepth = layersTopDown.get(depth);
+		int componentAtThisDepthArgbAt = componentAtThisDepth.getARGBAt(x, y);
 		
-		if(ArgbUtil.getAlphaComponent(componentARGB) == Color.ALPHA_OPAQUE)
-			return componentARGB;
+		if(ArgbUtil.getAlphaComponent(componentAtThisDepthArgbAt) == Color.ALPHA_OPAQUE)
+			return componentAtThisDepthArgbAt;
 		
-		int backgroundARGB = getArgbAtDepth(x, y, depth+1);
-		if(ArgbUtil.getAlphaComponent(componentARGB) == Color.ALPHA_TRANSPARENT)
-			return backgroundARGB;
+		int backgroundArgbAt = getArgbAtDepth(x, y, depth+1);
+		if(ArgbUtil.getAlphaComponent(componentAtThisDepthArgbAt) == Color.ALPHA_TRANSPARENT)
+			return backgroundArgbAt;
 		
-		return mixArgb(backgroundARGB, componentARGB);
+		return mixArgb(backgroundArgbAt, componentAtThisDepthArgbAt);
 	}
 	
 	private int mixArgb(int backgroundArgb, int foregroundArgb)
@@ -154,10 +154,10 @@ public class LayeredSnaporta
 		int greenCombined = getColorComponentCombined(ColorComponent.GREEN, backgroundArgb, foregroundArgb);
 		int blueCombined = getColorComponentCombined(ColorComponent.BLUE, backgroundArgb, foregroundArgb);
 		
-		double foregroundOpacity = ArgbUtil.getOpacity(foregroundArgb);
-		double backgroundOpacity = ArgbUtil.getOpacity(backgroundArgb);
-		double opacityCombined = foregroundOpacity+((1-foregroundOpacity)*backgroundOpacity);
-		int alphaCombined = ArgbUtil.getAlphaFromOpacity(opacityCombined);
+		double foregroundTransparency = 1-ArgbUtil.getOpacity(foregroundArgb);
+		double backgroundTransparency = 1-ArgbUtil.getOpacity(backgroundArgb);
+		double transparencyCombined = foregroundTransparency*backgroundTransparency;
+		int alphaCombined = ArgbUtil.getAlphaFromOpacity(1-transparencyCombined);
 		
 		return ArgbUtil.toArgb(alphaCombined, redCombined, greenCombined, blueCombined);
 	}
