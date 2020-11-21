@@ -1,5 +1,6 @@
 package io.domisum.lib.snaporta.color;
 
+import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.util.ArgbUtil;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
@@ -150,12 +151,24 @@ public final class Color
 	@Override
 	public String toString()
 	{
+		return PHR.r("{} ({})", displayAsComponentInts(), displayAsRgbHexadecimal());
+	}
+	
+	@API
+	public String displayAsComponentInts()
+	{
+		String opacityPercent = Math.round((alpha/(double) COLOR_COMPONENT_MAX)*100)+"%";
+		return PHR.r("{}r-{}g-{}b-{}", red, green, blue, opacityPercent);
+	}
+	
+	@API
+	public String displayAsRgbHexadecimal()
+	{
 		String redHex = getComponentAsHex(red);
 		String greenHex = getComponentAsHex(green);
 		String blueHex = getComponentAsHex(blue);
-		String opacityPercent = Math.round((alpha/(double) COLOR_COMPONENT_MAX)*100)+"%";
 		
-		return "#"+redHex+greenHex+blueHex+"-"+opacityPercent;
+		return "#"+redHex+greenHex+blueHex;
 	}
 	
 	
