@@ -164,11 +164,15 @@ public class LayeredSnaporta
 	
 	private static int getColorComponentCombined(ColorComponent colorComponent, int background, int foreground)
 	{
+		int foregroundComponent = ArgbUtil.getComponent(colorComponent, foreground);
 		double foregroundOpacity = ArgbUtil.getOpacity(foreground);
-		double mixed = MathUtil.mix(
-			ArgbUtil.getComponent(colorComponent, foreground), foregroundOpacity,
-			ArgbUtil.getComponent(colorComponent, background), 1-foregroundOpacity);
 		
+		int backgroundComponent = ArgbUtil.getComponent(colorComponent, background);
+		double backgroundOpacity = ArgbUtil.getOpacity(background);
+		
+		double mixed = MathUtil.mix(
+			foregroundComponent, foregroundOpacity,
+			backgroundComponent, (1-foregroundOpacity)*backgroundOpacity);
 		return (int) Math.round(mixed);
 	}
 	
