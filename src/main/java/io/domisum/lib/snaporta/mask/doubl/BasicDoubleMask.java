@@ -16,7 +16,7 @@ public final class BasicDoubleMask
 	
 	// INIT
 	@API
-	public static BasicDoubleMask onlyFalseOfWidthAndHeight(int width, int height)
+	public static BasicDoubleMask ofSize(int width, int height)
 	{
 		double[][] values = new double[height][width];
 		return new BasicDoubleMask(values);

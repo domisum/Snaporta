@@ -18,7 +18,7 @@ public final class BooleanMaskPainter
 	
 	// INIT
 	@API
-	public static BooleanMaskPainter onlyFalseOfWidthAndHeight(int width, int height)
+	public static BooleanMaskPainter ofSize(int width, int height)
 	{
 		boolean[][] values = new boolean[height][width];
 		return new BooleanMaskPainter(values);
