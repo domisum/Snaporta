@@ -46,8 +46,7 @@ public class IgnoreOutOfBoundsMatrixOnSnaportaEvaluator
 		evaluatedGreen = MathUtil.clamp(0, Color.COLOR_COMPONENT_MAX, evaluatedGreen);
 		evaluatedBlue = MathUtil.clamp(0, Color.COLOR_COMPONENT_MAX, evaluatedBlue);
 		
-		int color = ArgbUtil.toArgb(evaluatedAlpha, evaluatedRed, evaluatedGreen, evaluatedBlue);
-		return color;
+		return ArgbUtil.toArgb(evaluatedAlpha, evaluatedRed, evaluatedGreen, evaluatedBlue);
 	}
 	
 }

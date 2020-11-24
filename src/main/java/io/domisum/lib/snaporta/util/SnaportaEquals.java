@@ -12,10 +12,8 @@ public final class SnaportaEquals
 	{
 		if((a == null) || (b == null))
 			return a == b;
-		
 		if(a.getWidth() != b.getWidth())
 			return false;
-		
 		if(a.getHeight() != b.getHeight())
 			return false;
 		

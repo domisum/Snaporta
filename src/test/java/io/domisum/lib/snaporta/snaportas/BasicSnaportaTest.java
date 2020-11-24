@@ -1,6 +1,5 @@
 package io.domisum.lib.snaporta.snaportas;
 
-import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Colors;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,7 @@ public class BasicSnaportaTest
 		int width = 20;
 		int height = 10;
 		
-		Snaporta snaporta = BasicSnaporta.blankOfWidthAndHeight(width, height);
+		var snaporta = BasicSnaporta.blankOfWidthAndHeight(width, height);
 		
 		Assertions.assertEquals(width, snaporta.getWidth());
 		Assertions.assertEquals(height, snaporta.getHeight());
@@ -37,20 +36,18 @@ public class BasicSnaportaTest
 	void testNonRectangularArrayInit()
 	{
 		int[][] nonRectangular = {{0, 1}, {0}};
-		
 		Assertions.assertThrows(IllegalArgumentException.class, ()->new BasicSnaporta(nonRectangular));
 	}
 	
 	@Test
 	void testCopyEquality()
 	{
-		SnaportaPainter painter = new SnaportaPainter(BasicSnaporta.blankOfWidthAndHeight(16, 9));
+		var painter = new SnaportaPainter(BasicSnaporta.blankOfWidthAndHeight(16, 9));
 		painter.setColorAt(0, 3, Colors.RED);
 		painter.setColorAt(4, 2, Colors.GREEN);
 		
-		Snaporta base = painter.toSnaporta();
-		
-		Snaporta copy = BasicSnaporta.copyOf(base);
+		var base = painter.toSnaporta();
+		var copy = BasicSnaporta.copyOf(base);
 		
 		Assertions.assertEquals(base.getWidth(), copy.getWidth());
 		Assertions.assertEquals(base.getHeight(), copy.getHeight());

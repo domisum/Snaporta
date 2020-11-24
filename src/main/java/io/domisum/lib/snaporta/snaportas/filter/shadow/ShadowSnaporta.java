@@ -66,8 +66,7 @@ public class ShadowSnaporta
 		if(opacityAt == 0)
 			return Colors.TRANSPARENT;
 		
-		var shadowColorAt = color.deriveWithOpacity(opacityAt);
-		return shadowColorAt;
+		return color.deriveWithOpacity(opacityAt);
 	}
 	
 }

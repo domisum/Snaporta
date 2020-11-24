@@ -58,9 +58,7 @@ public class SharpenSnaporta
 	public int getArgbAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-		
-		int argb = matrixInterpolator.interpolateARGBAt(baseSnaporta, x, y);
-		return argb;
+		return matrixInterpolator.interpolateARGBAt(baseSnaporta, x, y);
 	}
 	
 }

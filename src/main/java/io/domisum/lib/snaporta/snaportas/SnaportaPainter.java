@@ -71,18 +71,14 @@ public class SnaportaPainter
 	public int getARGBAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-		
-		int argb = argbPixels[y][x];
-		return argb;
+		return argbPixels[y][x];
 	}
 	
 	@API
 	public Color getColorAt(int x, int y)
 	{
 		int argb = getARGBAt(x, y);
-		var color = Color.fromARGBInt(argb);
-		
-		return color;
+		return Color.fromARGBInt(argb);
 	}
 	
 	

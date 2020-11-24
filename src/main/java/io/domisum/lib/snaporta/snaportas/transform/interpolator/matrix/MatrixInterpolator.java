@@ -24,8 +24,7 @@ public class MatrixInterpolator
 		int closestPixelX = (int) Math.round(x);
 		int closestPixelY = (int) Math.round(y);
 		
-		int argb = matrixOnSnaportaEvaluator.evaluateToARGB(snaporta, interpolationMatrix, closestPixelX, closestPixelY);
-		return argb;
+		return matrixOnSnaportaEvaluator.evaluateToARGB(snaporta, interpolationMatrix, closestPixelX, closestPixelY);
 	}
 	
 }

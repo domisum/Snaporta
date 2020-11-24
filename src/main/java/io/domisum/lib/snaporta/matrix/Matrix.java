@@ -57,8 +57,7 @@ public class Matrix
 		String separatorLineComponent = "-".repeat(valueDisplayCharacters);
 		String separatorLine = separatorLineComponent+("+"+separatorLineComponent).repeat(getWidth()-1)+"\n";
 		
-		String asString = StringListUtil.listHorizontally(rowsString, separatorLine);
-		return asString;
+		return StringListUtil.listHorizontally(rowsString, separatorLine);
 	}
 	
 	private String generateToStringRow(double[] row, int padValueToLength)
@@ -71,8 +70,7 @@ public class Matrix
 		});
 		var roundedRowValues = roundedRowValuesStream.collect(Collectors.toList());
 		
-		String asString = StringListUtil.listHorizontally(roundedRowValues, "|");
-		return asString;
+		return StringListUtil.listHorizontally(roundedRowValues, "|");
 	}
 	
 	
@@ -109,8 +107,7 @@ public class Matrix
 		SnaportaValidate.validateInInterval(-getHorizontalRadius(), getHorizontalRadius(), "x", x);
 		SnaportaValidate.validateInInterval(-getVerticalRadius(), getVerticalRadius(), "y", y);
 		
-		double entry = entries[inEntriesY][inEntriesX];
-		return entry;
+		return entries[inEntriesY][inEntriesX];
 	}
 	
 	

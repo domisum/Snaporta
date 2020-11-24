@@ -24,12 +24,10 @@ public final class BasicSnaporta
 	{
 		if(width < 0)
 			throw new IllegalArgumentException("width can't be negative, was "+width);
-		
 		if(height < 0)
 			throw new IllegalArgumentException("height can't be negative, was "+height);
 		
-		var basicSnaporta = new BasicSnaporta(new int[height][width]);
-		return basicSnaporta;
+		return new BasicSnaporta(new int[height][width]);
 	}
 	
 	@API
@@ -39,9 +37,8 @@ public final class BasicSnaporta
 		for(int y = 0; y < snaporta.getHeight(); y++)
 			for(int x = 0; x < snaporta.getWidth(); x++)
 				argbPixels[y][x] = snaporta.getArgbAt(x, y);
-		var basicSnaporta = new BasicSnaporta(argbPixels);
 		
-		return basicSnaporta;
+		return new BasicSnaporta(argbPixels);
 	}
 	
 	
@@ -94,9 +91,7 @@ public final class BasicSnaporta
 	public int getArgbAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-		
-		int argb = argbPixels[y][x];
-		return argb;
+		return argbPixels[y][x];
 	}
 	
 }

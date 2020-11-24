@@ -54,8 +54,7 @@ public class SmoothSnaporta
 				kernel[kernelX][kernelY] = value;
 			}
 		
-		var matrix = new Matrix(kernel).deriveNormalized();
-		return matrix;
+		return new Matrix(kernel).deriveNormalized();
 	}
 	
 	
@@ -76,9 +75,7 @@ public class SmoothSnaporta
 	public int getArgbAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-		
-		int argb = matrixInterpolator.interpolateARGBAt(baseSnaporta, x, y);
-		return argb;
+		return matrixInterpolator.interpolateARGBAt(baseSnaporta, x, y);
 	}
 	
 }

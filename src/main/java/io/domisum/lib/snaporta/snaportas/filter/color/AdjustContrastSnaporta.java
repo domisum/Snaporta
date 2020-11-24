@@ -45,8 +45,7 @@ public class AdjustContrastSnaporta
 		int newGreen = adjustContrastChannel(parentColor.getGreen());
 		int newBlue = adjustContrastChannel(parentColor.getBlue());
 		
-		int argb = ArgbUtil.toArgb(parentColor.getAlpha(), newRed, newGreen, newBlue);
-		return argb;
+		return ArgbUtil.toArgb(parentColor.getAlpha(), newRed, newGreen, newBlue);
 	}
 	
 	private int adjustContrastChannel(int value)
@@ -55,8 +54,7 @@ public class AdjustContrastSnaporta
 		double newChannelRelative = channelRelative*(1+deltaContrast);
 		double newChannelRelativeClamped = MathUtil.clamp(0, 1, newChannelRelative);
 		
-		int newChannel = (int) Math.round(newChannelRelativeClamped*Color.COLOR_COMPONENT_MAX);
-		return newChannel;
+		return (int) Math.round(newChannelRelativeClamped*Color.COLOR_COMPONENT_MAX);
 	}
 	
 }

@@ -2,7 +2,6 @@ package io.domisum.lib.snaporta.formatconversion;
 
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Snaporta;
-import io.domisum.lib.snaporta.snaportas.BasicSnaporta;
 import io.domisum.lib.snaporta.snaportas.SnaportaPainter;
 
 import java.awt.image.BufferedImage;
@@ -39,14 +38,13 @@ public class SnaportaBufferedImageConverter
 	{
 		int width = bufferedImage.getWidth();
 		int height = bufferedImage.getHeight();
-		SnaportaPainter snaportaPainter = new SnaportaPainter(BasicSnaporta.blankOfWidthAndHeight(width, height));
+		var painter = new SnaportaPainter(width, height);
 		
 		for(int y = 0; y < height; y++)
 			for(int x = 0; x < width; x++)
-				snaportaPainter.setARGBAt(x, y, bufferedImage.getRGB(x, y));
+				painter.setARGBAt(x, y, bufferedImage.getRGB(x, y));
 		
-		var snaporta = snaportaPainter.toSnaporta();
-		return snaporta;
+		return painter.toSnaporta();
 	}
 	
 	@API

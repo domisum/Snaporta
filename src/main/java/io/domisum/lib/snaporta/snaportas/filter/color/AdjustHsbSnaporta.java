@@ -45,20 +45,16 @@ public class AdjustHsbSnaporta
 	public Color getColorAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
-		
 		var parentColor = parent.getColorAt(x, y);
 		
 		double hue = parentColor.getHue()+deltaHue;
 		hue = MathUtil.clamp(0, 1, hue);
-		
 		double saturation = parentColor.getSaturation()+deltaSaturation;
 		saturation = MathUtil.clamp(0, 1, saturation);
-		
 		double brightness = parentColor.getBrightness()+deltaBrightness;
 		brightness = MathUtil.clamp(0, 1, brightness);
 		
-		var adjustedColor = Color.fromOHSB(parentColor.getOpacity(), hue, saturation, brightness);
-		return adjustedColor;
+		return Color.fromOHSB(parentColor.getOpacity(), hue, saturation, brightness);
 	}
 	
 }
