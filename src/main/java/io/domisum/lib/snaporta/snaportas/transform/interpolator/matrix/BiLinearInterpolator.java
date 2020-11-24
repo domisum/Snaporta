@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashSet;
+import java.util.Optional;
 
 public class BiLinearInterpolator
 	implements Interpolator
@@ -19,11 +20,10 @@ public class BiLinearInterpolator
 		int yFloor = (int) Math.floor(y);
 		
 		var valuedPixels = new HashSet<ValuedPixel>();
-		valuedPixels.add(getValuedPixel(snaporta, x, y, xFloor, yFloor));
-		valuedPixels.add(getValuedPixel(snaporta, x, y, xFloor+1, yFloor));
-		valuedPixels.add(getValuedPixel(snaporta, x, y, xFloor+1, yFloor+1));
-		valuedPixels.add(getValuedPixel(snaporta, x, y, xFloor, yFloor+1));
-		valuedPixels.remove(null);
+		getValuedPixel(snaporta, x, y, xFloor, yFloor).ifPresent(valuedPixels::add);
+		getValuedPixel(snaporta, x, y, xFloor+1, yFloor).ifPresent(valuedPixels::add);
+		getValuedPixel(snaporta, x, y, xFloor+1, yFloor+1).ifPresent(valuedPixels::add);
+		getValuedPixel(snaporta, x, y, xFloor, yFloor+1).ifPresent(valuedPixels::add);
 		
 		double redSum = 0;
 		double greenSum = 0;
@@ -49,14 +49,13 @@ public class BiLinearInterpolator
 		blue = Math.min(blue, Color.COLOR_COMPONENT_MAX);
 		alpha = Math.min(alpha, Color.COLOR_COMPONENT_MAX);
 		
-		int argb = Color.fromARGB(alpha, red, green, blue).toARGBInt();
-		return argb;
+		return Color.fromARGB(alpha, red, green, blue).toARGBInt();
 	}
 	
-	private ValuedPixel getValuedPixel(Snaporta snaporta, double x, double y, int pX, int pY)
+	private Optional<ValuedPixel> getValuedPixel(Snaporta snaporta, double x, double y, int pX, int pY)
 	{
 		if((pX >= snaporta.getWidth()) || (pY >= snaporta.getHeight()))
-			return null;
+			return Optional.empty();
 		
 		var color = snaporta.getColorAt(pX, pY);
 		
@@ -65,7 +64,7 @@ public class BiLinearInterpolator
 		double value = dX*dY;
 		
 		var valuedPixel = new ValuedPixel(color, value);
-		return valuedPixel;
+		return Optional.of(valuedPixel);
 	}
 	
 	
