@@ -1,7 +1,7 @@
 package io.domisum.lib.snaporta.formatconversion.io;
 
 import io.domisum.lib.auxiliumlib.annotations.API;
-import io.domisum.lib.auxiliumlib.util.file.FileUtil;
+import io.domisum.lib.auxiliumlib.util.FileUtil;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.formatconversion.SnaportaBufferedImageConverter;
 
