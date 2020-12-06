@@ -57,7 +57,7 @@ public class Matrix
 		String separatorLineComponent = "-".repeat(valueDisplayCharacters);
 		String separatorLine = separatorLineComponent+("+"+separatorLineComponent).repeat(getWidth()-1)+"\n";
 		
-		return StringListUtil.listHorizontally(rowsString, separatorLine);
+		return StringListUtil.list(rowsString, separatorLine);
 	}
 	
 	private String generateToStringRow(double[] row, int padValueToLength)
@@ -70,7 +70,7 @@ public class Matrix
 		});
 		var roundedRowValues = roundedRowValuesStream.collect(Collectors.toList());
 		
-		return StringListUtil.listHorizontally(roundedRowValues, "|");
+		return StringListUtil.list(roundedRowValues, "|");
 	}
 	
 	
