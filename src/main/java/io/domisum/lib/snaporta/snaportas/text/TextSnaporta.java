@@ -17,6 +17,7 @@ import org.apache.commons.lang3.Validate;
 import javax.annotation.Nullable;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.function.Supplier;
 
@@ -237,17 +238,9 @@ public final class TextSnaporta
 			Validate.notNull(horizontalAlignment, "You have to set the horizontal alignment before building");
 			Validate.notNull(verticalAlignment, "You have to set the vertical alignment before building");
 			
-			var textSnaporta = new TextSnaporta(
-				width,
-				height,
-				text,
-				font,
-				maxFontSize,
-				fontColor,
-				padding,
-				horizontalAlignment,
-				verticalAlignment);
-			return textSnaporta;
+			return new TextSnaporta(width, height, text,
+				font, maxFontSize, fontColor,
+				padding, horizontalAlignment, verticalAlignment);
 		}
 		
 	}
@@ -267,7 +260,8 @@ public final class TextSnaporta
 		return lazyInitRender.get();
 	}
 	
-	public Snaporta getCropped(Padding padding)
+	@API
+	public Snaporta getCroppedToVisible(Padding padding)
 	{
 		var visibleBounds = getRender().getVisibleBounds();
 		
@@ -279,9 +273,9 @@ public final class TextSnaporta
 		return ViewportSnaporta.cropOnAllSides(this, cropLeft, cropRight, cropTop, cropBottom);
 	}
 	
-	public Snaporta getCropped()
+	public Snaporta getCroppedToVisible()
 	{
-		return getCropped(Padding.none());
+		return getCroppedToVisible(Padding.none());
 	}
 	
 	
@@ -306,24 +300,18 @@ public final class TextSnaporta
 		double textVisualWidth = visualBounds.getWidth();
 		double textVisualHeight = visualBounds.getHeight();
 		
-		double insidePaddingUnoccupiedWidth = insidePaddingWidth-textVisualWidth;
-		double unoccoupiedWidthOnLeft = getUnoccoupiedWidthOnLeft(insidePaddingUnoccupiedWidth);
-		double widthPastRenderStartPointOnLeft = -visualBounds.getMinX(); // overflow to left has negative x coordinate -> minus
-		double textMinX = padding.getLeft()+unoccoupiedWidthOnLeft;
-		double renderStartPointX = textMinX+widthPastRenderStartPointOnLeft;
+		double textMinX = getTextMinX(insidePaddingWidth, textVisualWidth);
+		double textMinY = getTextMinY(insidePaddingHeight, textVisualHeight);
 		
-		double insidePaddingUnoccupiedHeight = insidePaddingHeight-textVisualHeight;
-		double unoccoupiedHeightOnTop = getUnoccoupiedHeightOnTop(insidePaddingUnoccupiedHeight);
-		double topVisualBoundsEdgeToBaseline = -visualBounds.getMinY(); // top edge of visual bounds has negative y coordinate -> minus
-		double textMinY = padding.getTop()+unoccoupiedHeightOnTop;
-		double renderStartPointY = textMinY+topVisualBoundsEdgeToBaseline;
 		
 		// render start point is at (0,0) of the visual bounds (x -> right, y -> down); the x axis is equal to the baseline
+		double renderStartPointX = getRenderStartPointX(visualBounds, textMinX);
+		double renderStartPointY = getRenderStartPointY(visualBounds, textMinY);
 		graphics.drawGlyphVector(glyphVector, (float) renderStartPointX, (float) renderStartPointY);
-		
 		
 		var snaporta = SnaportaBufferedImageConverter.convert(bufferedImage);
 		graphics.dispose();
+		
 		
 		int visibleBoundsMinX = (int) Math.floor(textMinX);
 		int visibleBoundsMinY = (int) Math.floor(textMinY);
@@ -358,6 +346,32 @@ public final class TextSnaporta
 		return (int) Math.floor(fontSizeDecimal);
 	}
 	
+	
+	private double getTextMinX(double insidePaddingWidth, double textVisualWidth)
+	{
+		double insidePaddingUnoccupiedWidth = insidePaddingWidth-textVisualWidth;
+		double unoccoupiedWidthOnLeft = getUnoccoupiedWidthOnLeft(insidePaddingUnoccupiedWidth);
+		return padding.getLeft()+unoccoupiedWidthOnLeft;
+	}
+	
+	private double getTextMinY(double insidePaddingHeight, double textVisualHeight)
+	{
+		double insidePaddingUnoccupiedHeight = insidePaddingHeight-textVisualHeight;
+		double unoccoupiedHeightOnTop = getUnoccoupiedHeightOnTop(insidePaddingUnoccupiedHeight);
+		return padding.getTop()+unoccoupiedHeightOnTop;
+	}
+	
+	private double getRenderStartPointX(Rectangle2D visualBounds, double textMinX)
+	{
+		double widthPastRenderStartPointOnLeft = -visualBounds.getMinX(); // overflow to left has negative x coordinate -> minus
+		return textMinX+widthPastRenderStartPointOnLeft;
+	}
+	
+	private double getRenderStartPointY(Rectangle2D visualBounds, double textMinY)
+	{
+		double topVisualBoundsEdgeToBaseline = -visualBounds.getMinY(); // top edge of visual bounds has negative y coordinate -> minus
+		return textMinY+topVisualBoundsEdgeToBaseline;
+	}
 	
 	private double getUnoccoupiedWidthOnLeft(double unoccupiedWidth)
 	{
