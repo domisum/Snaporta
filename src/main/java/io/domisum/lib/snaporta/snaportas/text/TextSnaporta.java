@@ -46,7 +46,7 @@ public final class TextSnaporta
 	private final VerticalAlignment verticalAlignment;
 	
 	// RENDERED
-	private final Supplier<Render> lazyInitRender = Suppliers.memoize(this::render);
+	private final Supplier<Rendered> lazyInitRendered = Suppliers.memoize(this::render);
 	
 	
 	// INIT
@@ -250,20 +250,20 @@ public final class TextSnaporta
 	@Override
 	public int getArgbAt(int x, int y)
 	{
-		return lazyInitRender.get().getImage().getArgbAt(x, y);
+		return lazyInitRendered.get().getImage().getArgbAt(x, y);
 	}
 	
 	// GETTERS
 	@API
-	public Render getRender()
+	public Rendered getRendered()
 	{
-		return lazyInitRender.get();
+		return lazyInitRendered.get();
 	}
 	
 	@API
 	public Snaporta getCroppedToVisible(Padding padding)
 	{
-		var visibleBounds = getRender().getVisibleBounds();
+		var visibleBounds = getRendered().getVisibleBounds();
 		
 		int cropLeft = visibleBounds.getMinX()-padding.getLeft();
 		int cropRight = getWidth()-visibleBounds.getMaxX()-padding.getRight();
@@ -273,116 +273,153 @@ public final class TextSnaporta
 		return ViewportSnaporta.cropOnAllSides(this, cropLeft, cropRight, cropTop, cropBottom);
 	}
 	
+	@API
 	public Snaporta getCroppedToVisible()
 	{
 		return getCroppedToVisible(Padding.none());
 	}
 	
 	
-	// RENDERING
-	private Render render()
+	// RENDER
+	private Rendered render()
 	{
-		var bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		var graphics = bufferedImage.createGraphics();
-		graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-		graphics.setColor(fontColor.toAwt());
-		
-		double insidePaddingWidth = width-padding.getHorizontalSum();
-		double insidePaddingHeight = height-padding.getVerticalSum();
-		
-		int fontSize = determineFontSize(graphics, insidePaddingWidth, insidePaddingHeight);
-		var sizedFont = font.getAwtFont().deriveFont((float) fontSize);
-		graphics.setFont(sizedFont);
-		
-		var glyphVector = graphics.getFont().createGlyphVector(graphics.getFontRenderContext(), text);
-		var visualBounds = glyphVector.getVisualBounds();
-		double textVisualWidth = visualBounds.getWidth();
-		double textVisualHeight = visualBounds.getHeight();
-		
-		double textMinX = getTextMinX(insidePaddingWidth, textVisualWidth);
-		double textMinY = getTextMinY(insidePaddingHeight, textVisualHeight);
-		
-		
-		// render start point is at (0,0) of the visual bounds (x -> right, y -> down); the x axis is equal to the baseline
-		double renderStartPointX = getRenderStartPointX(visualBounds, textMinX);
-		double renderStartPointY = getRenderStartPointY(visualBounds, textMinY);
-		graphics.drawGlyphVector(glyphVector, (float) renderStartPointX, (float) renderStartPointY);
-		
-		var snaporta = SnaportaBufferedImageConverter.convert(bufferedImage);
-		graphics.dispose();
-		
-		
-		int visibleBoundsMinX = (int) Math.floor(textMinX);
-		int visibleBoundsMinY = (int) Math.floor(textMinY);
-		int visibleWidth = (int) Math.ceil(textVisualWidth);
-		int visibleHeight = (int) Math.ceil(textVisualHeight);
-		var visibleBounds = IntBounds2D.fromPosAndSize(visibleBoundsMinX, visibleBoundsMinY, visibleWidth, visibleHeight);
-		
-		return new Render(snaporta, visibleBounds);
+		return new Rendering().render();
 	}
 	
-	private int determineFontSize(Graphics2D graphics, double maxWidth, double maxHeight)
+	private class Rendering
 	{
-		final double testFontSize = 1000f;
 		
-		var testFont = font.getAwtFont().deriveFont((float) testFontSize);
-		var testGlyphVector = testFont.createGlyphVector(graphics.getFontRenderContext(), text);
+		private final BufferedImage bufferedImage;
+		private final Graphics2D graphics;
 		
-		var testGlyphVectorVisualBounds = testGlyphVector.getVisualBounds();
-		double testTextWidth = testGlyphVectorVisualBounds.getWidth();
-		double testTextHeight = testGlyphVectorVisualBounds.getHeight();
-		
-		double testWidthFactor = testTextWidth/maxWidth;
-		double testHeightFactor = testTextHeight/maxHeight;
-		
-		double biggerFactor = Math.max(testWidthFactor, testHeightFactor);
-		double fontSizeDecimal = testFontSize/biggerFactor;
+		private Rectangle2D visualBounds;
 		
 		
-		if(maxFontSize != null && maxFontSize < fontSizeDecimal)
-			return maxFontSize;
+		public Rendering()
+		{
+			bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+			
+			graphics = bufferedImage.createGraphics();
+			graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+			graphics.setColor(fontColor.toAwt());
+		}
 		
-		return (int) Math.floor(fontSizeDecimal);
+		public Rendered render()
+		{
+			int fontSize = determineFontSize();
+			var sizedFont = font.getAwtFont().deriveFont((float) fontSize);
+			graphics.setFont(sizedFont);
+			
+			var glyphVector = graphics.getFont().createGlyphVector(graphics.getFontRenderContext(), text);
+			visualBounds = glyphVector.getVisualBounds();
+			
+			// render start point is at (0,0) of the visual bounds (x -> right, y -> down); the x axis is equal to the baseline
+			double renderStartPointX = getRenderStartPointX(visualBounds, getTextMinX());
+			double renderStartPointY = getRenderStartPointY(visualBounds, getTextMinY());
+			graphics.drawGlyphVector(glyphVector, (float) renderStartPointX, (float) renderStartPointY);
+			
+			var snaporta = SnaportaBufferedImageConverter.convert(bufferedImage);
+			graphics.dispose();
+			
+			var visibleBounds = buildVisibleBounds();
+			return new Rendered(snaporta, visibleBounds);
+		}
+		
+		private int determineFontSize()
+		{
+			final double testFontSize = 1000f;
+			
+			var testFont = font.getAwtFont().deriveFont((float) testFontSize);
+			var testGlyphVector = testFont.createGlyphVector(graphics.getFontRenderContext(), text);
+			
+			var testGlyphVectorVisualBounds = testGlyphVector.getVisualBounds();
+			double testTextWidth = testGlyphVectorVisualBounds.getWidth();
+			double testTextHeight = testGlyphVectorVisualBounds.getHeight();
+			
+			double testWidthFactor = testTextWidth/getInsidePaddingWidth();
+			double testHeightFactor = testTextHeight/getInsidePaddingHeight();
+			
+			double biggerFactor = Math.max(testWidthFactor, testHeightFactor);
+			double fontSizeDecimal = testFontSize/biggerFactor;
+			
+			if(maxFontSize != null && maxFontSize < fontSizeDecimal)
+				return maxFontSize;
+			return (int) Math.floor(fontSizeDecimal);
+		}
+		
+		private IntBounds2D buildVisibleBounds()
+		{
+			int visibleBoundsMinX = (int) Math.floor(getTextMinX());
+			int visibleBoundsMinY = (int) Math.floor(getTextMinY());
+			int visibleWidth = (int) Math.ceil(visualBounds.getWidth());
+			int visibleHeight = (int) Math.ceil(visualBounds.getHeight());
+			
+			return IntBounds2D.fromPosAndSize(visibleBoundsMinX, visibleBoundsMinY, visibleWidth, visibleHeight);
+		}
+		
+		
+		// MEASUREMENTS
+		private int getInsidePaddingHeight()
+		{
+			return height-padding.getVerticalSum();
+		}
+		
+		private double getInsidePaddingWidth()
+		{
+			return width-padding.getHorizontalSum();
+		}
+		
+		private double getTextMinX()
+		{
+			double insidePaddingUnoccupiedWidth = getInsidePaddingWidth()-visualBounds.getWidth();
+			double unoccoupiedWidthOnLeft = getUnoccoupiedWidthOnLeft(insidePaddingUnoccupiedWidth);
+			return padding.getLeft()+unoccoupiedWidthOnLeft;
+		}
+		
+		private double getTextMinY()
+		{
+			double insidePaddingUnoccupiedHeight = getInsidePaddingHeight()-visualBounds.getHeight();
+			double unoccoupiedHeightOnTop = getUnoccoupiedHeightOnTop(insidePaddingUnoccupiedHeight);
+			return padding.getTop()+unoccoupiedHeightOnTop;
+		}
+		
+		private double getUnoccoupiedWidthOnLeft(double unoccupiedWidth)
+		{
+			double proportion = horizontalAlignment.getProportionOfUnoccupiedWidthOnLeft();
+			return proportion*unoccupiedWidth;
+		}
+		
+		private double getUnoccoupiedHeightOnTop(double unoccupiedHeight)
+		{
+			double proportion = verticalAlignment.getProportionOfUnoccupiedHeightOnTop();
+			return proportion*unoccupiedHeight;
+		}
+		
+		private double getRenderStartPointX(Rectangle2D visualBounds, double textMinX)
+		{
+			double widthPastRenderStartPointOnLeft = -visualBounds.getMinX(); // overflow to left has negative x coordinate -> minus
+			return textMinX+widthPastRenderStartPointOnLeft;
+		}
+		
+		private double getRenderStartPointY(Rectangle2D visualBounds, double textMinY)
+		{
+			double topVisualBoundsEdgeToBaseline = -visualBounds.getMinY(); // top edge of visual bounds has negative y coordinate -> minus
+			return textMinY+topVisualBoundsEdgeToBaseline;
+		}
+		
 	}
 	
-	
-	private double getTextMinX(double insidePaddingWidth, double textVisualWidth)
+	@API
+	@RequiredArgsConstructor
+	public static class Rendered
 	{
-		double insidePaddingUnoccupiedWidth = insidePaddingWidth-textVisualWidth;
-		double unoccoupiedWidthOnLeft = getUnoccoupiedWidthOnLeft(insidePaddingUnoccupiedWidth);
-		return padding.getLeft()+unoccoupiedWidthOnLeft;
-	}
-	
-	private double getTextMinY(double insidePaddingHeight, double textVisualHeight)
-	{
-		double insidePaddingUnoccupiedHeight = insidePaddingHeight-textVisualHeight;
-		double unoccoupiedHeightOnTop = getUnoccoupiedHeightOnTop(insidePaddingUnoccupiedHeight);
-		return padding.getTop()+unoccoupiedHeightOnTop;
-	}
-	
-	private double getRenderStartPointX(Rectangle2D visualBounds, double textMinX)
-	{
-		double widthPastRenderStartPointOnLeft = -visualBounds.getMinX(); // overflow to left has negative x coordinate -> minus
-		return textMinX+widthPastRenderStartPointOnLeft;
-	}
-	
-	private double getRenderStartPointY(Rectangle2D visualBounds, double textMinY)
-	{
-		double topVisualBoundsEdgeToBaseline = -visualBounds.getMinY(); // top edge of visual bounds has negative y coordinate -> minus
-		return textMinY+topVisualBoundsEdgeToBaseline;
-	}
-	
-	private double getUnoccoupiedWidthOnLeft(double unoccupiedWidth)
-	{
-		double proportion = horizontalAlignment.getProportionOfUnoccupiedWidthOnLeft();
-		return proportion*unoccupiedWidth;
-	}
-	
-	private double getUnoccoupiedHeightOnTop(double unoccupiedHeight)
-	{
-		double proportion = verticalAlignment.getProportionOfUnoccupiedHeightOnTop();
-		return proportion*unoccupiedHeight;
+		
+		@Getter
+		private final Snaporta image;
+		@Getter
+		private final IntBounds2D visibleBounds;
+		
 	}
 	
 	
@@ -410,18 +447,6 @@ public final class TextSnaporta
 		
 		@Getter
 		private final double proportionOfUnoccupiedHeightOnTop;
-		
-	}
-	
-	@API
-	@RequiredArgsConstructor
-	public static class Render
-	{
-		
-		@Getter
-		private final Snaporta image;
-		@Getter
-		private final IntBounds2D visibleBounds;
 		
 	}
 	
