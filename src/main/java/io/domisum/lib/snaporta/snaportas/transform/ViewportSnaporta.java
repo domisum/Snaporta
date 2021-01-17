@@ -52,7 +52,7 @@ public final class ViewportSnaporta
 	}
 	
 	@API
-	public static ViewportSnaporta cropOnAllSides(Snaporta base, int cropLeft, int cropRight, int cropTop, int cropBottom)
+	public static ViewportSnaporta crop(Snaporta base, int cropLeft, int cropRight, int cropTop, int cropBottom)
 	{
 		int croppedWidth = base.getWidth()-cropLeft-cropRight;
 		int croppedHeight = base.getHeight()-cropTop-cropBottom;
