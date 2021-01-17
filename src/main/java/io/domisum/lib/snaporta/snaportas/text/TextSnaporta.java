@@ -270,7 +270,7 @@ public final class TextSnaporta
 		int cropTop = visibleBounds.getMinY()-padding.getTop();
 		int cropBottom = height-visibleBounds.getMaxY()-padding.getBottom();
 		
-		return ViewportSnaporta.cropOnAllSides(this, cropLeft, cropRight, cropTop, cropBottom);
+		return ViewportSnaporta.crop(this, cropLeft, cropRight, cropTop, cropBottom);
 	}
 	
 	@API
