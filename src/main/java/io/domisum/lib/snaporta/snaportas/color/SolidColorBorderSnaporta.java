@@ -4,22 +4,25 @@ import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Padding;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
-import io.domisum.lib.snaporta.snaportas.ContainerSnaporta;
+import io.domisum.lib.snaporta.snaportas.GeneratedSnaporta;
 import io.domisum.lib.snaporta.snaportas.LayeredSnaporta;
 import io.domisum.lib.snaporta.snaportas.transform.ViewportSnaporta;
+import lombok.RequiredArgsConstructor;
 
 @API
+@RequiredArgsConstructor
 public class SolidColorBorderSnaporta
-	extends ContainerSnaporta
+	extends GeneratedSnaporta
 {
 	
-	@API
-	public SolidColorBorderSnaporta(Snaporta containedImage, Padding borderPadding, Color borderColor)
-	{
-		super(()->build(containedImage, borderPadding, borderColor));
-	}
+	private final Snaporta containedImage;
+	private final Padding borderPadding;
+	private final Color borderColor;
 	
-	private static Snaporta build(Snaporta containedImage, Padding borderPadding, Color borderColor)
+	
+	// INIT
+	@Override
+	protected Snaporta generate()
 	{
 		var viewport = ViewportSnaporta.pad(containedImage, borderPadding);
 		var background = new SolidColorSnaporta(viewport.getWidth(), viewport.getHeight(), borderColor);
