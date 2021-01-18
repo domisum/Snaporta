@@ -1,7 +1,7 @@
-package io.domisum.lib.snaporta.snaportas;
+package io.domisum.lib.snaporta;
 
 import io.domisum.lib.auxiliumlib.annotations.API;
-import io.domisum.lib.snaporta.Snaporta;
+import io.domisum.lib.snaporta.snaportas.BasicSnaporta;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
