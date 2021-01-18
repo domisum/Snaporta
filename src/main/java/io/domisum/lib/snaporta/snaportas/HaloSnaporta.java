@@ -10,68 +10,71 @@ import io.domisum.lib.snaporta.snaportas.mask.DoubleMaskOpacitySnaporta;
 import io.domisum.lib.snaporta.snaportas.transform.ViewportSnaporta;
 import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class HaloSnaporta
-	extends ContainerSnaporta
+	extends GeneratedSnaporta
 {
 	
-	public HaloSnaporta(Snaporta base, int radius, Color color)
-	{
-		super(()->generate(base, radius, color));
-	}
+	private final Snaporta base;
+	private final int radius;
+	private final Color color;
 	
-	private static Snaporta generate(Snaporta base, int radius, Color color)
+	
+	// INIT
+	@Override
+	protected Snaporta generate()
 	{
 		var padded = ViewportSnaporta.pad(base, Padding.toEverySide(radius));
 		
-		var haloIntensityMask = getHaloIntensityMask(padded, radius);
+		var haloIntensityMask = getHaloIntensityMask(padded);
 		var haloColored = new SolidColorSnaporta(padded.getWidth(), padded.getHeight(), color);
 		var halo = new DoubleMaskOpacitySnaporta(haloColored, haloIntensityMask);
 		
 		return new LayeredSnaporta(halo, padded);
 	}
 	
-	private static DoubleMask getHaloIntensityMask(Snaporta base, int radius)
+	private DoubleMask getHaloIntensityMask(Snaporta padded)
 	{
-		var intensityMaskPainter = DoubleMaskPainter.sized(base.getWidth(), base.getHeight());
+		var intensityMaskPainter = DoubleMaskPainter.sized(padded.getWidth(), padded.getHeight());
 		
-		for(int pY = radius; pY < base.getHeight()-radius; pY++)
-			for(int pX = radius; pX < base.getWidth()-radius; pX++)
-				if(shouldSourcePixelBeVisited(base, pX, pY))
-					visitSourcePixel(base, radius, intensityMaskPainter, pX, pY);
+		for(int pY = radius; pY < padded.getHeight()-radius; pY++)
+			for(int pX = radius; pX < padded.getWidth()-radius; pX++)
+				if(shouldSourcePixelBeVisited(padded, pX, pY))
+					visitSourcePixel(padded, intensityMaskPainter, pX, pY);
 		
 		return intensityMaskPainter.toMask();
 	}
 	
-	private static boolean shouldSourcePixelBeVisited(Snaporta base, int pX, int pY)
+	private boolean shouldSourcePixelBeVisited(Snaporta snaporta, int pX, int pY)
 	{
-		if(base.getColorAt(pX, pY).isFullyTransparent())
+		if(snaporta.getColorAt(pX, pY).isFullyTransparent())
 			return false;
 		
-		if(isSurroundedByFullOpacity(base, pX, pY))
+		if(isSurroundedByFullOpacity(snaporta, pX, pY))
 			return false;
 		
 		return true;
 	}
 	
-	private static boolean isSurroundedByFullOpacity(Snaporta base, int pX, int pY)
+	private boolean isSurroundedByFullOpacity(Snaporta snaporta, int pX, int pY)
 	{
 		for(var neighborPixel : NeighborPixel.values())
-			if(base.getAlphaAt(pX+neighborPixel.dX, pY+neighborPixel.dY) != Color.ALPHA_OPAQUE)
+			if(snaporta.getAlphaAt(pX+neighborPixel.dX, pY+neighborPixel.dY) != Color.ALPHA_OPAQUE)
 				return false;
 		
 		return true;
 	}
 	
-	private static void visitSourcePixel(Snaporta base, int radius, DoubleMaskPainter intensityMaskPainter, int pX, int pY)
+	private void visitSourcePixel(Snaporta snaporta, DoubleMaskPainter intensityMaskPainter, int pX, int pY)
 	{
-		double sourceOpacity = base.getColorAt(pX, pY).getOpacity();
+		double sourceOpacity = snaporta.getColorAt(pX, pY).getOpacity();
 		
 		for(int dY = -radius; dY <= radius; dY++)
 			for(int dX = -radius; dX <= radius; dX++)
 			{
 				int x = pX+dX;
 				int y = pY+dY;
-				double targetOpacity = base.getColorAt(x, y).getOpacity();
+				double targetOpacity = snaporta.getColorAt(x, y).getOpacity();
 				if(targetOpacity == 1)
 					continue;
 				
