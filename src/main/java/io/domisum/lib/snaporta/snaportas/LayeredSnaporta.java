@@ -56,7 +56,16 @@ public class LayeredSnaporta
 			throw new IllegalArgumentException("Can't determine dimensions of layered snaporta "
 				+"when empty list of layers is given");
 		
-		return layersBottomUp.get(0);
+		int maxWidth = -1;
+		int maxHeight = -1;
+		
+		for(var snaporta : layersBottomUp)
+		{
+			maxWidth = Math.max(maxWidth, snaporta.getWidth());
+			maxHeight = Math.max(maxHeight, snaporta.getHeight());
+		}
+		
+		return Sized.sized(maxWidth, maxHeight);
 	}
 	
 	
