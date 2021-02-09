@@ -1,16 +1,20 @@
 package io.domisum.lib.snaporta.mask.bool;
 
+import com.google.common.base.Suppliers;
 import io.domisum.lib.auxiliumlib.PHR;
+import io.domisum.lib.auxiliumlib.datacontainers.bound.IntBounds2D;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 import org.apache.commons.lang3.Validate;
 
 import java.util.Arrays;
+import java.util.function.Supplier;
 
 public final class BasicBooleanMask
 	implements BooleanMask
 {
 	
 	private final boolean[][] values;
+	private final Supplier<IntBounds2D> lazyInitBounds = Suppliers.memoize(this::getBoundsFromDefaultMethod);
 	
 	
 	// INIT
@@ -62,6 +66,17 @@ public final class BasicBooleanMask
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		return values[y][x];
+	}
+	
+	@Override
+	public IntBounds2D getBounds()
+	{
+		return lazyInitBounds.get();
+	}
+	
+	private IntBounds2D getBoundsFromDefaultMethod()
+	{
+		return BooleanMask.super.getBounds();
 	}
 	
 }
