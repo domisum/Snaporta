@@ -84,4 +84,12 @@ public final class DoubleMaskPainter
 		values[y][x] = value;
 	}
 	
+	@API
+	public void fill(double value)
+	{
+		for(int y = 0; y < getHeight(); y++)
+			for(int x = 0; x < getWidth(); x++)
+				values[y][x] = value;
+	}
+	
 }
