@@ -24,6 +24,16 @@ public final class BasicBooleanMask
 		return new BasicBooleanMask(values);
 	}
 	
+	public static BasicBooleanMask copyOf(BooleanMask booleanMask)
+	{
+		boolean[][] values = new boolean[booleanMask.getHeight()][booleanMask.getWidth()];
+		for(int y = 0; y < booleanMask.getHeight(); y++)
+			for(int x = 0; x < booleanMask.getWidth(); x++)
+				values[y][x] = booleanMask.getValueAt(x, y);
+		
+		return new BasicBooleanMask(values);
+	}
+	
 	BasicBooleanMask(boolean[][] values)
 	{
 		// validate minimum dimension
