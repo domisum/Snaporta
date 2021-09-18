@@ -33,7 +33,7 @@ public class MirroredSnaporta
 	}
 	
 	
-	// MASK
+	// SNAPORTA
 	@Override
 	public int getWidth()
 	{
