@@ -80,6 +80,8 @@ public class SnaportaFromFileReader
 		{
 			var metadata = ImageMetadataReader.readMetadata(file);
 			var metadataDir = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+			if(metadataDir == null)
+				return null;
 			return metadataDir.getInt(ExifIFD0Directory.TAG_ORIENTATION);
 		}
 		catch(MetadataException ignored)
