@@ -3,16 +3,16 @@ package io.domisum.lib.snaporta.formatconversion;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.snaportas.SnaportaPainter;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 
-public class SnaportaBufferedImageConverter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class SnaportaBufferedImageConverter
 {
 	
-	private static final SnaportaBufferedImageConverter SNAPORTA_BUFFERED_IMAGE_CONVERTER = new SnaportaBufferedImageConverter();
-	
-	// UTIL
 	@API
 	public static BufferedImage convert(Snaporta snaporta)
 	{
@@ -21,34 +21,6 @@ public class SnaportaBufferedImageConverter
 	
 	@API
 	public static BufferedImage convert(Snaporta snaporta, int bufferedImageType)
-	{
-		return SNAPORTA_BUFFERED_IMAGE_CONVERTER.convertTo(snaporta, bufferedImageType);
-	}
-	
-	@API
-	public static Snaporta convert(BufferedImage bufferedImage)
-	{
-		return SNAPORTA_BUFFERED_IMAGE_CONVERTER.convertFrom(bufferedImage);
-	}
-	
-	
-	// CONVERT
-	@API
-	public Snaporta convertFrom(BufferedImage bufferedImage)
-	{
-		int width = bufferedImage.getWidth();
-		int height = bufferedImage.getHeight();
-		var painter = new SnaportaPainter(width, height);
-		
-		for(int y = 0; y < height; y++)
-			for(int x = 0; x < width; x++)
-				painter.setARGBAt(x, y, bufferedImage.getRGB(x, y));
-		
-		return painter.toSnaporta();
-	}
-	
-	@API
-	public BufferedImage convertTo(Snaporta snaporta, int bufferedImageType)
 	{
 		final int rgbMask = 0xFFFFFF;
 		
@@ -74,6 +46,20 @@ public class SnaportaBufferedImageConverter
 		bufferedImage.setData(raster);
 		
 		return bufferedImage;
+	}
+	
+	@API
+	public static Snaporta convert(BufferedImage bufferedImage)
+	{
+		int width = bufferedImage.getWidth();
+		int height = bufferedImage.getHeight();
+		var painter = new SnaportaPainter(width, height);
+		
+		for(int y = 0; y < height; y++)
+			for(int x = 0; x < width; x++)
+				painter.setARGBAt(x, y, bufferedImage.getRGB(x, y));
+		
+		return painter.toSnaporta();
 	}
 	
 }

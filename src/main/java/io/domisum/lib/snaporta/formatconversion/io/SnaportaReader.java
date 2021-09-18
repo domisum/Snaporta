@@ -13,39 +13,21 @@ import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.formatconversion.SnaportaBufferedImageConverter;
 import io.domisum.lib.snaporta.snaportas.transform.CardinallyRotatedSnaporta;
 import io.domisum.lib.snaporta.snaportas.transform.MirroredSnaporta;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 
 @API
-public class SnaportaFromFileReader
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class SnaportaReader
 {
-	
-	// DEPENDENCIES
-	private final SnaportaBufferedImageConverter snaportaBufferedImageConverter = new SnaportaBufferedImageConverter();
-	
-	
-	// SHORTCUT
-	@API
-	public static Snaporta read(File file)
-	{
-		var fromFileReader = new SnaportaFromFileReader();
-		return fromFileReader.readFromFile(file);
-	}
-	
-	@API
-	public static Snaporta readUncaught(File file)
-		throws IOException
-	{
-		var fromFileReader = new SnaportaFromFileReader();
-		return fromFileReader.readFromFileUncaught(file);
-	}
-	
 	
 	// READING
 	@API
-	public Snaporta readFromFile(File file)
+	public static Snaporta readFromFile(File file)
 	{
 		try
 		{
@@ -58,11 +40,11 @@ public class SnaportaFromFileReader
 	}
 	
 	@API
-	public Snaporta readFromFileUncaught(File file)
+	public static Snaporta readFromFileUncaught(File file)
 		throws IOException
 	{
 		var bufferedImage = FileUtil.readImageUncaught(file);
-		var snaporta = snaportaBufferedImageConverter.convertFrom(bufferedImage);
+		var snaporta = SnaportaBufferedImageConverter.convert(bufferedImage);
 		
 		var exifRotation = readExifOrientation(file);
 		if(exifRotation != null)
@@ -73,7 +55,7 @@ public class SnaportaFromFileReader
 	
 	
 	// EXIF
-	private Integer readExifOrientation(File file)
+	private static Integer readExifOrientation(File file)
 		throws IOException
 	{
 		try
@@ -94,7 +76,7 @@ public class SnaportaFromFileReader
 		}
 	}
 	
-	private Snaporta applyExifOrientation(Snaporta input, Integer orientation)
+	private static Snaporta applyExifOrientation(Snaporta input, Integer orientation)
 	{
 		// from https://chunter.tistory.com/143
 		// (row #0 is) / (column #0 is)
