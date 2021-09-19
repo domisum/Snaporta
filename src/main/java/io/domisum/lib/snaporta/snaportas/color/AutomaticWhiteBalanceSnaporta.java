@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 @RequiredArgsConstructor
 public class AutomaticWhiteBalanceSnaporta
@@ -81,13 +80,13 @@ public class AutomaticWhiteBalanceSnaporta
 		int[] bounds = componentBounds.get(colorComponent);
 		
 		if(baseComponent <= bounds[0])
-			return bounds[0];
+			return 0;
 		else if(baseComponent >= bounds[1])
-			return bounds[1];
+			return Color.COLOR_COMPONENT_MAX;
 		
 		double oldRange = bounds[1]-bounds[0];
 		double newComponentDouble = (baseComponent-bounds[0])/oldRange*Color.COLOR_COMPONENT_MAX;
-		return (int) Math.round(newComponentDouble);
+		return (int) Math.floor(newComponentDouble);
 	}
 	
 }
