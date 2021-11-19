@@ -8,6 +8,7 @@ import io.domisum.lib.snaporta.util.Sized;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
 import java.util.List;
 
 @API
@@ -29,6 +30,12 @@ public class SnaportaRow
 	
 	// INIT
 	@API
+	public static SnaportaRow horizontal(RowItemAlignment rowItemAlignment, int betweenPadding, Snaporta... snaportas)
+	{
+		return horizontal(rowItemAlignment, betweenPadding, Arrays.asList(snaportas));
+	}
+	
+	@API
 	public static SnaportaRow horizontal(RowItemAlignment rowItemAlignment, int betweenPadding, List<Snaporta> snaportas)
 	{
 		return new SnaportaRow(snaportas, RowDirection.HORIZONTAL, rowItemAlignment, betweenPadding);
@@ -38,6 +45,12 @@ public class SnaportaRow
 	public static SnaportaRow horizontal(RowItemAlignment rowItemAlignment, List<Snaporta> snaportas)
 	{
 		return new SnaportaRow(snaportas, RowDirection.HORIZONTAL, rowItemAlignment, DEFAULT_BETWEEN_PADDING);
+	}
+	
+	@API
+	public static SnaportaRow vertical(RowItemAlignment rowItemAlignment, int betweenPadding, Snaporta... snaportas)
+	{
+		return vertical(rowItemAlignment, betweenPadding, Arrays.asList(snaportas));
 	}
 	
 	@API
