@@ -37,6 +37,16 @@ public final class ScaleSnaporta
 	}
 	
 	@API
+	public static ScaleSnaporta asBigAsPossibleKeepRatio(Snaporta base, int maxWidth, int maxHeight)
+	{
+		double horizontalScaleFactor = maxWidth/(double) base.getWidth();
+		double verticalScaleFactor = maxHeight/(double) base.getHeight();
+		
+		double scaleFactor = Math.min(horizontalScaleFactor, verticalScaleFactor);
+		return withFactor(base, scaleFactor);
+	}
+	
+	@API
 	public ScaleSnaporta(Snaporta baseSnaporta, Integer width, Integer height)
 	{
 		this(baseSnaporta, width, height, DEFAULT_INTERPOLATOR);

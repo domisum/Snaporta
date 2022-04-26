@@ -1,6 +1,7 @@
 package io.domisum.lib.snaporta.snaportas.transform;
 
 import io.domisum.lib.auxiliumlib.annotations.API;
+import io.domisum.lib.auxiliumlib.datacontainers.bound.IntBounds2D;
 import io.domisum.lib.auxiliumlib.util.ValidationUtil;
 import io.domisum.lib.snaporta.Padding;
 import io.domisum.lib.snaporta.Snaporta;
@@ -63,6 +64,14 @@ public final class ViewportSnaporta
 	public static ViewportSnaporta cropLeftTopWithSize(Snaporta base, int cropLeft, int cropTop, int croppedWidth, int croppedHeight)
 	{
 		return sizeAndOffset(base, croppedWidth, croppedHeight, -cropLeft, -cropTop);
+	}
+	
+	@API
+	public static ViewportSnaporta bounds(Snaporta base, IntBounds2D bounds)
+	{
+		return ViewportSnaporta.sizeAndOffset(base,
+			bounds.getWidth(), bounds.getHeight(),
+			-bounds.getMinX(), -bounds.getMinY());
 	}
 	
 	
