@@ -1,6 +1,7 @@
 package io.domisum.lib.snaporta.snaportas.text;
 
 import com.google.common.base.Suppliers;
+import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.auxiliumlib.datacontainers.bound.IntBounds2D;
 import io.domisum.lib.auxiliumlib.util.ValidationUtil;
@@ -15,8 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nullable;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.function.Supplier;
@@ -127,10 +127,10 @@ public final class TextSnaporta
 		public Builder padding(Padding padding)
 		{
 			ValidationUtil.notNull(padding, "padding");
-			Validate.isTrue(width-padding.getHorizontalSum() > 0,
-				"padding "+padding+" leaves no horizontal space for the text (snaporta width: "+width+")");
-			Validate.isTrue(height-padding.getVerticalSum() > 0,
-				"padding "+padding+" leaves no vertical space for the text (snaporta height: "+height+")");
+			Validate.isTrue(width - padding.getHorizontalSum() > 0,
+				"padding " + padding + " leaves no horizontal space for the text (snaporta width: " + width + ")");
+			Validate.isTrue(height - padding.getVerticalSum() > 0,
+				"padding " + padding + " leaves no vertical space for the text (snaporta height: " + height + ")");
 			
 			this.padding = padding;
 			return this;
@@ -246,12 +246,21 @@ public final class TextSnaporta
 	}
 	
 	
+	@Override
+	public String toString()
+	{
+		return PHR.r("{}(w={} x h={} \"{}\")", getClass().getSimpleName(),
+			width, height, text);
+	}
+	
+	
 	// SNAPORTA
 	@Override
 	public int getArgbAt(int x, int y)
 	{
 		return lazyInitRendered.get().getImage().getArgbAt(x, y);
 	}
+	
 	
 	// GETTERS
 	@API
@@ -265,10 +274,10 @@ public final class TextSnaporta
 	{
 		var visibleBounds = getRendered().getVisibleBounds();
 		
-		int cropLeft = visibleBounds.getMinX()-padding.getLeft();
-		int cropRight = getWidth()-visibleBounds.getMaxX()-padding.getRight();
-		int cropTop = visibleBounds.getMinY()-padding.getTop();
-		int cropBottom = height-visibleBounds.getMaxY()-padding.getBottom();
+		int cropLeft = visibleBounds.getMinX() - padding.getLeft();
+		int cropRight = getWidth() - visibleBounds.getMaxX() - padding.getRight();
+		int cropTop = visibleBounds.getMinY() - padding.getTop();
+		int cropBottom = height - visibleBounds.getMaxY() - padding.getBottom();
 		
 		return ViewportSnaporta.crop(this, cropLeft, cropRight, cropTop, cropBottom);
 	}
@@ -337,11 +346,11 @@ public final class TextSnaporta
 			double testTextWidth = testGlyphVectorVisualBounds.getWidth();
 			double testTextHeight = testGlyphVectorVisualBounds.getHeight();
 			
-			double testWidthFactor = testTextWidth/getInsidePaddingWidth();
-			double testHeightFactor = testTextHeight/getInsidePaddingHeight();
+			double testWidthFactor = testTextWidth / getInsidePaddingWidth();
+			double testHeightFactor = testTextHeight / getInsidePaddingHeight();
 			
 			double biggerFactor = Math.max(testWidthFactor, testHeightFactor);
-			double fontSizeDecimal = testFontSize/biggerFactor;
+			double fontSizeDecimal = testFontSize / biggerFactor;
 			
 			if(maxFontSize != null && maxFontSize < fontSizeDecimal)
 				return maxFontSize;
@@ -362,50 +371,50 @@ public final class TextSnaporta
 		// MEASUREMENTS
 		private int getInsidePaddingHeight()
 		{
-			return height-padding.getVerticalSum();
+			return height - padding.getVerticalSum();
 		}
 		
 		private double getInsidePaddingWidth()
 		{
-			return width-padding.getHorizontalSum();
+			return width - padding.getHorizontalSum();
 		}
 		
 		private double getTextMinX()
 		{
-			double insidePaddingUnoccupiedWidth = getInsidePaddingWidth()-visualBounds.getWidth();
+			double insidePaddingUnoccupiedWidth = getInsidePaddingWidth() - visualBounds.getWidth();
 			double unoccoupiedWidthOnLeft = getUnoccoupiedWidthOnLeft(insidePaddingUnoccupiedWidth);
-			return padding.getLeft()+unoccoupiedWidthOnLeft;
+			return padding.getLeft() + unoccoupiedWidthOnLeft;
 		}
 		
 		private double getTextMinY()
 		{
-			double insidePaddingUnoccupiedHeight = getInsidePaddingHeight()-visualBounds.getHeight();
+			double insidePaddingUnoccupiedHeight = getInsidePaddingHeight() - visualBounds.getHeight();
 			double unoccoupiedHeightOnTop = getUnoccoupiedHeightOnTop(insidePaddingUnoccupiedHeight);
-			return padding.getTop()+unoccoupiedHeightOnTop;
+			return padding.getTop() + unoccoupiedHeightOnTop;
 		}
 		
 		private double getUnoccoupiedWidthOnLeft(double unoccupiedWidth)
 		{
 			double proportion = horizontalAlignment.getProportionOfUnoccupiedWidthOnLeft();
-			return proportion*unoccupiedWidth;
+			return proportion * unoccupiedWidth;
 		}
 		
 		private double getUnoccoupiedHeightOnTop(double unoccupiedHeight)
 		{
 			double proportion = verticalAlignment.getProportionOfUnoccupiedHeightOnTop();
-			return proportion*unoccupiedHeight;
+			return proportion * unoccupiedHeight;
 		}
 		
 		private double getRenderStartPointX(Rectangle2D visualBounds, double textMinX)
 		{
 			double widthPastRenderStartPointOnLeft = -visualBounds.getMinX(); // overflow to left has negative x coordinate -> minus
-			return textMinX+widthPastRenderStartPointOnLeft;
+			return textMinX + widthPastRenderStartPointOnLeft;
 		}
 		
 		private double getRenderStartPointY(Rectangle2D visualBounds, double textMinY)
 		{
 			double topVisualBoundsEdgeToBaseline = -visualBounds.getMinY(); // top edge of visual bounds has negative y coordinate -> minus
-			return textMinY+topVisualBoundsEdgeToBaseline;
+			return textMinY + topVisualBoundsEdgeToBaseline;
 		}
 		
 	}

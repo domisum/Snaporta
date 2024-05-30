@@ -1,5 +1,6 @@
 package io.domisum.lib.snaporta.snaportas.transform;
 
+import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.snaportas.transform.interpolator.Interpolator;
@@ -30,8 +31,8 @@ public final class ScaleSnaporta
 	@API
 	public static ScaleSnaporta withFactor(Snaporta baseSnaporta, double factor)
 	{
-		int resizedWidth = (int) Math.round(baseSnaporta.getWidth()*factor);
-		int resizedHeight = (int) Math.round(baseSnaporta.getHeight()*factor);
+		int resizedWidth = (int) Math.round(baseSnaporta.getWidth() * factor);
+		int resizedHeight = (int) Math.round(baseSnaporta.getHeight() * factor);
 		
 		return new ScaleSnaporta(baseSnaporta, resizedWidth, resizedHeight);
 	}
@@ -39,8 +40,8 @@ public final class ScaleSnaporta
 	@API
 	public static ScaleSnaporta asBigAsPossibleKeepRatio(Snaporta base, int maxWidth, int maxHeight)
 	{
-		double horizontalScaleFactor = maxWidth/(double) base.getWidth();
-		double verticalScaleFactor = maxHeight/(double) base.getHeight();
+		double horizontalScaleFactor = maxWidth / (double) base.getWidth();
+		double verticalScaleFactor = maxHeight / (double) base.getHeight();
 		
 		double scaleFactor = Math.min(horizontalScaleFactor, verticalScaleFactor);
 		return withFactor(base, scaleFactor);
@@ -60,14 +61,14 @@ public final class ScaleSnaporta
 		
 		if(width == null)
 		{
-			double factor = height/(double) baseSnaporta.getHeight();
-			width = (int) Math.round(baseSnaporta.getWidth()*factor);
+			double factor = height / (double) baseSnaporta.getHeight();
+			width = (int) Math.round(baseSnaporta.getWidth() * factor);
 		}
 		
 		if(height == null)
 		{
-			double factor = width/(double) baseSnaporta.getWidth();
-			height = (int) Math.round(baseSnaporta.getHeight()*factor);
+			double factor = width / (double) baseSnaporta.getWidth();
+			height = (int) Math.round(baseSnaporta.getHeight() * factor);
 		}
 		
 		this.width = width;
@@ -78,17 +79,25 @@ public final class ScaleSnaporta
 	}
 	
 	
+	@Override
+	public String toString()
+	{
+		return PHR.r("{}(w={} x h={} {}\n{})", getClass().getSimpleName(),
+			width, height, interpolator, baseSnaporta);
+	}
+	
+	
 	// SNAPORTA
 	@Override
 	public int getArgbAt(int x, int y)
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
-		double relativeX = x/(double) width;
-		double relativeY = y/(double) height;
+		double relativeX = x / (double) width;
+		double relativeY = y / (double) height;
 		
-		double inChildX = baseSnaporta.getWidth()*relativeX;
-		double inChildY = baseSnaporta.getHeight()*relativeY;
+		double inChildX = baseSnaporta.getWidth() * relativeX;
+		double inChildY = baseSnaporta.getHeight() * relativeY;
 		
 		return interpolator.interpolateARGBAt(baseSnaporta, inChildX, inChildY);
 	}
