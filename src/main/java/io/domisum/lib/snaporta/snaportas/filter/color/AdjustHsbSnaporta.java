@@ -1,6 +1,8 @@
 package io.domisum.lib.snaporta.snaportas.filter.color;
 
+import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.auxiliumlib.annotations.API;
+import io.domisum.lib.auxiliumlib.util.StringUtil;
 import io.domisum.lib.auxiliumlib.util.math.MathUtil;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
@@ -20,6 +22,14 @@ public class AdjustHsbSnaporta
 	private final double deltaHue;
 	private final double deltaSaturation;
 	private final double deltaBrightness;
+	
+	
+	@Override
+	public String toString()
+	{
+		return PHR.r("{}(dh={} ds={} db={}\n{})", getClass().getSimpleName(),
+			deltaHue, deltaSaturation, deltaBrightness, StringUtil.indent(parent.toString(), "\t"));
+	}
 	
 	
 	// SNAPORTA

@@ -2,6 +2,7 @@ package io.domisum.lib.snaporta.snaportas.transform;
 
 import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.auxiliumlib.annotations.API;
+import io.domisum.lib.auxiliumlib.util.StringUtil;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.snaportas.transform.interpolator.Interpolator;
 import io.domisum.lib.snaporta.snaportas.transform.interpolator.matrix.BiLinearInterpolator;
@@ -83,7 +84,7 @@ public final class ScaleSnaporta
 	public String toString()
 	{
 		return PHR.r("{}(w={} x h={} {}\n{})", getClass().getSimpleName(),
-			width, height, interpolator, baseSnaporta);
+			width, height, interpolator, StringUtil.indent(baseSnaporta, "\t"));
 	}
 	
 	

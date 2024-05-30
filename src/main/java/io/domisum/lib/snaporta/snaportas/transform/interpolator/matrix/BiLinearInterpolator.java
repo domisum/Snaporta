@@ -14,6 +14,13 @@ public class BiLinearInterpolator
 {
 	
 	@Override
+	public String toString()
+	{
+		 return getClass().getSimpleName();
+	}
+	
+	
+	@Override
 	public int interpolateARGBAt(Snaporta snaporta, double x, double y)
 	{
 		int xFloor = (int) Math.floor(x);
