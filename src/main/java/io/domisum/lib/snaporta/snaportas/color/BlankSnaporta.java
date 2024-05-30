@@ -8,11 +8,16 @@ public class BlankSnaporta
 	extends SolidColorSnaporta
 {
 	
-	// INIT
 	@API
 	public BlankSnaporta(int width, int height)
 	{
 		super(width, height, Colors.TRANSPARENT);
+	}
+	
+	@Override
+	public boolean isBlank()
+	{
+		return true;
 	}
 	
 }

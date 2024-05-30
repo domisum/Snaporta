@@ -1,8 +1,10 @@
 package io.domisum.lib.snaporta.snaportas;
 
 import com.google.common.collect.Iterables;
+import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.auxiliumlib.contracts.SmartComparatorComparable;
+import io.domisum.lib.auxiliumlib.util.StringUtil;
 import io.domisum.lib.auxiliumlib.util.math.MathUtil;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
@@ -15,11 +17,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.Validate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @API
 @RequiredArgsConstructor
@@ -37,7 +35,7 @@ public class LayeredSnaporta
 	private final List<Layer> layersTopDown = new ArrayList<>();
 	
 	
-	// INIT
+	// HOUSEKEEPING
 	public LayeredSnaporta(List<Snaporta> layersBottomUp)
 	{
 		this(getDimensions(layersBottomUp).getWidth(), getDimensions(layersBottomUp).getHeight());
@@ -54,7 +52,7 @@ public class LayeredSnaporta
 	{
 		if(layersBottomUp.isEmpty())
 			throw new IllegalArgumentException("Can't determine dimensions of layered snaporta "
-				+"when empty list of layers is given");
+				+ "when empty list of layers is given");
 		
 		int maxWidth = -1;
 		int maxHeight = -1;
@@ -66,6 +64,19 @@ public class LayeredSnaporta
 		}
 		
 		return Sized.sized(maxWidth, maxHeight);
+	}
+	
+	@Override
+	public String toString()
+	{
+		var innerSb = new StringBuilder();
+		for(var layer : layersTopDown)
+			innerSb.append("\n").append(layer.snaporta.toString());
+		String inner = innerSb.length() > 0
+			? StringUtil.indent(innerSb.toString(), "\t")
+			: " <empty>";
+		return PHR.r("{}(w={} x h={}{})", getClass().getSimpleName(),
+			width, height, inner);
 	}
 	
 	
@@ -82,7 +93,7 @@ public class LayeredSnaporta
 	public void setLayerOnZ(Snaporta snaporta, int x, int y, double z)
 	{
 		var component = new Layer(snaporta, x, y, z);
-		layersTopDown.removeIf(c->c.getZ() == component.getZ());
+		layersTopDown.removeIf(c -> c.getZ() == component.getZ());
 		addLayer(component);
 	}
 	
@@ -104,8 +115,11 @@ public class LayeredSnaporta
 	@API
 	public void addLayerOnTop(Snaporta snaporta, int x, int y)
 	{
+		if(snaporta.isBlank())
+			return;
+		
 		var maxZ = layersTopDown.stream().mapToDouble(Layer::getZ).max();
-		double onTopZ = maxZ.isPresent() ? (maxZ.getAsDouble()+1) : 0;
+		double onTopZ = maxZ.isPresent() ? (maxZ.getAsDouble() + 1) : 0;
 		
 		var component = new Layer(snaporta, x, y, onTopZ);
 		addLayer(component);
@@ -114,14 +128,14 @@ public class LayeredSnaporta
 	@API
 	public void addLayerBelow(Snaporta snaporta, int x, int y)
 	{
-		double zBelow = layersTopDown.isEmpty() ? -1 : Iterables.getLast(layersTopDown).getZ()-1;
+		double zBelow = layersTopDown.isEmpty() ? -1 : Iterables.getLast(layersTopDown).getZ() - 1;
 		setLayerOnZ(snaporta, x, y, zBelow);
 	}
 	
 	private void validateUniqueZ(Layer component)
 	{
-		boolean uniqueZ = layersTopDown.stream().noneMatch(c->c.getZ() == component.getZ());
-		Validate.isTrue(uniqueZ, "Layer z values have to be unique, already have a layer with z="+component.getZ());
+		boolean uniqueZ = layersTopDown.stream().noneMatch(c -> c.getZ() == component.getZ());
+		Validate.isTrue(uniqueZ, "Layer z values have to be unique, already have a layer with z=" + component.getZ());
 	}
 	
 	
@@ -131,6 +145,14 @@ public class LayeredSnaporta
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		return getArgbAtDepth(x, y, 0);
+	}
+	
+	@Override
+	public boolean isBlank()
+	{
+		if(layersTopDown.isEmpty())
+			return true;
+		return Snaporta.super.isBlank();
 	}
 	
 	
@@ -146,7 +168,7 @@ public class LayeredSnaporta
 		if(ArgbUtil.getAlphaComponent(componentAtThisDepthArgbAt) == Color.ALPHA_OPAQUE)
 			return componentAtThisDepthArgbAt;
 		
-		int backgroundArgbAt = getArgbAtDepth(x, y, depth+1);
+		int backgroundArgbAt = getArgbAtDepth(x, y, depth + 1);
 		if(ArgbUtil.getAlphaComponent(componentAtThisDepthArgbAt) == Color.ALPHA_TRANSPARENT)
 			return backgroundArgbAt;
 		
@@ -162,10 +184,10 @@ public class LayeredSnaporta
 		int greenCombined = getColorComponentCombined(ColorComponent.GREEN, backgroundArgb, foregroundArgb);
 		int blueCombined = getColorComponentCombined(ColorComponent.BLUE, backgroundArgb, foregroundArgb);
 		
-		double foregroundTransparency = 1-ArgbUtil.getOpacity(foregroundArgb);
-		double backgroundTransparency = 1-ArgbUtil.getOpacity(backgroundArgb);
-		double transparencyCombined = foregroundTransparency*backgroundTransparency;
-		int alphaCombined = ArgbUtil.getAlphaFromOpacity(1-transparencyCombined);
+		double foregroundTransparency = 1 - ArgbUtil.getOpacity(foregroundArgb);
+		double backgroundTransparency = 1 - ArgbUtil.getOpacity(backgroundArgb);
+		double transparencyCombined = foregroundTransparency * backgroundTransparency;
+		int alphaCombined = ArgbUtil.getAlphaFromOpacity(1 - transparencyCombined);
 		
 		return ArgbUtil.toArgb(alphaCombined, redCombined, greenCombined, blueCombined);
 	}
@@ -180,7 +202,7 @@ public class LayeredSnaporta
 		
 		double mixed = MathUtil.mix(
 			foregroundComponent, foregroundOpacity,
-			backgroundComponent, (1-foregroundOpacity)*backgroundOpacity);
+			backgroundComponent, (1 - foregroundOpacity) * backgroundOpacity);
 		return (int) Math.round(mixed);
 	}
 	
@@ -210,8 +232,8 @@ public class LayeredSnaporta
 		// COMPONENT
 		public int getARGBAt(int x, int y)
 		{
-			int inSnaportaX = x-this.x;
-			int inSnaportaY = y-this.y;
+			int inSnaportaX = x - this.x;
+			int inSnaportaY = y - this.y;
 			
 			if(snaporta.isOutOfBounds(inSnaportaX, inSnaportaY))
 				return Colors.TRANSPARENT.toARGBInt();

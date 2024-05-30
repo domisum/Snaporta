@@ -1,7 +1,9 @@
 package io.domisum.lib.snaporta.snaportas.transform;
 
+import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.auxiliumlib.datacontainers.bound.IntBounds2D;
+import io.domisum.lib.auxiliumlib.util.StringUtil;
 import io.domisum.lib.auxiliumlib.util.ValidationUtil;
 import io.domisum.lib.snaporta.Padding;
 import io.domisum.lib.snaporta.Snaporta;
@@ -33,30 +35,30 @@ public final class ViewportSnaporta
 	@API
 	public static ViewportSnaporta offset(Snaporta base, int offsetX, int offsetY)
 	{
-		return sizeAndOffset(base, base.getWidth()+offsetX, base.getHeight()+offsetY, offsetX, offsetY);
+		return sizeAndOffset(base, base.getWidth() + offsetX, base.getHeight() + offsetY, offsetX, offsetY);
 	}
 	
 	@API
 	public static ViewportSnaporta center(Snaporta base, int width, int height)
 	{
-		int offsetX = (width-base.getWidth())/2;
-		int offsetY = (height-base.getHeight())/2;
+		int offsetX = (width - base.getWidth()) / 2;
+		int offsetY = (height - base.getHeight()) / 2;
 		return sizeAndOffset(base, width, height, offsetX, offsetY);
 	}
 	
 	@API
 	public static ViewportSnaporta pad(Snaporta base, Padding padding)
 	{
-		int width = base.getWidth()+padding.getHorizontalSum();
-		int height = base.getHeight()+padding.getVerticalSum();
+		int width = base.getWidth() + padding.getHorizontalSum();
+		int height = base.getHeight() + padding.getVerticalSum();
 		return sizeAndOffset(base, width, height, padding.getLeft(), padding.getTop());
 	}
 	
 	@API
 	public static ViewportSnaporta crop(Snaporta base, int cropLeft, int cropRight, int cropTop, int cropBottom)
 	{
-		int croppedWidth = base.getWidth()-cropLeft-cropRight;
-		int croppedHeight = base.getHeight()-cropTop-cropBottom;
+		int croppedWidth = base.getWidth() - cropLeft - cropRight;
+		int croppedHeight = base.getHeight() - cropTop - cropBottom;
 		return sizeAndOffset(base, croppedWidth, croppedHeight, -cropLeft, -cropTop);
 	}
 	
@@ -88,6 +90,13 @@ public final class ViewportSnaporta
 		this.offsetY = offsetY;
 	}
 	
+	@Override
+	public String toString()
+	{
+		return PHR.r("{}(w={} x h={}, oX={} oY={}\n{})", getClass().getSimpleName(),
+			width, height, offsetX, offsetY, StringUtil.indent(base.toString(), "\t"));
+	}
+	
 	
 	// SNAPORTA
 	@Override
@@ -95,8 +104,8 @@ public final class ViewportSnaporta
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
-		int inBaseX = x-offsetX;
-		int inBaseY = y-offsetY;
+		int inBaseX = x - offsetX;
+		int inBaseY = y - offsetY;
 		
 		if(!base.isInBounds(inBaseX, inBaseY))
 			return Colors.TRANSPARENT.toARGBInt();

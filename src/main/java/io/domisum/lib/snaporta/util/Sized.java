@@ -12,11 +12,13 @@ public interface Sized
 		return new SizedContainer(width, height);
 	}
 	
+	
 	@API
 	int getWidth();
 	
 	@API
 	int getHeight();
+	
 	
 	@API
 	default boolean isInBounds(int x, int y)

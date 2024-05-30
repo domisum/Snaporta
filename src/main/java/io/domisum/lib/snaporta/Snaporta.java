@@ -61,4 +61,18 @@ public interface Snaporta
 		return false;
 	}
 	
+	@API
+	default boolean isBlank()
+	{
+		if(getWidth() == 0 || getHeight() == 0)
+			return true;
+		
+		for(int y = 0; y < getHeight(); y++)
+			for(int x = 0; x < getWidth(); x++)
+				if(getAlphaAt(x, y) != Color.ALPHA_TRANSPARENT)
+					return false;
+		
+		return true;
+	}
+	
 }

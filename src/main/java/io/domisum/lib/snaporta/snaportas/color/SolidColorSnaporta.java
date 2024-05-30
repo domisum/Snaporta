@@ -1,5 +1,6 @@
 package io.domisum.lib.snaporta.snaportas.color;
 
+import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
@@ -9,18 +10,24 @@ import lombok.RequiredArgsConstructor;
 
 @API
 @RequiredArgsConstructor
+@Getter
 public class SolidColorSnaporta
 	implements Snaporta
 {
 	
 	// ATTRIBUTES
-	@Getter
 	private final int width;
-	@Getter
 	private final int height;
 	
-	@Getter
 	private final Color color;
+	
+	
+	@Override
+	public String toString()
+	{
+		return PHR.r("{}(w={} x h={}, c={})", getClass().getSimpleName(),
+			width, height, color);
+	}
 	
 	
 	// SNAPORTA
