@@ -235,10 +235,12 @@ public class LayeredSnaporta
 			int inSnaportaX = x - this.x;
 			int inSnaportaY = y - this.y;
 			
-			if(snaporta.isOutOfBounds(inSnaportaX, inSnaportaY))
-				return Colors.TRANSPARENT.toARGBInt();
+			// not using in bounds method for performance reasons
+			if((inSnaportaX >= 0) && (inSnaportaX < snaporta.getWidth()))
+				if((inSnaportaY >= 0) && (inSnaportaY < snaporta.getHeight()))
+					return snaporta.getArgbAt(inSnaportaX, inSnaportaY);
 			
-			return snaporta.getArgbAt(inSnaportaX, inSnaportaY);
+			return Colors.TRANSPARENT.toARGBInt();
 		}
 		
 	}
