@@ -14,6 +14,7 @@ import java.util.concurrent.Future;
 
 @API
 public class MultiThreadSnaportaRenderer
+	implements SnaportaRenderer
 {
 	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -41,7 +42,7 @@ public class MultiThreadSnaportaRenderer
 		Validate.isTrue(numberOfThreads > 0, "Number of threads has to be greater than 0");
 		
 		this.numberOfThreads = numberOfThreads;
-		executorService = Executors.newFixedThreadPool(numberOfThreads, r->
+		executorService = Executors.newFixedThreadPool(numberOfThreads, r ->
 		{
 			var thread = Executors.defaultThreadFactory().newThread(r);
 			thread.setDaemon(true);
@@ -52,23 +53,18 @@ public class MultiThreadSnaportaRenderer
 	
 	// RENDER
 	@API
+	@Override
 	public Snaporta render(Snaporta snaporta)
 	{
 		int[][] argbPixels = new int[snaporta.getHeight()][snaporta.getWidth()];
 		
 		var futures = new HashSet<Future<?>>();
 		int numberOfRows = snaporta.getHeight();
-		int firstUncoveredRow = 0;
-		for(int i = 0; i < numberOfThreads; i++)
+		for(int y = 0; y < numberOfRows; y++)
 		{
-			int rowMinIncl = firstUncoveredRow;
-			boolean lastThread = (i+1) == numberOfThreads;
-			int rowMaxExcl = lastThread ? numberOfRows : ((i+1)*(numberOfRows/numberOfThreads));
-			
-			var future = executorService.submit(()->render(snaporta, argbPixels, rowMinIncl, rowMaxExcl));
+			final int yf = y;
+			var future = executorService.submit(() -> render(snaporta, argbPixels, yf));
 			futures.add(future);
-			
-			firstUncoveredRow = rowMaxExcl;
 		}
 		
 		try
@@ -76,19 +72,18 @@ public class MultiThreadSnaportaRenderer
 			for(var future : futures)
 				future.get();
 		}
-		catch(InterruptedException|ExecutionException e)
+		catch(InterruptedException | ExecutionException e)
 		{
-			logger.error("An error occured while rendering snaporta", e);
+			logger.error("An error occurred while rendering snaporta", e);
 		}
 		
 		return new BasicSnaporta(argbPixels);
 	}
 	
-	private void render(Snaporta snaporta, int[][] argbPixels, int rowMinIncl, int rowMaxExcl)
+	private void render(Snaporta snaporta, int[][] argbPixels, int y)
 	{
-		for(int y = rowMinIncl; y < rowMaxExcl; y++)
-			for(int x = 0; x < snaporta.getWidth(); x++)
-				argbPixels[y][x] = snaporta.getArgbAt(x, y);
+		for(int x = 0; x < snaporta.getWidth(); x++)
+			argbPixels[y][x] = snaporta.getArgbAt(x, y);
 	}
 	
 }
