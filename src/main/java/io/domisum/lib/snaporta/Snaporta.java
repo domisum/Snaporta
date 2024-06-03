@@ -75,4 +75,10 @@ public interface Snaporta
 		return true;
 	}
 	
+	@API
+	default Snaporta optimize()
+	{
+		return this; // optional to implement this
+	}
+	
 }
