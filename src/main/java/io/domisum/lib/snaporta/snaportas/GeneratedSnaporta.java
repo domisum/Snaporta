@@ -43,4 +43,10 @@ public abstract class GeneratedSnaporta
 		return generateOnce.get().getArgbAt(x, y);
 	}
 	
+	@Override
+	public boolean isBlank()
+	{
+		return generateOnce.get().isBlank();
+	}
+	
 }
