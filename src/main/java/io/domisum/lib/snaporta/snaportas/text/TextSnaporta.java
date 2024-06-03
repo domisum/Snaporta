@@ -32,7 +32,7 @@ public final class TextSnaporta
 	private final int width;
 	@Getter
 	private final int height;
-	private final String text;
+	@Getter private final String text;
 	
 	// FONT
 	private final Font font;
