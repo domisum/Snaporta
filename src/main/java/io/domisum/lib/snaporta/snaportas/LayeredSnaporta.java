@@ -182,29 +182,39 @@ public class LayeredSnaporta
 		int[][] argbPixels = new int[getHeight()][getWidth()];
 		for(var l : layersBottomUp)
 			if(l instanceof ViewportSnaporta vs)
-			{
-				var topLeft = vs.getPositionOffset();
-				var bottomRight = topLeft.deriveAdd(vs.getWindowSize());
-				var inBaseOffset = vs.getInternalOffset().deriveSubtract(vs.getPositionOffset());
-				
-				int yMax = Math.min(bottomRight.getY(), height);
-				int xMax = Math.min(bottomRight.getX(), width);
-				for(int y = topLeft.getY(); y < yMax; y++)
-					for(int x = topLeft.getX(); x < xMax; x++)
-					{
-						int inBaseX = x + inBaseOffset.getX();
-						int inBaseY = y + inBaseOffset.getY();
-						
-						int layerColor = vs.getBase().getArgbAt(inBaseX, inBaseY);
-						argbPixels[y][x] = mixArgb(argbPixels[y][x], layerColor);
-					}
-			}
+				renderViewportLayer(vs, argbPixels);
 			else
-				for(int y = 0; y < l.getHeight(); y++)
-					for(int x = 0; x < l.getWidth(); x++)
-						argbPixels[y][x] = mixArgb(argbPixels[y][x], l.getArgbAt(x, y));
+				renderLayer(l, argbPixels);
 		
 		return new BasicSnaporta(argbPixels);
+	}
+	
+	private void renderViewportLayer(ViewportSnaporta vs, int[][] argbPixels)
+	{
+		var topLeft = vs.getPositionOffset();
+		var bottomRight = topLeft.deriveAdd(vs.getWindowSize());
+		var inBaseOffset = vs.getInternalOffset().deriveSubtract(vs.getPositionOffset());
+		
+		int yBound = Math.min(bottomRight.getY(), height);
+		int xBound = Math.min(bottomRight.getX(), width);
+		for(int y = topLeft.getY(); y < yBound; y++)
+			for(int x = topLeft.getX(); x < xBound; x++)
+			{
+				int inBaseX = x + inBaseOffset.getX();
+				int inBaseY = y + inBaseOffset.getY();
+				
+				int layerColor = vs.getBase().getArgbAt(inBaseX, inBaseY);
+				argbPixels[y][x] = mixArgb(argbPixels[y][x], layerColor);
+			}
+	}
+	
+	private void renderLayer(Snaporta l, int[][] argbPixels)
+	{
+		int yBound = Math.min(height, l.getHeight());
+		int xBound = Math.min(width, l.getWidth());
+		for(int y = 0; y < yBound; y++)
+			for(int x = 0; x < xBound; x++)
+				argbPixels[y][x] = mixArgb(argbPixels[y][x], l.getArgbAt(x, y));
 	}
 	
 	
