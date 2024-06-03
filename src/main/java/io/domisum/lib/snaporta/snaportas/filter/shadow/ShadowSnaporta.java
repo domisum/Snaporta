@@ -1,5 +1,6 @@
 package io.domisum.lib.snaporta.snaportas.filter.shadow;
 
+import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
@@ -13,22 +14,28 @@ public class ShadowSnaporta
 {
 	
 	// SETTINGS
-	private final Snaporta baseSnaporta;
+	private Snaporta baseSnaporta;
 	private final Color color;
 	private final int offsetX;
 	private final int offsetY;
 	
 	
-	// INIT
+	// HOUSEKEEPING
 	public ShadowSnaporta(Snaporta baseSnaporta, Color color, int offsetX, int offsetY)
 	{
-		Validate.notNull(baseSnaporta);
-		Validate.notNull(color);
+		Validate.notNull(baseSnaporta, "baseSnaporta cannot be null");
+		Validate.notNull(color, "color cannot be null");
 		
 		this.baseSnaporta = baseSnaporta;
 		this.color = color;
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return PHR.r("{}(sc={}, oX={} oY={})", getClass().getSimpleName(), color, offsetX, offsetY);
 	}
 	
 	
@@ -56,8 +63,8 @@ public class ShadowSnaporta
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
-		int inBaseX = x-offsetX;
-		int inBaseY = y-offsetY;
+		int inBaseX = x - offsetX;
+		int inBaseY = y - offsetY;
 		if(!baseSnaporta.isInBounds(inBaseX, inBaseY))
 			return Colors.TRANSPARENT;
 		
@@ -67,6 +74,22 @@ public class ShadowSnaporta
 			return Colors.TRANSPARENT;
 		
 		return color.deriveMultiplyOpacity(opacityAt);
+	}
+	
+	
+	@Override
+	public boolean isBlank()
+	{
+		if(baseSnaporta.isBlank() || color.getAlpha() == Color.ALPHA_TRANSPARENT)
+			return true;
+		return Snaporta.super.isBlank();
+	}
+	
+	@Override
+	public Snaporta optimize()
+	{
+		baseSnaporta = baseSnaporta.optimize();
+		return this;
 	}
 	
 }
