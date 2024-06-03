@@ -158,22 +158,9 @@ public final class ViewportSnaporta
 	
 	private Snaporta mergeWithInnerViewportSnaporta(ViewportSnaporta inner)
 	{
-		var windowThisTl = this.positionOffset;
-		var windowThisBr = windowThisTl.deriveAdd(this.windowSize);
-		var windowInnerTl = windowThisTl.deriveSubtract(this.internalOffset).deriveAdd(inner.positionOffset);
-		var windowInnerBr = windowInnerTl.deriveAdd(inner.windowSize);
-		
-		int windowLeft = Math.max(windowThisTl.getX(), windowInnerTl.getX());
-		int windowRight = Math.min(windowThisBr.getX(), windowInnerBr.getX());
-		int windowWidth = windowRight - windowLeft;
-		
-		int windowTop = Math.max(windowThisTl.getY(), windowInnerTl.getY());
-		int windowBottom = Math.min(windowThisBr.getY(), windowInnerBr.getY());
-		int windowHeight = windowBottom - windowTop;
-		
 		var newPositionOffset = this.positionOffset;
 		var newInternalOffset = inner.internalOffset.deriveSubtract(inner.positionOffset).deriveAdd(this.internalOffset);
-		var newWindowSize = new Coordinate2DInt(windowWidth, windowHeight);
+		var newWindowSize = calculateMergedWindowSize(inner);
 		
 		if(newInternalOffset.getX() < 0)
 		{
@@ -186,12 +173,28 @@ public final class ViewportSnaporta
 			newInternalOffset = new Coordinate2DInt(newInternalOffset.getX(), 0);
 		}
 		
-		
 		if(newWindowSize.getX() <= 0 || newWindowSize.getY() <= 0)
 			return new BlankSnaporta(width, height);
 		
 		return new ViewportSnaporta(inner.base, width, height,
 			newPositionOffset, newInternalOffset, newWindowSize);
+	}
+	
+	private Coordinate2DInt calculateMergedWindowSize(ViewportSnaporta inner)
+	{
+		var windowThisTl = this.positionOffset;
+		var windowThisBr = windowThisTl.deriveAdd(this.windowSize);
+		var windowInnerTl = windowThisTl.deriveSubtract(this.internalOffset).deriveAdd(inner.positionOffset);
+		var windowInnerBr = windowInnerTl.deriveAdd(inner.windowSize);
+		
+		int windowLeft = Math.max(windowThisTl.getX(), windowInnerTl.getX());
+		int windowRight = Math.min(windowThisBr.getX(), windowInnerBr.getX());
+		int windowWidth = windowRight - windowLeft;
+		
+		int windowTop = Math.max(windowThisTl.getY(), windowInnerTl.getY());
+		int windowBottom = Math.min(windowThisBr.getY(), windowInnerBr.getY());
+		int windowHeight = windowBottom - windowTop;
+		return new Coordinate2DInt(windowWidth, windowHeight);
 	}
 	
 }
