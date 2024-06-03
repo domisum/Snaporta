@@ -83,7 +83,7 @@ public final class ScaleSnaporta
 	@Override
 	public String toString()
 	{
-		return PHR.r("{}(w={} x h={} {}\n{})", getClass().getSimpleName(),
+		return PHR.r("{}(w={} x h={}, {}\n{})", getClass().getSimpleName(),
 			width, height, interpolator, StringUtil.indent(baseSnaporta, "\t"));
 	}
 	
