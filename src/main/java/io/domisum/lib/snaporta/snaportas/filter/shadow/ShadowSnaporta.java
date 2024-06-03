@@ -14,7 +14,7 @@ public class ShadowSnaporta
 {
 	
 	// SETTINGS
-	private Snaporta baseSnaporta;
+	private final Snaporta baseSnaporta;
 	private final Color color;
 	private final int offsetX;
 	private final int offsetY;
@@ -80,16 +80,18 @@ public class ShadowSnaporta
 	@Override
 	public boolean isBlank()
 	{
-		if(baseSnaporta.isBlank() || color.getAlpha() == Color.ALPHA_TRANSPARENT)
+		if(color.getAlpha() == Color.ALPHA_TRANSPARENT)
 			return true;
-		return Snaporta.super.isBlank();
+		return baseSnaporta.isBlank();
 	}
 	
 	@Override
 	public Snaporta optimize()
 	{
-		baseSnaporta = baseSnaporta.optimize();
-		return this;
+		var baseOpt = baseSnaporta.optimize();
+		if(baseOpt == baseSnaporta)
+			return this;
+		return new ShadowSnaporta(baseOpt, color, offsetX, offsetY);
 	}
 	
 }
