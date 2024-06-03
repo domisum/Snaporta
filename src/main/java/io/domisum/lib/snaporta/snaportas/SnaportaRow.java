@@ -3,11 +3,14 @@ package io.domisum.lib.snaporta.snaportas;
 import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.auxiliumlib.exceptions.IncompleteCodeError;
+import io.domisum.lib.auxiliumlib.util.StringListUtil;
+import io.domisum.lib.auxiliumlib.util.StringUtil;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.util.Sized;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,7 +31,7 @@ public class SnaportaRow
 	private final int betweenPadding;
 	
 	
-	// INIT
+	// HOUSEKEEPING
 	@API
 	public static SnaportaRow horizontal(RowItemAlignment rowItemAlignment, int betweenPadding, Snaporta... snaportas)
 	{
@@ -65,6 +68,17 @@ public class SnaportaRow
 		return new SnaportaRow(snaportas, RowDirection.VERTICAL, rowItemAlignment, DEFAULT_BETWEEN_PADDING);
 	}
 	
+	@Override
+	public String toString()
+	{
+		var itemsDisplay = new ArrayList<>(snaportas);
+		
+		String inner = itemsDisplay.isEmpty() ? " <empty>"
+			: "\n" + StringUtil.indent(StringListUtil.list(itemsDisplay, "\n"), "\t");
+		return PHR.r("{}(d={}, ria={}, pd={}{})", getClass().getSimpleName(),
+			direction, rowItemAlignment, betweenPadding, inner);
+	}
+	
 	
 	// GENERATE
 	@Override
@@ -74,14 +88,14 @@ public class SnaportaRow
 			throw new IllegalArgumentException(PHR.r("Row direction {} doesn't support row item alignment {}",
 				direction, rowItemAlignment));
 		
-		int paddingSum = (snaportas.size()-1)*betweenPadding;
+		int paddingSum = (snaportas.size() - 1) * betweenPadding;
 		int width = direction == RowDirection.HORIZONTAL ?
-			snaportas.stream().mapToInt(Sized::getWidth).sum()+paddingSum :
+			snaportas.stream().mapToInt(Sized::getWidth).sum() + paddingSum :
 			snaportas.stream().mapToInt(Sized::getWidth).max().orElseThrow();
 		
 		int height = direction == RowDirection.HORIZONTAL ?
 			snaportas.stream().mapToInt(Sized::getHeight).max().orElseThrow() :
-			snaportas.stream().mapToInt(Sized::getHeight).sum()+paddingSum;
+			snaportas.stream().mapToInt(Sized::getHeight).sum() + paddingSum;
 		
 		var combined = new LayeredSnaporta(width, height);
 		int xOrY = 0;
@@ -129,11 +143,11 @@ public class SnaportaRow
 		public int calculateOffset(int itemSize, int spaceSize)
 		{
 			if(this == CENTER)
-				return (spaceSize-itemSize)/2;
+				return (spaceSize - itemSize) / 2;
 			else if(this == TOP || this == LEFT)
 				return 0;
 			else if(this == BOTTOM || this == RIGHT)
-				return spaceSize-itemSize;
+				return spaceSize - itemSize;
 			else
 				throw new IncompleteCodeError();
 		}
