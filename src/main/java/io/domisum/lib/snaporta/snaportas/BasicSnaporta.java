@@ -33,6 +33,9 @@ public final class BasicSnaporta
 	@API
 	public static BasicSnaporta copyOf(Snaporta snaporta)
 	{
+		if(snaporta instanceof BasicSnaporta bs)
+			return bs; // immutable, so this is fine
+			
 		int[][] argbPixels = new int[snaporta.getHeight()][snaporta.getWidth()];
 		for(int y = 0; y < snaporta.getHeight(); y++)
 			for(int x = 0; x < snaporta.getWidth(); x++)
