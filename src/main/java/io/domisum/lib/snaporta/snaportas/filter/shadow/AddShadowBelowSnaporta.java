@@ -1,6 +1,8 @@
 package io.domisum.lib.snaporta.snaportas.filter.shadow;
 
+import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.auxiliumlib.annotations.API;
+import io.domisum.lib.auxiliumlib.util.StringUtil;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
 import io.domisum.lib.snaporta.snaportas.LayeredSnaporta;
@@ -28,6 +30,13 @@ public class AddShadowBelowSnaporta
 		this.shadowColor = shadowColor;
 		this.shadowOffsetX = shadowOffsetX;
 		this.shadowOffsetY = shadowOffsetY;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return PHR.r("{}(c={}, sx={} x sy={}\n{})", getClass().getSimpleName(),
+			shadowColor, shadowOffsetX, shadowOffsetY, StringUtil.indent(base, "\t"));
 	}
 	
 	
