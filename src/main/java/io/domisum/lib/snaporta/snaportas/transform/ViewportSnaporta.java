@@ -129,10 +129,10 @@ public final class ViewportSnaporta
 	}
 	
 	@Override
-	public boolean isBlank()
+	public BlankState isBlank()
 	{
 		if(windowSize.getX() <= 0 || windowSize.getY() <= 0)
-			return true;
+			return BlankState.BLANK;
 		return base.isBlank();
 	}
 	

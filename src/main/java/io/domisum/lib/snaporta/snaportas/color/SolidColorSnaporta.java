@@ -45,9 +45,9 @@ public class SolidColorSnaporta
 	}
 	
 	@Override
-	public boolean isBlank()
+	public BlankState isBlank()
 	{
-		return color.isFullyTransparent();
+		return (color.isFullyTransparent() || width <= 0 || height <= 0) ? BlankState.BLANK : BlankState.NOT_BLANK;
 	}
 	
 }

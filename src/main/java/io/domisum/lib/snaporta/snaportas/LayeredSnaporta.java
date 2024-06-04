@@ -144,12 +144,11 @@ public class LayeredSnaporta
 	}
 	
 	@Override
-	public boolean isBlank()
+	public BlankState isBlank()
 	{
 		if(layersBottomUp.isEmpty())
-			return true;
-		ensureRendered();
-		return rendered.isBlank();
+			return BlankState.BLANK;
+		return BlankState.UNKNOWN;
 	}
 	
 	@Override
@@ -171,7 +170,7 @@ public class LayeredSnaporta
 		
 		if(layer instanceof LayeredSnaporta laySnap)
 			return laySnap.layersBottomUp;
-		if(layer.isBlank())
+		if(layer.isBlank() == BlankState.BLANK)
 			return Collections.emptyList();
 		
 		return List.of(layer);
@@ -219,7 +218,7 @@ public class LayeredSnaporta
 	
 	
 	// COLOR MIXING
-	private int mixArgb(int backgroundArgb, int foregroundArgb)
+	public static int mixArgb(int backgroundArgb, int foregroundArgb)
 	{
 		if(ArgbUtil.getAlphaComponent(backgroundArgb) == Color.ALPHA_TRANSPARENT)
 			return foregroundArgb;

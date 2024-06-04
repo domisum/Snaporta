@@ -62,23 +62,26 @@ public interface Snaporta
 	}
 	
 	@API
-	default boolean isBlank()
+	default BlankState isBlank()
 	{
 		if(getWidth() == 0 || getHeight() == 0)
-			return true;
+			return BlankState.BLANK;
 		
-		for(int y = 0; y < getHeight(); y++)
-			for(int x = 0; x < getWidth(); x++)
-				if(getAlphaAt(x, y) != Color.ALPHA_TRANSPARENT)
-					return false;
-		
-		return true;
+		return BlankState.UNKNOWN;
 	}
 	
 	@API
 	default Snaporta optimize()
 	{
 		return this; // optional to implement this
+	}
+	
+	
+	enum BlankState
+	{
+		BLANK,
+		UNKNOWN,
+		NOT_BLANK
 	}
 	
 }

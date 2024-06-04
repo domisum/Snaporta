@@ -15,9 +15,9 @@ public class BlankSnaporta
 	}
 	
 	@Override
-	public boolean isBlank()
+	public BlankState isBlank()
 	{
-		return true;
+		return BlankState.BLANK;
 	}
 	
 }

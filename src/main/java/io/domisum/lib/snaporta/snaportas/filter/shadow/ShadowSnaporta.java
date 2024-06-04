@@ -78,10 +78,10 @@ public class ShadowSnaporta
 	
 	
 	@Override
-	public boolean isBlank()
+	public BlankState isBlank()
 	{
 		if(color.getAlpha() == Color.ALPHA_TRANSPARENT)
-			return true;
+			return BlankState.BLANK;
 		return baseSnaporta.isBlank();
 	}
 	

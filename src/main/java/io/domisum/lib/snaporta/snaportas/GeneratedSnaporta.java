@@ -44,9 +44,9 @@ public abstract class GeneratedSnaporta
 	}
 	
 	@Override
-	public boolean isBlank()
+	public BlankState isBlank()
 	{
-		return generateOnce.get().isBlank();
+		return BlankState.UNKNOWN;
 	}
 	
 }
