@@ -44,7 +44,7 @@ public final class SnaportaWriter
 	}
 	
 	@API
-	public static byte[] writeToRaw(Snaporta snaporta, String format, Float quality)
+	public static byte[] writeToRaw(Snaporta snaporta, String format, Double quality)
 	{
 		format = format.toLowerCase(Locale.ROOT);
 		if(format.equals("jpg"))
@@ -65,7 +65,7 @@ public final class SnaportaWriter
 				
 				var iwp = writer.getDefaultWriteParam();
 				iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-				iwp.setCompressionQuality(quality);
+				iwp.setCompressionQuality(quality.floatValue());
 				
 				writer.setOutput(baos);
 				var iioImage = new IIOImage(bufferedImage, null, null);
