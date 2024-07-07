@@ -11,6 +11,7 @@ import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
+import javax.imageio.stream.MemoryCacheImageOutputStream;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -67,7 +68,7 @@ public final class SnaportaWriter
 				iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
 				iwp.setCompressionQuality(quality.floatValue());
 				
-				writer.setOutput(baos);
+				writer.setOutput(new MemoryCacheImageOutputStream(baos));
 				var iioImage = new IIOImage(bufferedImage, null, null);
 				writer.write(null, iioImage, iwp);
 				writer.dispose();
