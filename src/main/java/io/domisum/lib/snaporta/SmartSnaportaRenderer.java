@@ -1,6 +1,6 @@
 package io.domisum.lib.snaporta;
 
-import io.domisum.lib.auxiliumlib.RunStopwatch;
+import io.domisum.lib.auxiliumlib.time.RunStopwatch;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.auxiliumlib.util.math.RandomUtil;
 import io.domisum.lib.snaporta.snaportas.BasicSnaporta;
