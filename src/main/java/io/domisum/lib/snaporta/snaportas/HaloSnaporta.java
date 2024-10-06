@@ -1,5 +1,7 @@
 package io.domisum.lib.snaporta.snaportas;
 
+import io.domisum.lib.auxiliumlib.PHR;
+import io.domisum.lib.auxiliumlib.util.StringUtil;
 import io.domisum.lib.snaporta.Padding;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
@@ -20,6 +22,15 @@ public class HaloSnaporta
 	private final Color color;
 	
 	
+	// OBJECT
+	@Override
+	public String toString()
+	{
+		return PHR.r("{}(radius={}, color={}\n{})", getClass().getSimpleName(),
+			radius, color, StringUtil.indent(base.toString(), "\t"));
+	}
+	
+	
 	// INIT
 	@Override
 	protected Snaporta generate()
@@ -37,8 +48,8 @@ public class HaloSnaporta
 	{
 		var intensityMaskPainter = DoubleMaskPainter.sized(padded.getWidth(), padded.getHeight());
 		
-		for(int pY = radius; pY < padded.getHeight()-radius; pY++)
-			for(int pX = radius; pX < padded.getWidth()-radius; pX++)
+		for(int pY = radius; pY < padded.getHeight() - radius; pY++)
+			for(int pX = radius; pX < padded.getWidth() - radius; pX++)
 				if(shouldSourcePixelBeVisited(padded, pX, pY))
 					visitSourcePixel(padded, intensityMaskPainter, pX, pY);
 		
@@ -59,7 +70,7 @@ public class HaloSnaporta
 	private boolean isSurroundedByFullOpacity(Snaporta snaporta, int pX, int pY)
 	{
 		for(var neighborPixel : NeighborPixel.values())
-			if(snaporta.getAlphaAt(pX+neighborPixel.dX, pY+neighborPixel.dY) != Color.ALPHA_OPAQUE)
+			if(snaporta.getAlphaAt(pX + neighborPixel.dX, pY + neighborPixel.dY) != Color.ALPHA_OPAQUE)
 				return false;
 		
 		return true;
@@ -72,19 +83,19 @@ public class HaloSnaporta
 		for(int dY = -radius; dY <= radius; dY++)
 			for(int dX = -radius; dX <= radius; dX++)
 			{
-				int x = pX+dX;
-				int y = pY+dY;
+				int x = pX + dX;
+				int y = pY + dY;
 				double targetOpacity = snaporta.getColorAt(x, y).getOpacity();
 				if(targetOpacity == 1)
 					continue;
 				
-				int distanceSquared = dX*dX+dY*dY;
-				if(distanceSquared > radius*radius)
+				int distanceSquared = dX * dX + dY * dY;
+				if(distanceSquared > radius * radius)
 					continue;
 				double distance = Math.sqrt(distanceSquared);
 				
-				double distanceIntensityFactor = (radius-distance+1)/radius;
-				double intensity = sourceOpacity*distanceIntensityFactor*(1-targetOpacity);
+				double distanceIntensityFactor = (radius - distance + 1) / radius;
+				double intensity = sourceOpacity * distanceIntensityFactor * (1 - targetOpacity);
 				if(intensity > intensityMaskPainter.getValueAt(x, y))
 					intensityMaskPainter.setValueAt(x, y, intensity);
 			}

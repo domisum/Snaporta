@@ -1,5 +1,7 @@
 package io.domisum.lib.snaporta.snaportas.mask;
 
+import io.domisum.lib.auxiliumlib.PHR;
+import io.domisum.lib.auxiliumlib.util.StringUtil;
 import io.domisum.lib.snaporta.Snaporta;
 import io.domisum.lib.snaporta.color.Color;
 import io.domisum.lib.snaporta.mask.doubl.DoubleMask;
@@ -12,6 +14,16 @@ public class DoubleMaskOpacitySnaporta
 	
 	private final Snaporta base;
 	private final DoubleMask opacityMask;
+	
+	
+	// OBJECT
+	@Override
+	public String toString()
+	{
+		return PHR.r("{}(\n{}\n{})", getClass().getSimpleName(),
+			StringUtil.indent("mask=" + opacityMask, "\t"),
+			StringUtil.indent("base=" + base.toString(), "\t"));
+	}
 	
 	
 	// SNAPORTA
