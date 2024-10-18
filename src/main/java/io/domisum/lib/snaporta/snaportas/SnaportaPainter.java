@@ -7,6 +7,8 @@ import io.domisum.lib.snaporta.color.Color;
 import io.domisum.lib.snaporta.util.Sized;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 
+import java.util.Arrays;
+
 public class SnaportaPainter
 	implements Sized
 {
@@ -101,6 +103,25 @@ public class SnaportaPainter
 	{
 		var color = getColorAt(x, y).deriveWithOpacity(opacity);
 		setColorAt(x, y, color);
+	}
+	
+	@API
+	public void fill(Color color)
+	{
+		int colorArgb = color.toARGBInt();
+		for(int[] row : argbPixels)
+			Arrays.fill(row, colorArgb);
+	}
+	
+	@API
+	public void fill(int x0i, int x1e, int y0i, int y1e, Color color)
+	{
+		int colorArgb = color.toARGBInt();
+		for(int y = y0i; y < y1e; y++)
+		{
+			int[] row = argbPixels[y];
+			Arrays.fill(row, x0i, x1e, colorArgb);
+		}
 	}
 	
 }
