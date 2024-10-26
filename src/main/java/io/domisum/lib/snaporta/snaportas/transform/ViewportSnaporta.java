@@ -72,7 +72,7 @@ public final class ViewportSnaporta
 	}
 	
 	@API
-	public static ViewportSnaporta bounds(Snaporta base, IntBounds2D bounds)
+	public static ViewportSnaporta boundsSubsection(Snaporta base, IntBounds2D bounds)
 	{
 		return sizeAndOffset(base,
 			bounds.getWidth(), bounds.getHeight(),
