@@ -42,7 +42,8 @@ public class LayeredSnaporta
 	{
 		this(getDimensions(layersBottomUp).getWidth(), getDimensions(layersBottomUp).getHeight());
 		for(var component : layersBottomUp)
-			addLayerOnTop(component);
+			if(component != null)
+				addLayerOnTop(component);
 	}
 	
 	public LayeredSnaporta(Snaporta... layersBottomUp)
