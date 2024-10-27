@@ -21,8 +21,8 @@ public class DoubleMaskOpacitySnaporta
 	public String toString()
 	{
 		return PHR.r("{}(\n{}\n{})", getClass().getSimpleName(),
-			StringUtil.indent("mask=" + opacityMask, "\t"),
-			StringUtil.indent("base=" + base.toString(), "\t"));
+			StringUtil.indent(opacityMask, "\t"),
+			StringUtil.indent(base.toString(), "\t"));
 	}
 	
 	
