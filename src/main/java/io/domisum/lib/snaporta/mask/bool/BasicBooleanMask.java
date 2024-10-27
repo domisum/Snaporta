@@ -57,6 +57,13 @@ public final class BasicBooleanMask
 		this.values = valuesCopy;
 	}
 	
+	@Override
+	public String toString()
+	{
+		return PHR.r("{}(w={} h={})", getClass().getSimpleName(),
+			getWidth(), getHeight());
+	}
+	
 	
 	// GETTERS
 	@Override

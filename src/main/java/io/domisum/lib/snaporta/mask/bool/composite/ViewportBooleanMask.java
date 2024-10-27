@@ -1,6 +1,8 @@
 package io.domisum.lib.snaporta.mask.bool.composite;
 
+import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.auxiliumlib.annotations.API;
+import io.domisum.lib.auxiliumlib.util.StringUtil;
 import io.domisum.lib.snaporta.mask.bool.BooleanMask;
 import io.domisum.lib.snaporta.util.SnaportaValidate;
 import lombok.AccessLevel;
@@ -27,7 +29,15 @@ public class ViewportBooleanMask
 	
 	public static ViewportBooleanMask extendLeftTopRightBottom(BooleanMask baseMask, int extendLeft, int extendTop, int extendRight, int extendBottom)
 	{
-		return new ViewportBooleanMask(baseMask, extendLeft, extendTop, extendLeft+extendRight, extendTop+extendBottom);
+		return new ViewportBooleanMask(baseMask, extendLeft, extendTop, extendLeft + extendRight, extendTop + extendBottom);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return PHR.r("{}(oX={} oY={} dW={} dH={}\n{})", getClass().getSimpleName(),
+			offsetX, offsetY, deltaWidth, deltaHeight,
+			StringUtil.indent(baseMask.toString(), "\t"));
 	}
 	
 	
@@ -35,13 +45,13 @@ public class ViewportBooleanMask
 	@Override
 	public int getWidth()
 	{
-		return baseMask.getWidth()+deltaWidth;
+		return baseMask.getWidth() + deltaWidth;
 	}
 	
 	@Override
 	public int getHeight()
 	{
-		return baseMask.getHeight()+deltaHeight;
+		return baseMask.getHeight() + deltaHeight;
 	}
 	
 	@Override
@@ -49,8 +59,8 @@ public class ViewportBooleanMask
 	{
 		SnaportaValidate.validateInBounds(this, x, y);
 		
-		int bX = x-offsetX;
-		int bY = y-offsetY;
+		int bX = x - offsetX;
+		int bY = y - offsetY;
 		
 		if(baseMask.isOutOfBounds(bX, bY))
 			return false;
