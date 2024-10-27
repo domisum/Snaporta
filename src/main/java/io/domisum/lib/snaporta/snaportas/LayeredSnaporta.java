@@ -194,10 +194,12 @@ public class LayeredSnaporta
 		var bottomRight = topLeft.deriveAdd(vs.getWindowSize());
 		var inBaseOffset = vs.getInternalOffset().deriveSubtract(vs.getPositionOffset());
 		
-		int yBound = Math.min(bottomRight.getY(), height);
-		int xBound = Math.min(bottomRight.getX(), width);
-		for(int y = topLeft.getY(); y < yBound; y++)
-			for(int x = topLeft.getX(); x < xBound; x++)
+		int yBoundLowerIncl = MathUtil.clamp(0, height, topLeft.getY());
+		int yBoundUpperExcl = MathUtil.clamp(0, height, bottomRight.getY());
+		int xBoundLowerIncl = MathUtil.clamp(0, width, topLeft.getX());
+		int xBoundUpperExcl = MathUtil.clamp(0, width, bottomRight.getX());
+		for(int y = yBoundLowerIncl; y < yBoundUpperExcl; y++)
+			for(int x = xBoundLowerIncl; x < xBoundUpperExcl; x++)
 			{
 				int inBaseX = x + inBaseOffset.getX();
 				int inBaseY = y + inBaseOffset.getY();
