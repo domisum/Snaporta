@@ -61,10 +61,11 @@ public class LayeredSnaporta
 		int maxHeight = -1;
 		
 		for(var snaporta : layersBottomUp)
-		{
-			maxWidth = Math.max(maxWidth, snaporta.getWidth());
-			maxHeight = Math.max(maxHeight, snaporta.getHeight());
-		}
+			if(snaporta != null)
+			{
+				maxWidth = Math.max(maxWidth, snaporta.getWidth());
+				maxHeight = Math.max(maxHeight, snaporta.getHeight());
+			}
 		
 		return Sized.sized(maxWidth, maxHeight);
 	}
