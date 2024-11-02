@@ -258,7 +258,7 @@ public final class TextSnaporta
 	@Override
 	public int getArgbAt(int x, int y)
 	{
-		return lazyInitRendered.get().getImage().getArgbAt(x, y);
+		return lazyInitRendered.get().image().getArgbAt(x, y);
 	}
 	
 	
@@ -272,7 +272,7 @@ public final class TextSnaporta
 	@API
 	public Snaporta getCroppedToVisible(Padding padding)
 	{
-		var visibleBounds = getRendered().getVisibleBounds();
+		var visibleBounds = getRendered().visibleBounds();
 		
 		int cropLeft = visibleBounds.getMinX() - padding.getLeft();
 		int cropRight = getWidth() - visibleBounds.getMaxX() - padding.getRight();
@@ -286,6 +286,15 @@ public final class TextSnaporta
 	public Snaporta getCroppedToVisible()
 	{
 		return getCroppedToVisible(Padding.none());
+	}
+	
+	@API
+	public Snaporta getHorizontallyCroppedToVisible()
+	{
+		int topPadding = getRendered().visibleBounds().getMinY();
+		int bottomPadding = getHeight() - getRendered().visibleBounds().getMaxY();
+		var cropPadding = Padding.toTop(topPadding).deriveAddBottom(bottomPadding);
+		return getCroppedToVisible(cropPadding);
 	}
 	
 	
@@ -332,7 +341,7 @@ public final class TextSnaporta
 			graphics.dispose();
 			
 			var visibleBounds = buildVisibleBounds();
-			return new Rendered(snaporta, visibleBounds);
+			return new Rendered(snaporta, visibleBounds, fontSize);
 		}
 		
 		private int determineFontSize()
@@ -420,16 +429,7 @@ public final class TextSnaporta
 	}
 	
 	@API
-	@RequiredArgsConstructor
-	public static class Rendered
-	{
-		
-		@Getter
-		private final Snaporta image;
-		@Getter
-		private final IntBounds2D visibleBounds;
-		
-	}
+	public record Rendered(Snaporta image, IntBounds2D visibleBounds, int fontSize) {}
 	
 	
 	// OPTIONS
