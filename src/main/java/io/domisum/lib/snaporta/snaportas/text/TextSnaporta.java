@@ -369,9 +369,17 @@ public final class TextSnaporta
 		private IntBounds2D buildVisibleBounds()
 		{
 			int visibleBoundsMinX = (int) Math.floor(getTextMinX());
+			if(visibleBoundsMinX < 0)
+				visibleBoundsMinX = 0;
 			int visibleBoundsMinY = (int) Math.floor(getTextMinY());
+			if(visibleBoundsMinY < 0)
+				visibleBoundsMinY = 0;
 			int visibleWidth = (int) Math.ceil(visualBounds.getWidth());
+			if(visibleWidth > width)
+				visibleWidth = width;
 			int visibleHeight = (int) Math.ceil(visualBounds.getHeight());
+			if(visibleHeight > height)
+				visibleHeight = height;
 			
 			return IntBounds2D.fromPosAndSize(visibleBoundsMinX, visibleBoundsMinY, visibleWidth, visibleHeight);
 		}
@@ -429,7 +437,11 @@ public final class TextSnaporta
 	}
 	
 	@API
-	public record Rendered(Snaporta image, IntBounds2D visibleBounds, int fontSize) {}
+	public record Rendered(
+		Snaporta image,
+		IntBounds2D visibleBounds,
+		int fontSize
+	) {}
 	
 	
 	// OPTIONS
