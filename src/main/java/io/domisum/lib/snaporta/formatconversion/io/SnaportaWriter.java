@@ -28,8 +28,8 @@ public final class SnaportaWriter
 	@API
 	public static void writeToFile(File file, Snaporta snaporta)
 	{
-		var bufferedImage = SnaportaBufferedImageConverter.convert(snaporta);
-		FileUtil.writeImage(file, bufferedImage);
+		byte[] raw = writeToRaw(snaporta, FileUtil.getExtension(file));
+		FileUtil.writeRaw(file, raw);
 	}
 	
 	@API
