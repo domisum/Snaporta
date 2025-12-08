@@ -16,6 +16,8 @@ import io.domisum.lib.snaporta.snaportas.transform.MirroredSnaporta;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import javax.imageio.ImageIO;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -35,7 +37,7 @@ public final class SnaportaReader
 		}
 		catch(IOException e)
 		{
-			throw new UncheckedIOException("Failed to read snaporta from image "+file, e);
+			throw new UncheckedIOException("Failed to read snaporta from image " + file, e);
 		}
 	}
 	
@@ -51,6 +53,21 @@ public final class SnaportaReader
 			snaporta = applyExifOrientation(snaporta, exifRotation);
 		
 		return snaporta;
+	}
+	
+	public static Snaporta readRaw(byte[] raw)
+	{
+		try
+		{
+			var bufferedImage = ImageIO.read(new ByteArrayInputStream(raw));
+			if(bufferedImage == null)
+				throw new IOException("Failed to identify image type of bytes");
+			return SnaportaBufferedImageConverter.convert(bufferedImage);
+		}
+		catch(IOException e)
+		{
+			throw new UncheckedIOException("Failed to read snaporta from byte[]", e);
+		}
 	}
 	
 	
@@ -93,7 +110,7 @@ public final class SnaportaReader
 		else if(orientation == 8) // left / bottom
 			return new CardinallyRotatedSnaporta(input, CardinalRotation.COUNTERCLOCKWISE_90);
 		else
-			throw new IncompleteCodeError("Unexpected exif orientation: "+orientation);
+			throw new IncompleteCodeError("Unexpected exif orientation: " + orientation);
 	}
 	
 }
