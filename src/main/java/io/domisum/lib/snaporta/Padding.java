@@ -118,12 +118,12 @@ public class Padding
 	// GETTERS
 	public int getHorizontalSum()
 	{
-		return left+right;
+		return left + right;
 	}
 	
 	public int getVerticalSum()
 	{
-		return top+bottom;
+		return top + bottom;
 	}
 	
 	
@@ -131,44 +131,48 @@ public class Padding
 	@API
 	public Padding deriveAddLeft(int deltaLeftPadding)
 	{
-		return new Padding(left+deltaLeftPadding, right, top, bottom);
+		return new Padding(left + deltaLeftPadding, right, top, bottom);
 	}
 	
 	@API
 	public Padding deriveAddRight(int deltaRightPadding)
 	{
-		return new Padding(left, right+deltaRightPadding, top, bottom);
+		return new Padding(left, right + deltaRightPadding, top, bottom);
 	}
 	
 	@API
 	public Padding deriveAddTop(int deltaTopPaddding)
 	{
-		return new Padding(left, right, top+deltaTopPaddding, bottom);
+		return new Padding(left, right, top + deltaTopPaddding, bottom);
 	}
 	
 	@API
 	public Padding deriveAddBottom(int deltaBottomPadding)
 	{
-		return new Padding(left, right, top, bottom+deltaBottomPadding);
+		return new Padding(left, right, top, bottom + deltaBottomPadding);
 	}
 	
 	@API
 	public Padding deriveAddHorizontal(int deltaHorizontalPadding)
 	{
-		return new Padding(left+deltaHorizontalPadding, right+deltaHorizontalPadding, top, bottom);
+		return new Padding(left + deltaHorizontalPadding, right + deltaHorizontalPadding, top, bottom);
 	}
 	
 	@API
 	public Padding deriveAddVertical(int deltaVerticalPadding)
 	{
-		return new Padding(left, right, top+deltaVerticalPadding, bottom+deltaVerticalPadding);
+		return new Padding(left, right, top + deltaVerticalPadding, bottom + deltaVerticalPadding);
 	}
 	
 	@API
 	public Padding deriveAddToAllSides(int deltaPadding)
 	{
-		return new Padding(left+deltaPadding, right+deltaPadding, top+deltaPadding, bottom+deltaPadding);
+		return new Padding(left + deltaPadding, right + deltaPadding, top + deltaPadding, bottom + deltaPadding);
 	}
+	
+	@API
+	public Padding deriveMultiply(int factor)
+	{return new Padding(left * factor, right * factor, top * factor, bottom * factor);}
 	
 	
 	// DERIVE MIRROR
