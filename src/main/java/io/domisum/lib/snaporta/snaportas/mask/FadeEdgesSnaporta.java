@@ -2,8 +2,9 @@ package io.domisum.lib.snaporta.snaportas.mask;
 
 import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.auxiliumlib.util.StringUtil;
+import io.domisum.lib.snaporta.Padding;
 import io.domisum.lib.snaporta.Snaporta;
-import io.domisum.lib.snaporta.mask.doubl.DoubleMaskPainter;
+import io.domisum.lib.snaporta.mask.doubl.DoubleMask;
 import io.domisum.lib.snaporta.snaportas.GeneratedSnaporta;
 import lombok.RequiredArgsConstructor;
 
@@ -13,36 +14,68 @@ public class FadeEdgesSnaporta
 {
 	
 	private final Snaporta base;
-	private final int distanceFromEdge;
+	private final Padding fadeDistances;
 	
 	
 	@Override
 	public String toString()
 	{
-		return PHR.r("{}(dist={}\n{})", getClass().getSimpleName(), distanceFromEdge,
+		return PHR.r("{}(dist={}\n{})", getClass().getSimpleName(), fadeDistances,
 			StringUtil.indent(base.toString(), "\t"));
 	}
 	
-	
 	@Override
 	protected Snaporta generate()
+	{return new DoubleMaskOpacitySnaporta(base, new FadeEdgesOpacityMask());}
+	
+	
+	// INTERNAL
+	private class FadeEdgesOpacityMask
+		implements DoubleMask
 	{
-		var painter = DoubleMaskPainter.sized(base.getWidth(), base.getHeight());
-		for(int y = 0; y < base.getHeight(); y++)
-			for(int x = 0; x < base.getWidth(); x++)
-			{
-				int distanceToEdge = x + 1;
-				distanceToEdge = Math.min(distanceToEdge, y + 1);
-				distanceToEdge = Math.min(distanceToEdge, base.getWidth() - x);
-				distanceToEdge = Math.min(distanceToEdge, base.getHeight() - y);
-				
-				double opacity = distanceToEdge > distanceFromEdge ? 1 :
-					distanceToEdge / (double) distanceFromEdge;
-				opacity *= opacity; // quadratic falloff
-				painter.setValueAt(x, y, opacity);
-			}
 		
-		return new DoubleMaskOpacitySnaporta(base, painter.toMask());
+		@Override
+		public double getValueAt(int x, int y)
+		{
+			double factor = 1;
+			
+			if(x < fadeDistances.getLeft())
+			{
+				double f = (x + 0.5) / fadeDistances.getLeft();
+				if(f < factor)
+					factor = f;
+			}
+			if(getWidth() - x >= fadeDistances.getRight())
+			{
+				double f = (getWidth() - x - 0.5) / fadeDistances.getRight();
+				if(f < factor)
+					factor = f;
+			}
+			if(y < fadeDistances.getTop())
+			{
+				double f = (y + 0.5) / fadeDistances.getTop();
+				if(f < factor)
+					factor = f;
+			}
+			if(getHeight() - y >= fadeDistances.getBottom())
+			{
+				double f = (getHeight() - y - 0.5) / fadeDistances.getBottom();
+				if(f < factor)
+					factor = f;
+			}
+			
+			double opacity = 1 - ((1 - factor) * (1 - factor));
+			return opacity;
+		}
+		
+		@Override
+		public int getWidth()
+		{return base.getWidth();}
+		
+		@Override
+		public int getHeight()
+		{return base.getHeight();}
+		
 	}
 	
 }
