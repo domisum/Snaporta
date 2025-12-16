@@ -55,7 +55,7 @@ public interface Snaporta
 	{
 		for(int y = 0; y < getHeight(); y++)
 			for(int x = 0; x < getWidth(); x++)
-				if(getAlphaAt(x, y) > 0)
+				if(getAlphaAt(x, y) < Color.COLOR_COMPONENT_MAX)
 					return true;
 		
 		return false;
