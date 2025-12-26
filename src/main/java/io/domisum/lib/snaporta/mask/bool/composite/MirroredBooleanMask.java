@@ -15,15 +15,11 @@ public class MirroredBooleanMask
 	// INIT
 	@API
 	public static MirroredBooleanMask horizontal(BooleanMask baseMask)
-	{
-		return new MirroredBooleanMask(baseMask, Orientation.HORIZONTAL);
-	}
+	{return new MirroredBooleanMask(baseMask, Orientation.HORIZONTAL);}
 	
 	@API
 	public static MirroredBooleanMask vertical(BooleanMask baseMask)
-	{
-		return new MirroredBooleanMask(baseMask, Orientation.VERTICAL);
-	}
+	{return new MirroredBooleanMask(baseMask, Orientation.VERTICAL);}
 	
 	@API
 	public MirroredBooleanMask(BooleanMask baseMask, Orientation orientation)
@@ -35,24 +31,18 @@ public class MirroredBooleanMask
 	
 	// MASK
 	@Override
-	public int getWidth()
-	{
-		return baseMask.getWidth();
-	}
+	public int getWidth() {return baseMask.getWidth();}
 	
 	@Override
-	public int getHeight()
-	{
-		return baseMask.getHeight();
-	}
+	public int getHeight() {return baseMask.getHeight();}
 	
 	@Override
 	public boolean getValueAt(int x, int y)
 	{
 		if(orientation == Orientation.HORIZONTAL)
-			x = getWidth()-x-1;
+			x = getWidth() - x - 1;
 		if(orientation == Orientation.VERTICAL)
-			y = getHeight()-y-1;
+			y = getHeight() - y - 1;
 		
 		return baseMask.getValueAt(x, y);
 	}

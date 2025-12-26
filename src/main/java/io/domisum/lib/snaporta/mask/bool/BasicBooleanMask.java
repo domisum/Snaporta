@@ -26,6 +26,9 @@ public final class BasicBooleanMask
 	
 	public static BasicBooleanMask copyOf(BooleanMask booleanMask)
 	{
+		if(booleanMask instanceof BasicBooleanMask bbm)
+			return bbm; // immutable, so no copy needed
+		
 		boolean[][] values = new boolean[booleanMask.getHeight()][booleanMask.getWidth()];
 		for(int y = 0; y < booleanMask.getHeight(); y++)
 			for(int x = 0; x < booleanMask.getWidth(); x++)
@@ -67,16 +70,10 @@ public final class BasicBooleanMask
 	
 	// GETTERS
 	@Override
-	public int getWidth()
-	{
-		return values[0].length;
-	}
+	public int getWidth() {return values[0].length;}
 	
 	@Override
-	public int getHeight()
-	{
-		return values.length;
-	}
+	public int getHeight() {return values.length;}
 	
 	@Override
 	public boolean getValueAt(int x, int y)
@@ -86,14 +83,8 @@ public final class BasicBooleanMask
 	}
 	
 	@Override
-	public IntBounds2D getBounds()
-	{
-		return lazyInitBounds.get();
-	}
+	public IntBounds2D getBounds() {return lazyInitBounds.get();}
 	
-	private IntBounds2D getBoundsFromDefaultMethod()
-	{
-		return BooleanMask.super.getBounds();
-	}
+	private IntBounds2D getBoundsFromDefaultMethod() {return BooleanMask.super.getBounds();}
 	
 }
