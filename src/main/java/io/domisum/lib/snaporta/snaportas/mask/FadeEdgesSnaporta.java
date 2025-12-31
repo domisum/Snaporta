@@ -8,6 +8,8 @@ import io.domisum.lib.snaporta.mask.doubl.DoubleMask;
 import io.domisum.lib.snaporta.snaportas.GeneratedSnaporta;
 import lombok.RequiredArgsConstructor;
 
+import java.util.function.Function;
+
 @RequiredArgsConstructor
 public class FadeEdgesSnaporta
 	extends GeneratedSnaporta
@@ -15,7 +17,11 @@ public class FadeEdgesSnaporta
 	
 	private final Snaporta base;
 	private final Padding fadeDistances;
+	private final Function<Double, Double> factorOpacity;
 	
+	
+	public FadeEdgesSnaporta(Snaporta base, Padding fadeDistances)
+	{this(base, fadeDistances, Function.identity());}
 	
 	@Override
 	public String toString()
@@ -37,33 +43,34 @@ public class FadeEdgesSnaporta
 		@Override
 		public double getValueAt(int x, int y)
 		{
-			double opacity = 1;
+			double factor = 1;
 			
 			if(x < fadeDistances.getLeft())
 			{
 				double f = (x + 0.5) / fadeDistances.getLeft();
-				if(f < opacity)
-					opacity = f;
+				if(f < factor)
+					factor = f;
 			}
 			if(getWidth() - 1 - x < fadeDistances.getRight())
 			{
 				double f = (getWidth() - x - 0.5) / fadeDistances.getRight();
-				if(f < opacity)
-					opacity = f;
+				if(f < factor)
+					factor = f;
 			}
 			if(y < fadeDistances.getTop())
 			{
 				double f = (y + 0.5) / fadeDistances.getTop();
-				if(f < opacity)
-					opacity = f;
+				if(f < factor)
+					factor = f;
 			}
 			if(getHeight() - 1 - y < fadeDistances.getBottom())
 			{
 				double f = (getHeight() - y - 0.5) / fadeDistances.getBottom();
-				if(f < opacity)
-					opacity = f;
+				if(f < factor)
+					factor = f;
 			}
 			
+			double opacity = factorOpacity.apply(factor);
 			return opacity;
 		}
 		
