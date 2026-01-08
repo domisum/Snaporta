@@ -48,26 +48,26 @@ public class FadeEdgesSnaporta
 			if(x < fadeDistances.getLeft())
 			{
 				double f = (x + 0.5) / fadeDistances.getLeft();
-				if(f < factor)
-					factor = f;
+				if(f < 1)
+					factor *= f;
 			}
 			if(getWidth() - 1 - x < fadeDistances.getRight())
 			{
 				double f = (getWidth() - x - 0.5) / fadeDistances.getRight();
-				if(f < factor)
-					factor = f;
+				if(f < 1)
+					factor *= f;
 			}
 			if(y < fadeDistances.getTop())
 			{
 				double f = (y + 0.5) / fadeDistances.getTop();
-				if(f < factor)
-					factor = f;
+				if(f < 1)
+					factor *= f;
 			}
 			if(getHeight() - 1 - y < fadeDistances.getBottom())
 			{
 				double f = (getHeight() - y - 0.5) / fadeDistances.getBottom();
-				if(f < factor)
-					factor = f;
+				if(f < 1)
+					factor *= f;
 			}
 			
 			double opacity = factorOpacity.apply(factor);
