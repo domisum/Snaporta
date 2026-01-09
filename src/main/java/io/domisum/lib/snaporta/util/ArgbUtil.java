@@ -4,7 +4,6 @@ import io.domisum.lib.snaporta.color.Color;
 import io.domisum.lib.snaporta.color.ColorComponent;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.Validate;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ArgbUtil
@@ -17,15 +16,15 @@ public final class ArgbUtil
 	// CONVERSION
 	public static int toArgb(int alpha, int red, int green, int blue)
 	{
-		int alphaMasked = alpha&TWO_BYTE_MASK;
-		int redMasked = red&TWO_BYTE_MASK;
-		int greenMasked = green&TWO_BYTE_MASK;
-		int blueMasked = blue&TWO_BYTE_MASK;
+		int alphaMasked = alpha & TWO_BYTE_MASK;
+		int redMasked = red & TWO_BYTE_MASK;
+		int greenMasked = green & TWO_BYTE_MASK;
+		int blueMasked = blue & TWO_BYTE_MASK;
 		
 		int color = 0;
-		color |= alphaMasked<<(8*3);
-		color |= redMasked<<(8*2);
-		color |= greenMasked<<8;
+		color |= alphaMasked << (8 * 3);
+		color |= redMasked << (8 * 2);
+		color |= greenMasked << 8;
 		color |= blueMasked;
 		
 		return color;
@@ -41,44 +40,45 @@ public final class ArgbUtil
 			case GREEN: return getGreenComponent(argb);
 			case BLUE: return getBlueComponent(argb);
 			
-			default: throw new IllegalArgumentException("Invalid color component: "+colorComponent);
+			default: throw new IllegalArgumentException("Invalid color component: " + colorComponent);
 		}
 	}
 	
 	
 	public static int getAlphaComponent(int argb)
 	{
-		int shiftedAlpha = argb >> (8*3);
-		return shiftedAlpha&TWO_BYTE_MASK;
+		int shiftedAlpha = argb >> (8 * 3);
+		return shiftedAlpha & TWO_BYTE_MASK;
 	}
 	
 	public static double getOpacity(int argb)
 	{
-		return getAlphaComponent(argb)/(double) Color.COLOR_COMPONENT_MAX;
+		return getAlphaComponent(argb) / (double) Color.COLOR_COMPONENT_MAX;
 	}
 	
 	public static int getAlphaFromOpacity(double opacity)
 	{
-		Validate.inclusiveBetween(0, 1, opacity, "Opacity has to be in interval [0.0-1.0], was "+opacity);
-		return (int) Math.round(opacity*Color.COLOR_COMPONENT_MAX);
+		if(opacity < 0 || opacity > 1)
+			throw new IllegalArgumentException("Opacity has to be in interval [0.0-1.0], was " + opacity);
+		return (int) Math.round(opacity * Color.COLOR_COMPONENT_MAX);
 	}
 	
 	
 	public static int getRedComponent(int argb)
 	{
-		int shiftedRed = argb >> (8*2);
-		return shiftedRed&TWO_BYTE_MASK;
+		int shiftedRed = argb >> (8 * 2);
+		return shiftedRed & TWO_BYTE_MASK;
 	}
 	
 	public static int getGreenComponent(int argb)
 	{
 		int shiftedGreen = argb >> 8;
-		return shiftedGreen&TWO_BYTE_MASK;
+		return shiftedGreen & TWO_BYTE_MASK;
 	}
 	
 	public static int getBlueComponent(int argb)
 	{
-		return argb&TWO_BYTE_MASK;
+		return argb & TWO_BYTE_MASK;
 	}
 	
 }
