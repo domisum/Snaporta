@@ -1,6 +1,7 @@
 package io.domisum.lib.snaporta.snaportas;
 
 import io.domisum.lib.auxiliumlib.PHR;
+import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.auxiliumlib.util.StringUtil;
 import io.domisum.lib.snaporta.Padding;
 import io.domisum.lib.snaporta.Snaporta;
@@ -12,6 +13,7 @@ import io.domisum.lib.snaporta.snaportas.mask.DoubleMaskOpacitySnaporta;
 import io.domisum.lib.snaporta.snaportas.transform.ViewportSnaporta;
 import lombok.RequiredArgsConstructor;
 
+@API
 @RequiredArgsConstructor
 public class HaloSnaporta
 	extends GeneratedSnaporta

@@ -1,6 +1,8 @@
 package io.domisum.lib.snaporta.snaportas.transform;
 
+import io.domisum.lib.auxiliumlib.PHR;
 import io.domisum.lib.auxiliumlib.annotations.API;
+import io.domisum.lib.auxiliumlib.util.StringUtil;
 import io.domisum.lib.snaporta.Orientation;
 import io.domisum.lib.snaporta.Snaporta;
 
@@ -32,6 +34,13 @@ public class MirroredSnaporta
 		this.orientation = orientation;
 	}
 	
+	@Override
+	public String toString()
+	{
+		return PHR.r("{}({}\n{})", getClass().getSimpleName(),
+			orientation, StringUtil.indent(baseSnaporta, "\t"));
+	}
+	
 	
 	// SNAPORTA
 	@Override
@@ -50,9 +59,9 @@ public class MirroredSnaporta
 	public int getArgbAt(int x, int y)
 	{
 		if(orientation == Orientation.HORIZONTAL)
-			x = getWidth()-x-1;
+			x = getWidth() - x - 1;
 		if(orientation == Orientation.VERTICAL)
-			y = getHeight()-y-1;
+			y = getHeight() - y - 1;
 		
 		return baseSnaporta.getArgbAt(x, y);
 	}
