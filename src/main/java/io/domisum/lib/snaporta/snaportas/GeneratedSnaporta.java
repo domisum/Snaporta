@@ -12,11 +12,19 @@ public abstract class GeneratedSnaporta
 {
 	
 	private final Supplier<Snaporta> generateOnce;
+	private boolean generated = false;
 	
 	
 	// INIT
 	@API
-	public GeneratedSnaporta() {generateOnce = Suppliers.memoize(this::generate);}
+	public GeneratedSnaporta() {generateOnce = Suppliers.memoize(this::gen);}
+	
+	private Snaporta gen()
+	{
+		var snaporta = generate();
+		generated = true;
+		return snaporta;
+	}
 	
 	protected abstract Snaporta generate();
 	
@@ -32,7 +40,15 @@ public abstract class GeneratedSnaporta
 	public int getArgbAt(int x, int y) {return get().getArgbAt(x, y);}
 	
 	@Override
-	public BlankState isBlank() {return BlankState.UNKNOWN;}
+	public BlankState isBlank()
+	{
+		if(!generated)
+			return BlankState.UNKNOWN;
+		return get().isBlank();
+	}
+	
+	@Override
+	public Snaporta optimize() {return get().optimize();}
 	
 	
 	// UTIL

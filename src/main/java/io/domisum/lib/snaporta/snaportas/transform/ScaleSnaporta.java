@@ -103,4 +103,13 @@ public final class ScaleSnaporta
 		return interpolator.interpolateARGBAt(baseSnaporta, inChildX, inChildY);
 	}
 	
+	@Override
+	public Snaporta optimize()
+	{
+		var baseOptimized = baseSnaporta.optimize();
+		if(baseOptimized == baseSnaporta)
+			return this;
+		return new ScaleSnaporta(baseOptimized, width, height, interpolator);
+	}
+	
 }
