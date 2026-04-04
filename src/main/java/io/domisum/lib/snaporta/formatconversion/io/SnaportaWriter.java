@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
 import javax.imageio.stream.MemoryCacheImageOutputStream;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -24,26 +23,19 @@ import java.util.Locale;
 public final class SnaportaWriter
 {
 	
-	// SHORTCUT
+	// FILE
 	@API
-	public static void writeToFile(File file, Snaporta snaporta)
+	public static void writeToFile(File file, Snaporta snaporta) {writeToFile(file, snaporta, null);}
+	
+	@API
+	public static void writeToFile(File file, Snaporta snaporta, Double quality)
 	{
-		byte[] raw = writeToRaw(snaporta, FileUtil.getExtension(file));
+		byte[] raw = writeToRaw(snaporta, FileUtil.getExtension(file), quality);
 		FileUtil.writeRaw(file, raw);
 	}
 	
-	@API
-	public static byte[] writeToRaw(Snaporta snaporta)
-	{
-		return writeToRaw(snaporta, "png");
-	}
 	
-	@API
-	public static byte[] writeToRaw(Snaporta snaporta, String format)
-	{
-		return writeToRaw(snaporta, format, null);
-	}
-	
+	// RAW
 	@API
 	public static byte[] writeToRaw(Snaporta snaporta, String format, Double quality)
 	{
@@ -62,7 +54,7 @@ public final class SnaportaWriter
 			if("jpeg".equals(format) && quality != null)
 			{
 				var iter = ImageIO.getImageWritersByFormatName("jpeg");
-				var writer = (ImageWriter) iter.next();
+				var writer = iter.next();
 				
 				var iwp = writer.getDefaultWriteParam();
 				iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
@@ -83,5 +75,11 @@ public final class SnaportaWriter
 			throw new UncheckedIOException(e);
 		}
 	}
+	
+	@API
+	public static byte[] writeToRaw(Snaporta snaporta) {return writeToRaw(snaporta, "png");}
+	
+	@API
+	public static byte[] writeToRaw(Snaporta snaporta, String format) {return writeToRaw(snaporta, format, null);}
 	
 }
